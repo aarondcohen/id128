@@ -1,0 +1,15 @@
+{
+  "name": "SOME_NAME",
+	"description": "",
+  "version": "0.0.1",
+	"author": "Aaron Cohen <aarondcohen@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+	"scripts": {
+		"test": "mocha"
+	},
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
+  }
+}
