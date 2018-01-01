@@ -26,19 +26,22 @@ function randomInteger(max) {
 
 const ALPHABET = Object.freeze({
 	ASCII: makeString(128, (v, k) => String.fromCharCode(k)),
-	HEX: '0123456789ABCDEFabcdef',
+	HEX: '0123456789ABCDEF',
 });
 
 const described_namespace = Coder.HexCoder;
 
-describe(described_namespace.constructor.name, function() {
-	const bytes_any = makeBytes(16, () => randomInteger(256));
-	const bytes_max = makeBytes(16, () => (0xFF));
-	const bytes_min = makeBytes(16, () => (0));
-	const hex_any = makeString(32, () => randomChar(ALPHABET.HEX));
-	const hex_max = makeString(32, () => ('F'));
-	const hex_min = makeString(32, () => ('0'));
+const bytes_any = makeBytes(16, () => randomInteger(256));
+const bytes_max = makeBytes(16, () => (0xFF));
+const bytes_min = makeBytes(16, () => (0));
+const encoding_any = makeString(32, () => randomChar(ALPHABET.HEX));
+const encoding_max = makeString(32, () => ('F'));
+const encoding_min = makeString(32, () => ('0'));
 
+const namespace_description = described_namespace.constructor.name
+	+ ` using random encoding ${encoding_any}`;
+
+describe(namespace_description, function() {
 	describe('.decode', function() {
 		const subject = described_namespace.decode.bind(described_namespace);
 
@@ -46,28 +49,32 @@ describe(described_namespace.constructor.name, function() {
 			[
 				subject,
 				subject.bind(null, makeBytes(32)),
-				subject.bind(null, makeString(31, () => ('0'))),
-				subject.bind(null, makeString(33, () => ('0'))),
-				subject.bind(null, makeString(31, () => randomChar(ALPHABET.ASCII)) + '!'),
+				subject.bind(null, encoding_any.slice(0, -1)),
+				subject.bind(null, encoding_any + randomChar(ALPHABET.HEX)),
+				subject.bind(null, makeString(31, () => randomChar(ALPHABET.ASCII)) + '\0'),
 			].forEach((expectation) => expect(subject)
 				.to.throw(InvalidDecodingError, 'Requires a 32-character hex string'));
 
-			expect(subject.bind(null, hex_any)).not.to.throw();
+			expect(subject.bind(null, encoding_any)).not.to.throw();
 		});
 
-		it(`decodes ${hex_min} to all 0-bits`, function() {
-			expect(subject(hex_min)).to.deep.equal(bytes_min);
+		it(`decodes ${encoding_min} to all 0-bits`, function() {
+			expect(subject(encoding_min)).to.deep.equal(bytes_min);
 		});
 
-		it(`decodes ${hex_max} to all 1-bits`, function() {
-			expect(subject(hex_max)).to.deep.equal(bytes_max);
+		it(`decodes ${encoding_max} to all 1-bits`, function() {
+			expect(subject(encoding_max)).to.deep.equal(bytes_max);
 		});
 
-		it('is case insenstive', function() {
-			expect(subject(hex_any))
-				.to.deep.equal(subject(hex_any.toUpperCase()));
-			expect(subject(hex_any))
-				.to.deep.equal(subject(hex_any.toLowerCase()));
+		it('ignores case', function() {
+			const encoding = makeString(32, () => randomChar(
+				ALPHABET.HEX + ALPHABET.HEX.toLowerCase()
+			));
+
+			expect(subject(encoding))
+				.to.deep.equal(subject(encoding.toUpperCase()));
+			expect(subject(encoding))
+				.to.deep.equal(subject(encoding.toLowerCase()));
 		});
 
 		it('inverts encode', function() {
@@ -83,25 +90,25 @@ describe(described_namespace.constructor.name, function() {
 			[
 				subject,
 				subject.bind(null, makeString(16)),
-				subject.bind(null, makeBytes(15, () => (0))),
-				subject.bind(null, makeBytes(17, () => (0))),
+				subject.bind(null, makeBytes(15)),
+				subject.bind(null, makeBytes(17)),
 			].forEach((expectation) => expect(subject)
 				.to.throw(InvalidEncodingError, 'Requires a 16-byte Uint8Array'));
 
 			expect(subject.bind(null, bytes_any)).not.to.throw();
 		});
 
-		it(`encodes all 0-bits to ${hex_min}`, function() {
-			expect(subject(bytes_min)).to.equal(hex_min);
+		it(`encodes all 0-bits to ${encoding_min}`, function() {
+			expect(subject(bytes_min)).to.equal(encoding_min);
 		});
 
-		it(`encodes all 1-bits to ${hex_max}`, function() {
-			expect(subject(bytes_max)).to.equal(hex_max);
+		it(`encodes all 1-bits to ${encoding_max}`, function() {
+			expect(subject(bytes_max)).to.equal(encoding_max);
 		});
 
-		it('inverts decode (modulo case-sensitivity)', function() {
-			expect(subject(described_namespace.decode(hex_any)))
-				.to.deep.equal(hex_any.toUpperCase());
+		it('inverts decode', function() {
+			expect(subject(described_namespace.decode(encoding_any)))
+				.to.equal(encoding_any);
 		});
 	});
 });
