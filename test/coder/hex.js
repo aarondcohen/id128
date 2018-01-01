@@ -3,6 +3,10 @@
 const expect = require('chai').expect;
 
 const { Coder } = require('../../');
+const {
+	InvalidDecodingError,
+	InvalidEncodingError,
+} = require('../../src/coder/error.js');
 
 function makeBytes(length = 16, fn = () => {}) {
 	return Uint8Array.from({length}, fn);
@@ -46,7 +50,7 @@ describe(described_namespace.constructor.name, function() {
 				subject.bind(null, makeString(33, () => ('0'))),
 				subject.bind(null, makeString(31, () => randomChar(ALPHABET.ASCII)) + '!'),
 			].forEach((expectation) => expect(subject)
-				.to.throw(Error, 'Requires a 32-character hex string'));
+				.to.throw(InvalidDecodingError, 'Requires a 32-character hex string'));
 
 			expect(subject.bind(null, hex_any)).not.to.throw();
 		});
@@ -82,7 +86,7 @@ describe(described_namespace.constructor.name, function() {
 				subject.bind(null, makeBytes(15, () => (0))),
 				subject.bind(null, makeBytes(17, () => (0))),
 			].forEach((expectation) => expect(subject)
-				.to.throw(Error, 'Requires a 16-byte Uint8Array'));
+				.to.throw(InvalidEncodingError, 'Requires a 16-byte Uint8Array'));
 
 			expect(subject.bind(null, bytes_any)).not.to.throw();
 		});

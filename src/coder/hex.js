@@ -1,3 +1,5 @@
+const { InvalidDecodingError, InvalidEncodingError } = require('./error.js');
+
 const BYTE_TO_HEX = Array
 	.from({length: 256})
 	.map((val, key) => key.toString(16).padStart(2, '0').toUpperCase());
@@ -15,7 +17,7 @@ const VALID_ENCODING = new RegExp('^[0-9A-Fa-f]{32}$');
 class HexCoder {
 	decode(encoding) {
 		if (! this.validateEncoding(encoding)) {
-			throw new Error('Requires a 32-character hex string');
+			throw new InvalidDecodingError('Requires a 32-character hex string');
 		}
 
 		const normalized_encoding = encoding.toUpperCase();
@@ -34,7 +36,7 @@ class HexCoder {
 
 	encode(bytes) {
 		if (! this.validateBytes(bytes)) {
-			throw new Error('Requires a 16-byte Uint8Array');
+			throw new InvalidEncodingError('Requires a 16-byte Uint8Array');
 		}
 
 		let encoding = '';
