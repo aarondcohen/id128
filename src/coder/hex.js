@@ -16,11 +16,12 @@ const VALID_ENCODING = new RegExp('^[0-9A-Fa-f]{32}$');
 
 class HexCoder {
 	decode(encoding) {
-		if (! this.validateEncoding(encoding)) {
+		if (! this.isValidEncoding(encoding)) {
 			throw new InvalidDecodingError('Requires a 32-character hex string');
 		}
 
 		const normalized_encoding = encoding.toUpperCase();
+
 		let bytes = new Uint8Array(16);
 
 		for (
@@ -35,7 +36,7 @@ class HexCoder {
 	}
 
 	encode(bytes) {
-		if (! this.validateBytes(bytes)) {
+		if (! this.isValidBytes(bytes)) {
 			throw new InvalidEncodingError('Requires a 16-byte Uint8Array');
 		}
 
@@ -44,16 +45,16 @@ class HexCoder {
 		return encoding;
 	}
 
-	validateEncoding(encoding) {
-		return true
-			&& (typeof encoding === 'string' || encoding instanceof String)
-			&& VALID_ENCODING.test(encoding);
-	}
-
-	validateBytes(bytes) {
+	isValidBytes(bytes) {
 		return true
 			&& (bytes instanceof Uint8Array)
 			&& bytes.length === 16;
+	}
+
+	isValidEncoding(encoding) {
+		return true
+			&& (typeof encoding === 'string' || encoding instanceof String)
+			&& VALID_ENCODING.test(encoding);
 	}
 }
 
