@@ -2,14 +2,15 @@
 
 const expect = require('chai').expect;
 
-const { Coder } = require('../../');
+const ByteArray = require('common/byte-array');
+const Crockford32Coder = require('coder/crockford32');
 const {
 	InvalidDecodingError,
 	InvalidEncodingError,
-} = require('../../src/coder/error.js');
+} = require('coder/error.js');
 
-function makeBytes(length = 16, fn = () => {}) {
-	return Uint8Array.from({length}, fn);
+function makeBytes(length) {
+	return Uint8Array.from({length});
 }
 
 function makeString(length = 26, fn = () => { return '\0' }) {
@@ -29,11 +30,11 @@ const ALPHABET = Object.freeze({
 	CROCKFORD32: '0123456789ABCDEFGHJKMNPQRSTVWXYZ',
 });
 
-const described_namespace = Coder.Crockford32Coder;
+const described_namespace = Crockford32Coder;
 
-const bytes_any = makeBytes(16, () => randomInteger(256));
-const bytes_max = makeBytes(16, () => (0xFF));
-const bytes_min = makeBytes(16, () => (0));
+const bytes_any = ByteArray.generateRandomFilled();
+const bytes_max = ByteArray.generateOneFilled();
+const bytes_min = ByteArray.generateZeroFilled();
 const encoding_any = makeString(1, () => randomChar('01234567'))
 	+ makeString(25, () => randomChar(ALPHABET.CROCKFORD32));
 const encoding_max = '7' + makeString(25, () => ('Z'));
