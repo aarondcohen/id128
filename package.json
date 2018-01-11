@@ -1,20 +1,20 @@
 {
-  "name": "SOME_NAME",
+	"name": "SOME_NAME",
 	"description": "",
-  "version": "0.0.1",
+	"version": "0.0.1",
 	"author": "Aaron Cohen <aarondcohen@gmail.com>",
-  "license": "MIT",
-  "main": "index.js",
+	"license": "MIT",
+	"main": "index.js",
 	"scripts": {
-    "benchmark": "matcha",
+		"benchmark": "matcha",
 		"test": "NODE_PATH='./src/' mocha"
 	},
-  "devDependencies": {
-    "chai": "*",
-    "ksuid": "*",
-    "matcha": "*",
-    "mocha": "*",
-    "ulid": "*",
-    "uuid": "*"
-  }
+	"devDependencies": {
+		"chai": "*",
+		"ksuid": "*",
+		"matcha": "*",
+		"mocha": "*",
+		"ulid": "*",
+		"uuid": "*"
+	}
 }
