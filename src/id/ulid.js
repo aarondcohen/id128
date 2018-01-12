@@ -1,12 +1,11 @@
 const ByteArray = require('../common/byte-array');
+const BaseId = require('./base');
 
 const BYTE_RADIX = 1 << 8;
 const TIME_BYTES = 6;
 const EPOCH_MS_MAX = BYTE_RADIX ** TIME_BYTES;
 const DATE_MIN_ISO = new Date(0).toISOString();
 const DATE_MAX_ISO = new Date(EPOCH_MS_MAX - 1).toISOString();
-
-const _bytes = Symbol('bytes');
 
 const _setTime = (epoch_ms, bytes) => {
 	for (let idx = TIME_BYTES - 1; idx > -1; --idx) {
@@ -28,7 +27,7 @@ const _validateTime = (time) => {
 	}
 };
 
-class Ulid {
+class Ulid extends BaseId {
 
 	//Constructors
 
@@ -50,15 +49,7 @@ class Ulid {
 		return new this(ByteArray.generateOneFilled());
 	}
 
-	constructor(bytes) {
-		this[_bytes] = bytes;
-	}
-
 	// Accessors
-
-	get bytes() {
-		return this[_bytes];
-	}
 
 	get time() {
 		const epoch_ms = this.bytes
@@ -66,16 +57,6 @@ class Ulid {
 			.reduce((acc, val) => (acc * BYTE_RADIX + val), 0);
 
 		return new Date(epoch_ms);
-	}
-
-	// Comparators
-
-	compare(rhs) {
-		return ByteArray.compare(this.bytes, rhs.bytes);
-	}
-
-	equal(rhs) {
-		return this.compare(rhs) === 0;
 	}
 }
 
