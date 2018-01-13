@@ -8,24 +8,13 @@ const {
 	assertCompareDemonstratesTotalOrder,
 	assertEqualDemonstratesSameness,
 	assertGenerateBasics,
+	assertUuidVariantVersion,
 } = require('./shared');
 
 const described_class = require('id/uuid4');
 
 describe(described_class.name, function() {
 	assertGenerateBasics(described_class);
-
-	describe('.generate extended', function() {
-		const subject = () => described_class.generate();
-
-		it('is variant 1', function() {
-			expect(subject().variant).to.eql(1);
-		});
-
-		it('is version 4', function() {
-			expect(subject().version).to.eql(4);
-		});
-	});
 
 	describe('.MIN', function() {
 		const subject = () => described_class.MIN();
@@ -36,14 +25,6 @@ describe(described_class.name, function() {
 			expected.set([0b10000000], 8);
 
 			expect(subject().bytes).to.deep.equal(expected);
-		});
-
-		it('is variant 1', function() {
-			expect(subject().variant).to.eql(1);
-		});
-
-		it('is version 4', function() {
-			expect(subject().version).to.eql(4);
 		});
 	});
 
@@ -57,16 +38,9 @@ describe(described_class.name, function() {
 
 			expect(subject().bytes).to.deep.equal(expected);
 		});
-
-		it('is variant 1', function() {
-			expect(subject().variant).to.eql(1);
-		});
-
-		it('is version 4', function() {
-			expect(subject().version).to.eql(4);
-		});
 	});
 
+	assertUuidVariantVersion(described_class, 1, 4);
 	assertAccessorBytes(described_class);
 
 	assertCompareDemonstratesTotalOrder([

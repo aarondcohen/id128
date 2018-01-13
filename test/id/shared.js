@@ -109,9 +109,40 @@ function assertGenerateBasics(described_class, generate_args = []) {
 	});
 }
 
+function assertUuidVariantVersion(described_class, variant, version) {
+	const assertVariant = (subject) => it(`is variant ${variant}`, function() {
+		expect(subject().variant).to.eql(variant);
+	});
+	const assertVersion = (subject) => it(`is version ${version}`, function() {
+		expect(subject().version).to.eql(version);
+	});
+
+	describe('.generate variant/version', function() {
+		const subject = () => described_class.generate();
+
+		assertVariant(subject);
+		assertVersion(subject);
+	});
+
+	describe('.MIN variant/version', function() {
+		const subject = () => described_class.MIN();
+
+		assertVariant(subject);
+		assertVersion(subject);
+	});
+
+	describe('.MAX variant/version', function() {
+		const subject = () => described_class.MAX();
+
+		assertVariant(subject);
+		assertVersion(subject);
+	});
+}
+
 module.exports = {
 	assertAccessorBytes,
 	assertCompareDemonstratesTotalOrder,
 	assertEqualDemonstratesSameness,
 	assertGenerateBasics,
+	assertUuidVariantVersion,
 };
