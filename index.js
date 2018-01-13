@@ -1,12 +1,12 @@
-const Ulid = require('./src/id/ulid');
-const Uuid4 = require('./src/id/uuid4');
-const UuidNil = require('./src/id/uuid-nil');
+const { Ulid } = require('./src/id/ulid');
+const { Uuid4 } = require('./src/id/uuid4');
+const { UuidNil } = require('./src/id/uuid-nil');
 
 const Crockford32Coder = require('./src/coder/crockford32');
 const HexCoder = require('./src/coder/hex');
 const UuidCoder = require('./src/coder/uuid');
 
-const IdFactory = require('./src/factory/id');
+const { IdFactory } = require('./src/factory/id');
 
 module.exports = {
 	Ulid: new IdFactory({

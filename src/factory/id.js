@@ -60,4 +60,4 @@ class IdFactory {
 	}
 }
 
-module.exports = IdFactory;
+module.exports = { IdFactory };

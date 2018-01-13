@@ -1,8 +1,6 @@
 'use strict';
 
-const expect = require('chai').expect;
-
-const ByteArray = require('common/byte-array');
+const { expect } = require('chai');
 const {
 	assertAccessorBytes,
 	assertCompareDemonstratesTotalOrder,
@@ -10,7 +8,9 @@ const {
 	assertGenerateBasics,
 } = require('./shared');
 
-const described_class = require('id/ulid');;
+const ByteArray = require('common/byte-array');
+
+const { Ulid: described_class } = require('id/ulid');;
 
 describe(described_class.name, function() {
 	assertGenerateBasics(described_class, [new Date(0)]);

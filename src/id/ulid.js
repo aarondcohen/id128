@@ -1,5 +1,5 @@
 const ByteArray = require('../common/byte-array');
-const BaseId = require('./base');
+const { BaseId } = require('./base');
 
 const BYTE_RADIX = 1 << 8;
 const TIME_BYTES = 6;
@@ -67,4 +67,4 @@ class Ulid extends BaseId {
 	}
 }
 
-module.exports = Ulid;
+module.exports = { Ulid };

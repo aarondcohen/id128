@@ -1,14 +1,14 @@
 'use strict';
 
-const expect = require('chai').expect;
-
-const ByteArray = require('common/byte-array');
+const { expect } = require('chai');
 const {
 	assertAccessorBytes,
 	assertUuidVariantVersion,
 } = require('./shared');
 
-const described_class = require('id/uuid-nil');
+const ByteArray = require('common/byte-array');
+
+const { UuidNil: described_class } = require('id/uuid-nil');
 
 describe(described_class.name, function() {
 	describe('.generate', function() {

@@ -1,6 +1,6 @@
 'use strict';
 
-const BaseId = require('./base');
+const { BaseId } = require('./base');
 
 const VARIANT_BYTE = 8;
 const VERSION_BYTE = 6;

@@ -32,4 +32,4 @@ class BaseId {
 	}
 }
 
-module.exports = BaseId;
+module.exports = { BaseId };

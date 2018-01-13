@@ -36,4 +36,4 @@ class UuidNil extends Uuid {
 	}
 }
 
-module.exports = UuidNil;
+module.exports = { UuidNil };
