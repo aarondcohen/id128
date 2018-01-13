@@ -16,7 +16,7 @@ const _setVersion = (version, bytes) => {
 	bytes[VERSION_BYTE] |= version << 4;
 };
 
-class Uuid extends BaseId {
+class Uuid4 extends BaseId {
 	static generate() {
 		let bytes = ByteArray.generateRandomFilled();
 
@@ -60,4 +60,4 @@ class Uuid extends BaseId {
 	}
 }
 
-module.exports = Uuid;
+module.exports = Uuid4;

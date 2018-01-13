@@ -10,7 +10,7 @@ const {
 	assertGenerateBasics,
 } = require('./shared');
 
-const described_class = require('id/uuid');
+const described_class = require('id/uuid4');
 
 describe(described_class.name, function() {
 	assertGenerateBasics(described_class);

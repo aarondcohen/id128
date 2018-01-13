@@ -114,3 +114,4 @@ function assertValidId128(id_name) {
 }
 
 assertValidId128('Ulid');
+assertValidId128('Uuid4');
