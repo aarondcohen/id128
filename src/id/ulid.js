@@ -31,7 +31,14 @@ class Ulid extends BaseId {
 
 	//Constructors
 
-	static generate(time) {
+	static generate(time = null) {
+		if (Number.isInteger(time)) {
+			time = new Date(time);
+		}
+		else if (time === null) {
+			time = new Date();
+		}
+
 		_validateTime(time);
 
 		let bytes = ByteArray.generateRandomFilled();
