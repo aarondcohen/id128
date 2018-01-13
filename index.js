@@ -1,5 +1,6 @@
 const Ulid = require('./src/id/ulid');
 const Uuid4 = require('./src/id/uuid4');
+const UuidNil = require('./src/id/uuid-nil');
 
 const Crockford32Coder = require('./src/coder/crockford32');
 const HexCoder = require('./src/coder/hex');
@@ -18,13 +19,19 @@ module.exports = {
 		canonical_coder: UuidCoder,
 		raw_coder: HexCoder,
 	}),
+	UuidNil: new IdFactory({
+		id: UuidNil,
+		canonical_coder: UuidCoder,
+		raw_coder: HexCoder,
+	}),
 	Coder: {
-		Crockford32Coder,
-		HexCoder,
-		UuidCoder,
+		Crockford32: Crockford32Coder,
+		Hex: HexCoder,
+		Uuid: UuidCoder,
 	},
 	Id: {
 		Ulid,
 		Uuid4,
+		UuidNil,
 	},
 };
