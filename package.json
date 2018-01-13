@@ -1,6 +1,6 @@
 {
-	"name": "SOME_NAME",
-	"description": "",
+	"name": "id128",
+	"description": "Collection of 128-bit Id generators",
 	"version": "0.0.1",
 	"author": "Aaron Cohen <aarondcohen@gmail.com>",
 	"license": "MIT",
