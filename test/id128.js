@@ -22,10 +22,6 @@ function assertValidId128(id_name) {
 				expect(subject()).to.be.an.instanceof(id_class);
 			});
 
-			it('always returns a different object', function() {
-				expect(subject()).not.to.equal(subject());
-			});
-
 			it('generates 128-bit id', function() {
 				expect(subject().bytes).to.have.lengthOf(16);
 			});
@@ -38,10 +34,6 @@ function assertValidId128(id_name) {
 				expect(subject()).to.be.an.instanceof(id_class);
 			});
 
-			it('always returns the same object', function() {
-				expect(subject()).to.equal(subject());
-			});
-
 			it('generates 128-bit id', function() {
 				expect(subject().bytes).to.have.lengthOf(16);
 			});
@@ -52,10 +44,6 @@ function assertValidId128(id_name) {
 
 			it(`returns a ${id_name}`, function() {
 				expect(subject()).to.be.an.instanceof(id_class);
-			});
-
-			it('always returns the same object', function() {
-				expect(subject()).to.equal(subject());
 			});
 
 			it('generates 128-bit id', function() {

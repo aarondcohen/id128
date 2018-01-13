@@ -6,6 +6,13 @@ const MAX = Symbol('max');
 const MIN = Symbol('min');
 const RAW_CODER = Symbol('raw_coder');
 
+const injectCoders = (factory, id) => {
+	return Object.defineProperties(id, {
+		toCanonical: { value: () => factory.toCanonical(id) },
+		toRaw: { value: () => factory.toRaw(id) },
+	});
+};
+
 class IdFactory {
 	constructor({
 		id,
@@ -20,25 +27,25 @@ class IdFactory {
 	//Generators
 
 	generate() {
-		return this[ID].generate(...arguments);
+		return injectCoders(this, this[ID].generate(...arguments));
 	}
 
 	MIN() {
-		return this[MIN] = this[MIN] || this[ID].MIN();
+		return this[MIN] = this[MIN] || injectCoders(this, this[ID].MIN());
 	}
 
 	MAX() {
-		return this[MAX] = this[MAX] || this[ID].MAX();
+		return this[MAX] = this[MAX] || injectCoders(this, this[ID].MAX());
 	}
 
 	// Coders
 
 	fromCanonical(canonical) {
-		return new this[ID](this[CANONICAL_CODER].decode(canonical));
+		return injectCoders(this, new this[ID](this[CANONICAL_CODER].decode(canonical)));
 	}
 
 	fromRaw(raw) {
-		return new this[ID](this[RAW_CODER].decode(raw));
+		return injectCoders(this, new this[ID](this[RAW_CODER].decode(raw)));
 	}
 
 	toCanonical(id) {
