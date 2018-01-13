@@ -6,20 +6,18 @@ const MAX = Symbol('max');
 const MIN = Symbol('min');
 const RAW_CODER = Symbol('raw_coder');
 
-const injectCoders = (factory, id) => {
-	return Object.defineProperties(id, {
-		toCanonical: { value: () => factory.toCanonical(id) },
-		toRaw: { value: () => factory.toRaw(id) },
-	});
-};
-
 class IdFactory {
 	constructor({
 		id,
 		canonical_coder,
 		raw_coder,
 	} = {}) {
-		this[ID] = id;
+		const factory = this;
+		this[ID] = class extends id {
+			static get [Symbol.species]() { return id; }
+			toCanonical() { return factory.toCanonical(this); }
+			toRaw() { return factory.toRaw(this); }
+		};
 		this[CANONICAL_CODER] = canonical_coder;
 		this[RAW_CODER] = raw_coder;
 	}
@@ -27,25 +25,25 @@ class IdFactory {
 	//Generators
 
 	generate() {
-		return injectCoders(this, this[ID].generate(...arguments));
+		return this[ID].generate(...arguments);
 	}
 
 	MIN() {
-		return this[MIN] = this[MIN] || injectCoders(this, this[ID].MIN());
+		return this[MIN] = this[MIN] || this[ID].MIN();
 	}
 
 	MAX() {
-		return this[MAX] = this[MAX] || injectCoders(this, this[ID].MAX());
+		return this[MAX] = this[MAX] || this[ID].MAX();
 	}
 
 	// Coders
 
 	fromCanonical(canonical) {
-		return injectCoders(this, new this[ID](this[CANONICAL_CODER].decode(canonical)));
+		return  new this[ID](this[CANONICAL_CODER].decode(canonical));
 	}
 
 	fromRaw(raw) {
-		return injectCoders(this, new this[ID](this[RAW_CODER].decode(raw)));
+		return  new this[ID](this[RAW_CODER].decode(raw));
 	}
 
 	toCanonical(id) {
