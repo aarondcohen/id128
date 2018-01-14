@@ -64,6 +64,16 @@ function assertCompareDemonstratesTotalOrder(labeled_ids) {
 	});
 }
 
+function assertDebuggable(described_class) {
+	describe('when cast as a string', function() {
+		const subject = () => '' + new described_class();
+
+		it(`mentions the type ${described_class.name}`, function() {
+			expect(subject()).to.contain.string(described_class.name);
+		});
+	});
+}
+
 function assertEqualDemonstratesSameness(labeled_ids) {
 	describe('#equal', function() {
 		const diagnose = (lhs, rhs) => `(${lhs}).equal(${rhs})`;
@@ -143,6 +153,7 @@ function assertUuidVariantVersion(described_class, variant, version) {
 module.exports = {
 	assertAccessorBytes,
 	assertCompareDemonstratesTotalOrder,
+	assertDebuggable,
 	assertEqualDemonstratesSameness,
 	assertGenerateBasics,
 	assertUuidVariantVersion,

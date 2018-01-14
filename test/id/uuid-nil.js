@@ -3,6 +3,7 @@
 const { expect } = require('chai');
 const {
 	assertAccessorBytes,
+	assertDebuggable,
 	assertUuidVariantVersion,
 } = require('./shared');
 
@@ -11,6 +12,8 @@ const ByteArray = require('common/byte-array');
 const { UuidNil: described_class } = require('id/uuid-nil');
 
 describe(described_class.name, function() {
+	assertDebuggable(described_class);
+
 	describe('.generate', function() {
 		const subject = () => described_class.generate();
 

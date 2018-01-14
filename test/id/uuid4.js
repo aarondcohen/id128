@@ -4,6 +4,7 @@ const { expect } = require('chai');
 const {
 	assertAccessorBytes,
 	assertCompareDemonstratesTotalOrder,
+	assertDebuggable,
 	assertEqualDemonstratesSameness,
 	assertGenerateBasics,
 	assertUuidVariantVersion,
@@ -14,6 +15,7 @@ const ByteArray = require('common/byte-array');
 const { Uuid4: described_class } = require('id/uuid4');
 
 describe(described_class.name, function() {
+	assertDebuggable(described_class);
 	assertGenerateBasics(described_class);
 
 	describe('.MIN', function() {

@@ -21,6 +21,10 @@ class BaseId {
 		return this[_bytes];
 	}
 
+	get [Symbol.toStringTag]() {
+    return this.constructor.name;
+  }
+
 	// Comparators
 
 	compare(rhs) {

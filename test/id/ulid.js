@@ -4,6 +4,7 @@ const { expect } = require('chai');
 const {
 	assertAccessorBytes,
 	assertCompareDemonstratesTotalOrder,
+	assertDebuggable,
 	assertEqualDemonstratesSameness,
 	assertGenerateBasics,
 } = require('./shared');
@@ -13,8 +14,9 @@ const ByteArray = require('common/byte-array');
 const { Ulid: described_class } = require('id/ulid');;
 
 describe(described_class.name, function() {
-	assertGenerateBasics(described_class, [new Date(0)]);
+	assertDebuggable(described_class);
 
+	assertGenerateBasics(described_class, [new Date(0)]);
 	describe('.generate extended', function() {
 		const subject = (time) => described_class.generate(time);
 
@@ -109,7 +111,6 @@ describe(described_class.name, function() {
 	});
 
 	assertAccessorBytes(described_class);
-
 	describe('#time', function() {
 		const subject = (time) => described_class.generate(time).time;
 

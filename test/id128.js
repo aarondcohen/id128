@@ -4,6 +4,16 @@ const { expect } = require('chai');
 
 const Id128 = require('../');
 
+function assertDebuggable(id_name, generator) {
+	describe('when cast as a string', function() {
+		const subject = () => '' + generator();
+
+		it(`mentions the type ${id_name}`, function() {
+			expect(subject()).to.contain.string(id_name);
+		});
+	});
+}
+
 function assertValidId128(id_name) {
 	const factory = Id128[id_name];
 	const id_class = Id128.Id[id_name];
@@ -25,6 +35,8 @@ function assertValidId128(id_name) {
 			it('generates 128-bit id', function() {
 				expect(subject().bytes).to.have.lengthOf(16);
 			});
+
+			assertDebuggable(id_name, subject);
 		});
 
 		describe('.MIN', function() {
@@ -37,6 +49,8 @@ function assertValidId128(id_name) {
 			it('generates 128-bit id', function() {
 				expect(subject().bytes).to.have.lengthOf(16);
 			});
+
+			assertDebuggable(id_name, subject);
 		});
 
 		describe('.MAX', function() {
@@ -49,6 +63,8 @@ function assertValidId128(id_name) {
 			it('generates 128-bit id', function() {
 				expect(subject().bytes).to.have.lengthOf(16);
 			});
+
+			assertDebuggable(id_name, subject);
 		});
 
 		describe('canonical', function() {
@@ -73,6 +89,10 @@ function assertValidId128(id_name) {
 						.to.deep.equal(test_id);
 				});
 			});
+
+			describe('when decoded', function() {
+				assertDebuggable(id_name, () => factory.fromCanonical(id.toCanonical()));
+			});
 		});
 
 		describe('raw', function() {
@@ -96,6 +116,10 @@ function assertValidId128(id_name) {
 					expect(factory.fromRaw(factory.toRaw(test_id)), label)
 						.to.deep.equal(test_id);
 				});
+			});
+
+			describe('when decoded', function() {
+				assertDebuggable(id_name, () => factory.fromCanonical(id.toCanonical()));
 			});
 		});
 	});

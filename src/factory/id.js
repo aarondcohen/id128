@@ -1,10 +1,10 @@
 'use strict';
 
-const ID = Symbol('id');
-const CANONICAL_CODER = Symbol('canonical_coder');
-const MAX = Symbol('max');
-const MIN = Symbol('min');
-const RAW_CODER = Symbol('raw_coder');
+const _id = Symbol('id');
+const _canonical_coder = Symbol('canonical_coder');
+const _max = Symbol('max');
+const _min = Symbol('min');
+const _raw_coder = Symbol('raw_coder');
 
 class IdFactory {
 	constructor({
@@ -13,45 +13,46 @@ class IdFactory {
 		raw_coder,
 	} = {}) {
 		const factory = this;
-		this[ID] = class extends id {
+		this[_id] = class extends id {
 			static get [Symbol.species]() { return id; }
+			get [Symbol.toStringTag]() { return `${id.name} ${this.toRaw()}`; }
 			toCanonical() { return factory.toCanonical(this); }
 			toRaw() { return factory.toRaw(this); }
 		};
-		this[CANONICAL_CODER] = canonical_coder;
-		this[RAW_CODER] = raw_coder;
+		this[_canonical_coder] = canonical_coder;
+		this[_raw_coder] = raw_coder;
 	}
 
 	//Generators
 
 	generate() {
-		return this[ID].generate(...arguments);
+		return this[_id].generate(...arguments);
 	}
 
 	MIN() {
-		return this[MIN] = this[MIN] || this[ID].MIN();
+		return this[_min] = this[_min] || this[_id].MIN();
 	}
 
 	MAX() {
-		return this[MAX] = this[MAX] || this[ID].MAX();
+		return this[_max] = this[_max] || this[_id].MAX();
 	}
 
 	// Coders
 
 	fromCanonical(canonical) {
-		return  new this[ID](this[CANONICAL_CODER].decode(canonical));
+		return  new this[_id](this[_canonical_coder].decode(canonical));
 	}
 
 	fromRaw(raw) {
-		return  new this[ID](this[RAW_CODER].decode(raw));
+		return  new this[_id](this[_raw_coder].decode(raw));
 	}
 
 	toCanonical(id) {
-		return this[CANONICAL_CODER].encode(id.bytes);
+		return this[_canonical_coder].encode(id.bytes);
 	}
 
 	toRaw(id) {
-		return this[RAW_CODER].encode(id.bytes);
+		return this[_raw_coder].encode(id.bytes);
 	}
 
 	// Comparators
