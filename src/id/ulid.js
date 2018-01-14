@@ -3,7 +3,7 @@ const { BaseId } = require('./base');
 
 const BYTE_RADIX = 1 << 8;
 const TIME_BYTES = 6;
-const EPOCH_MS_MAX = BYTE_RADIX ** TIME_BYTES;
+const EPOCH_MS_MAX = Math.pow(BYTE_RADIX, TIME_BYTES);
 const DATE_MIN_ISO = new Date(0).toISOString();
 const DATE_MAX_ISO = new Date(EPOCH_MS_MAX - 1).toISOString();
 

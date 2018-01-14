@@ -2,7 +2,7 @@ const { InvalidDecodingError, InvalidEncodingError } = require('./error.js');
 
 const BYTE_TO_HEX = Array
 	.from({length: 256})
-	.map((val, key) => key.toString(16).padStart(2, '0').toUpperCase());
+	.map((val, key) => (0x100 + key).toString(16).substr(1).toUpperCase());
 
 const HEX_TO_BYTE = BYTE_TO_HEX.reduce(
 	(mapping, hex, idx) => {

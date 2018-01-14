@@ -104,7 +104,7 @@ describe(described_class.name, function() {
 		});
 
 		it('has the greatest allowed time', function() {
-			expect(subject().time).to.eql(new Date(2 ** 48 - 1));
+			expect(subject().time).to.eql(new Date(Math.pow(2, 48) - 1));
 		});
 	});
 
@@ -116,9 +116,9 @@ describe(described_class.name, function() {
 		it('returns the time given to generate', function() {
 			[
 				0,
-				Math.floor(2** 48 * Math.random()),
+				Math.floor(Math.pow(2, 48) * Math.random()),
 				Date.now(),
-				2 ** 48 - 1,
+				Math.pow(2, 48) - 1,
 			]
 				.map(ms => new Date(ms))
 				.forEach((time) => expect(subject(time)).to.eql(time));

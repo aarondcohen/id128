@@ -9,6 +9,9 @@
 		"benchmark": "matcha",
 		"test": "NODE_PATH='./src/' mocha"
 	},
+	"engines": {
+		"node": ">=v6.9.0"
+	},
 	"devDependencies": {
 		"chai": "*",
 		"ksuid": "*",
