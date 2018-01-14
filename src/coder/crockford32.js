@@ -96,7 +96,14 @@ class Crockford32Coder {
 			(bytes[15]),
 		];
 
-		return quintets.map(_quintetToChar).join('');
+		//Note: Massive performance losses occured when
+		// using the more legible Array.map and Array.join
+		let encoding = '';
+		for (let quintet of quintets) {
+			encoding += _quintetToChar(quintet);
+		}
+
+		return encoding;
 	}
 
 	isValidBytes(bytes) {
