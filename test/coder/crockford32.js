@@ -63,6 +63,8 @@ describe(describeNamespace(described_namespace, encoding_any), function() {
 				['L', '1'],
 				['o', '0'],
 				['O', '0'],
+				['u', 'V'],
+				['U', 'V'],
 			];
 
 			conversions.forEach(([character, replacement]) => {

@@ -2,17 +2,19 @@ const { InvalidDecodingError, InvalidEncodingError } = require('./error.js');
 
 const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 const MAX_QUINTET = 0b11111;
-const VALID_ENCODING = new RegExp('^[0-7][^\\WuU_]{25}$');
+const VALID_ENCODING = new RegExp('^[0-7][^\\W_]{25}$');
 
 const CHAR_TO_QUINTET = Array.from(ALPHABET).reduce(
 	(acc, chr, idx) => (acc[chr] = acc[chr.toLowerCase()] = idx, acc),
 	{
-		'I': '1',
-		'i': '1',
-		'L': '1',
-		'l': '1',
-		'O': '0',
-		'o': '0',
+		'I': ALPHABET.indexOf('1'),
+		'i': ALPHABET.indexOf('1'),
+		'L': ALPHABET.indexOf('1'),
+		'l': ALPHABET.indexOf('1'),
+		'O': ALPHABET.indexOf('0'),
+		'o': ALPHABET.indexOf('0'),
+		'U': ALPHABET.indexOf('V'),
+		'u': ALPHABET.indexOf('V'),
 	}
 );
 const QUINTET_TO_CHAR = Array.from(ALPHABET);
