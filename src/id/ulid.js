@@ -7,7 +7,14 @@ const EPOCH_MS_MAX = Math.pow(BYTE_RADIX, TIME_BYTES);
 const DATE_MIN_ISO = new Date(0).toISOString();
 const DATE_MAX_ISO = new Date(EPOCH_MS_MAX - 1).toISOString();
 
-const _setTime = (epoch_ms, bytes) => {
+const _coerceTime = (time = null) => (
+	Number.isInteger(time) ? new Date(time) :
+	time === null ? new Date() :
+		time
+);
+
+const _setTime = (time, bytes) => {
+	let epoch_ms = time.getTime();
 	for (let idx = TIME_BYTES - 1; idx > -1; --idx) {
 		let rem = epoch_ms % BYTE_RADIX;
 		epoch_ms = (epoch_ms - rem) / BYTE_RADIX;
@@ -31,19 +38,13 @@ class Ulid extends BaseId {
 
 	//Constructors
 
-	static generate(time = null) {
-		if (Number.isInteger(time)) {
-			time = new Date(time);
-		}
-		else if (time === null) {
-			time = new Date();
-		}
-
+	static generate(time) {
+		time = _coerceTime(time);
 		_validateTime(time);
 
 		let bytes = ByteArray.generateRandomFilled();
 
-		_setTime(time.getTime(), bytes);
+		_setTime(time, bytes);
 
 		return new this(bytes);
 	}

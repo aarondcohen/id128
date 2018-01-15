@@ -119,12 +119,13 @@ function assertValidId128(id_name) {
 			});
 
 			describe('when decoded', function() {
-				assertDebuggable(id_name, () => factory.fromCanonical(id.toCanonical()));
+				assertDebuggable(id_name, () => factory.fromRaw(id.toRaw()));
 			});
 		});
 	});
 }
 
 assertValidId128('Ulid');
+assertValidId128('UlidMonotonic');
 assertValidId128('Uuid4');
 assertValidId128('UuidNil');

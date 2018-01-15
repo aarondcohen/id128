@@ -1,5 +1,6 @@
 const {
 	Ulid: MyUlid,
+	UlidMonotonic: MyUlidMonotonic,
 	Uuid4: MyUuid4,
 	UuidNil: MyUuidNil,
 } = require('../');
@@ -19,6 +20,14 @@ suite('Competitors', function() {
 
 	bench('Id128.Ulid Canonical', function() {
 		MyUlid.generate().toCanonical();
+	});
+
+	bench('Id128.UlidMonotonic', function() {
+		MyUlidMonotonic.generate();
+	});
+
+	bench('Id128.UlidMonotonic Canonical', function() {
+		MyUlidMonotonic.generate().toCanonical();
 	});
 
 	bench('Id128.Uuid4', function() {
