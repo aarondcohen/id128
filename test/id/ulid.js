@@ -13,6 +13,9 @@ const ByteArray = require('common/byte-array');
 
 const { Ulid: described_class } = require('id/ulid');;
 
+const MAX_TIME = new Date(Math.pow(2, 48) - 1);
+const MIN_TIME = new Date(0);
+
 describe(described_class.name, function() {
 	assertDebuggable(described_class);
 
@@ -21,12 +24,10 @@ describe(described_class.name, function() {
 		const subject = (time) => described_class.generate(time);
 
 		it('accepts a Date', function() {
-			const time = new Date;
-
 			[
-				['start of epoch time', described_class.MIN().time],
+				['start of epoch time', MIN_TIME],
 				['current time', new Date],
-				['end of epoch time', described_class.MAX().time],
+				['end of epoch time', MAX_TIME],
 			].forEach(([label, value]) => {
 				expect(() => subject(value), label).not.to.throw();
 				expect(subject(value).time, label).to.eql(value);
@@ -35,9 +36,9 @@ describe(described_class.name, function() {
 
 		it('accepts milliseconds', function() {
 			[
-				['start of epoch time', described_class.MIN().time],
+				['start of epoch time', MIN_TIME],
 				['current time', new Date],
-				['end of epoch time', described_class.MAX().time],
+				['end of epoch time', MAX_TIME],
 			].forEach(([label, value]) => {
 				expect(() => subject(value.getTime()), label).not.to.throw();
 				expect(subject(value.getTime()).time, label).to.eql(value);
@@ -56,12 +57,12 @@ describe(described_class.name, function() {
 			});
 		});
 
-		it('rejects pre-epoch values', function() {
+		it('rejects pre/post-epoch values', function() {
 			[
-				['date prior to 1970', new Date(described_class.MIN().time.getTime() - 1)],
-				['ms before epoch', described_class.MIN().time.getTime() - 1],
-				['date after late 10889', new Date(described_class.MAX().time.getTime() + 1)],
-				['ms after 48-bit epoch', described_class.MAX().time.getTime() + 1],
+				['date prior to 1970', new Date(MIN_TIME.getTime() - 1)],
+				['ms before epoch', MIN_TIME.getTime() - 1],
+				['date after late 10889', new Date(MAX_TIME.getTime() + 1)],
+				['ms after 48-bit epoch', MAX_TIME.getTime() + 1],
 			].forEach(([label, value]) => {
 				expect(() => subject(value), label).to.throw(RangeError);
 			});
@@ -116,29 +117,27 @@ describe(described_class.name, function() {
 
 		it('returns the time given to generate', function() {
 			[
-				0,
-				Math.floor(Math.pow(2, 48) * Math.random()),
-				Date.now(),
-				Math.pow(2, 48) - 1,
-			]
-				.map(ms => new Date(ms))
-				.forEach((time) => expect(subject(time)).to.eql(time));
+				MIN_TIME,
+				new Date(Math.floor(MAX_TIME.getTime() * Math.random())),
+				new Date(),
+				MAX_TIME,
+			].forEach((time) => expect(subject(time)).to.eql(time));
 		});
 	});
 
 	assertCompareDemonstratesTotalOrder([
 		['the min id', described_class.MIN()],
-		['a min time id', described_class.generate(described_class.MIN().time)],
+		['a min time id', described_class.generate(MIN_TIME)],
 		['a recent id', described_class.generate(new Date())],
-		['a max time id', described_class.generate(described_class.MAX().time)],
+		['a max time id', described_class.generate(MAX_TIME)],
 		['the max id', described_class.MAX()],
 	]);
 
 	assertEqualDemonstratesSameness([
 		['the min id', described_class.MIN()],
-		['a min time id', described_class.generate(described_class.MIN().time)],
+		['a min time id', described_class.generate(MIN_TIME)],
 		['a recent id', described_class.generate(new Date())],
-		['a max time id', described_class.generate(described_class.MAX().time)],
+		['a max time id', described_class.generate(MAX_TIME)],
 		['the max id', described_class.MAX()],
 	]);
 });
