@@ -1,4 +1,4 @@
-const { InvalidDecodingError, InvalidEncodingError } = require('./error.js');
+const { InvalidDecodingError, InvalidEncodingError } = require('../common/error');
 
 const BYTE_TO_HEX = Array
 	.from({length: 256})

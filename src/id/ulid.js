@@ -1,5 +1,6 @@
 const ByteArray = require('../common/byte-array');
 const { BaseId } = require('./base');
+const { InvalidSeedError } = require('../common/error');
 
 const BYTE_RADIX = 1 << 8;
 const TIME_BYTES = 6;
@@ -24,13 +25,13 @@ const _setTime = (time, bytes) => {
 
 const _validateTime = (time) => {
 	if (! (time instanceof Date)) {
-		throw new TypeError('Time must be a Date');
+		throw new InvalidSeedError('Time must be a Date');
 	}
 
 	const epoch_ms = time.getTime();
 
 	if (epoch_ms < 0 || epoch_ms >= EPOCH_MS_MAX) {
-		throw new RangeError(`Time must be between ${DATE_MIN_ISO} and ${DATE_MAX_ISO}`);
+		throw new InvalidSeedError(`Time must be between ${DATE_MIN_ISO} and ${DATE_MAX_ISO}`);
 	}
 };
 

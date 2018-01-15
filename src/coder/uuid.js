@@ -1,7 +1,7 @@
 'use strict';
 
 const HexCoder = require('./hex');
-const { InvalidDecodingError } = require('./error');
+const { InvalidDecodingError } = require('../common/error');
 
 class UuidCoder {
 	decode(encoding) {

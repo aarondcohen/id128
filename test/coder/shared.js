@@ -6,7 +6,7 @@ const ByteArray = require('common/byte-array');
 const {
 	InvalidDecodingError,
 	InvalidEncodingError,
-} = require('coder/error');
+} = require('common/error');
 
 // Constants
 

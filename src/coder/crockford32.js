@@ -1,4 +1,4 @@
-const { InvalidDecodingError, InvalidEncodingError } = require('./error.js');
+const { InvalidDecodingError, InvalidEncodingError } = require('../common/error');
 
 const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 const MAX_QUINTET = 0b11111;

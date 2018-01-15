@@ -10,7 +10,7 @@ const {
 	makeString,
 } = require('./shared');
 
-const { InvalidDecodingError } = require('coder/error');
+const { InvalidDecodingError } = require('common/error');
 
 const described_namespace =  require('coder/crockford32');
 
