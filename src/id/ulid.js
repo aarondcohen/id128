@@ -60,10 +60,10 @@ class Ulid extends BaseId {
 	// Accessors
 
 	get time() {
-		const epoch_ms = this.bytes
-			.subarray(0, TIME_BYTES)
-			.reduce((acc, val) => (acc * BYTE_RADIX + val), 0);
-
+		let epoch_ms = 0;
+		for (let idx = 0; idx < TIME_BYTES; ++idx) {
+			epoch_ms = epoch_ms * BYTE_RADIX + this.bytes[idx];
+		}
 		return new Date(epoch_ms);
 	}
 }
