@@ -3,8 +3,9 @@ const { BaseId } = require('./base');
 const { InvalidSeedError } = require('../common/error');
 
 const BYTE_RADIX = 1 << 8;
-const TIME_BYTES = 6;
-const EPOCH_MS_MAX = Math.pow(BYTE_RADIX, TIME_BYTES);
+const RANDOM_OFFSET = 6;
+const TIME_OFFSET = 0;
+const EPOCH_MS_MAX = Math.pow(BYTE_RADIX, RANDOM_OFFSET - TIME_OFFSET);
 const DATE_MIN_ISO = new Date(0).toISOString();
 const DATE_MAX_ISO = new Date(EPOCH_MS_MAX - 1).toISOString();
 
@@ -16,7 +17,13 @@ const _coerceTime = (time = null) => (
 
 const _setTime = (time, bytes) => {
 	let epoch_ms = time.getTime();
-	for (let idx = TIME_BYTES - 1; idx > -1; --idx) {
+	for (
+		let
+			idx = RANDOM_OFFSET - 1,
+			end = TIME_OFFSET - 1;
+		idx > end;
+		--idx
+	) {
 		let rem = epoch_ms % BYTE_RADIX;
 		epoch_ms = (epoch_ms - rem) / BYTE_RADIX;
 		bytes[idx] = rem;
@@ -62,7 +69,7 @@ class Ulid extends BaseId {
 
 	get time() {
 		let epoch_ms = 0;
-		for (let idx = 0; idx < TIME_BYTES; ++idx) {
+		for (let idx = TIME_OFFSET; idx < RANDOM_OFFSET; ++idx) {
 			epoch_ms = epoch_ms * BYTE_RADIX + this.bytes[idx];
 		}
 		return new Date(epoch_ms);

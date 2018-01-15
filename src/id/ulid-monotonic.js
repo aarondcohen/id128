@@ -5,10 +5,19 @@ const { ClockSequenceOverflowError } = require('../common/error');
 let _previous_time;
 let _previous_id;
 
+const CLOCK_SEQUENCE_OFFSET = 6;
+const RANDOM_OFFSET = 8;
+
 const _incrementClockSequence = (id) => {
 	const bytes = id.bytes;
 
-	for (let idx = 8; idx > 5; --idx) {
+	for (
+		let
+			idx = RANDOM_OFFSET - 1,
+			end = CLOCK_SEQUENCE_OFFSET - 1;
+		idx > end;
+		--idx
+	) {
 		if (bytes[idx] === 0xFF) {
 			bytes[idx] = 0;
 		} else {
@@ -21,11 +30,11 @@ const _incrementClockSequence = (id) => {
 };
 
 const _reserveClockSequence = (id) => {
-	id.bytes[6] &= 0b01111111;
+	id.bytes[CLOCK_SEQUENCE_OFFSET] &= 0b01111111;
 };
 
 const _restoreClockSequence = (id) => {
-	id.bytes.set(_previous_id.bytes.subarray(0, 11));
+	id.bytes.set(_previous_id.bytes.subarray(0, RANDOM_OFFSET));
 };
 
 class UlidMonotonic extends Ulid {
