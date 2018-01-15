@@ -44,6 +44,10 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
+cuid@*:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/cuid/-/cuid-2.0.2.tgz#703ea1504f913c5c11b9a4f7bb0cf8357a9e1844"
+
 debug@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
@@ -223,6 +227,10 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+nanoid@*:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.0.1.tgz#58a8e0577d9db07ae4f231a3afa59af94e4fc439"
+
 object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
@@ -270,6 +278,10 @@ ulid@*:
 uuid@*:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
+
+uuidjs@*:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/uuidjs/-/uuidjs-4.0.3.tgz#4b4113a98e70507643a9a55a0493ff95b1d2538d"
 
 v8-argv@0.1.x:
   version "0.1.0"

@@ -14,10 +14,13 @@
 	},
 	"devDependencies": {
 		"chai": "*",
+		"cuid": "*",
 		"ksuid": "*",
 		"matcha": "*",
 		"mocha": "*",
+		"nanoid": "*",
 		"ulid": "*",
-		"uuid": "*"
+		"uuid": "*",
+		"uuidjs": "*"
 	}
 }

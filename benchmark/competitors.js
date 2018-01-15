@@ -3,9 +3,12 @@ const {
 	Uuid4: MyUuid4,
 	UuidNil: MyUuidNil,
 } = require('../');
+const Cuid = require('cuid');
 const Ksuid = require('ksuid');
+const Nanoid = require('nanoid');
 const Ulid = require('ulid');
 const Uuid = require('uuid');
+const UuidJs = require('uuidjs');
 
 suite('Competitors', function() {
   set('iterations', 100000);
@@ -15,7 +18,7 @@ suite('Competitors', function() {
 	});
 
 	bench('Id128.Ulid Canonical', function() {
-		MyUlid.toCanonical(MyUlid.generate());
+		MyUlid.generate().toCanonical();
 	});
 
 	bench('Id128.Uuid4', function() {
@@ -23,7 +26,7 @@ suite('Competitors', function() {
 	});
 
 	bench('Id128.Uuid4 Canonical', function() {
-		MyUuid4.toCanonical(MyUuid4.generate());
+		MyUuid4.generate().toCanonical();
 	});
 
 	bench('Id128.UuidNil', function() {
@@ -31,11 +34,24 @@ suite('Competitors', function() {
 	});
 
 	bench('Id128.UuidNil Canonical', function() {
-		MyUuidNil.toCanonical(MyUuidNil.generate());
+		MyUuidNil.generate().toCanonical();
+	});
+
+	bench('Cuid', function() {
+		Cuid();
 	});
 
 	bench('Ksuid', function() {
 		Ksuid.randomSync();
+	});
+
+	bench('Nanoid', function() {
+		Nanoid();
+	});
+
+	const HEX_ALPHABET = '0123456789ABCDEF';
+	bench('Nanoid like Uuid v4', function() {
+		Nanoid(32, HEX_ALPHABET);
 	});
 
 	bench('Ulid', function() {
@@ -44,5 +60,17 @@ suite('Competitors', function() {
 
 	bench('Uuid', function() {
 		Uuid();
+	});
+
+	bench('UuidJs', function() {
+		UuidJs.generate();
+	});
+
+	bench('UuidJs v4', function() {
+		UuidJs.genV4();
+	});
+
+	bench('UuidJs v4 Canonical', function() {
+		UuidJs.genV4().toString();
 	});
 });
