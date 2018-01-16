@@ -1,8 +1,9 @@
-const { InvalidDecodingError, InvalidEncodingError } = require('../common/error');
+'use strict';
+
+const { BaseCoder } = require('./base');
 
 const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 const MAX_QUINTET = 0b11111;
-const VALID_ENCODING = new RegExp('^[0-7][^\\W_]{25}$');
 
 const CHAR_TO_QUINTET = Array.from(ALPHABET).reduce(
 	(acc, chr, idx) => (acc[chr] = acc[chr.toLowerCase()] = idx, acc),
@@ -27,12 +28,15 @@ function _quintetToChar(quintet) {
 	return QUINTET_TO_CHAR[quintet & MAX_QUINTET];
 }
 
-class Crockford32Coder {
-	decode(encoding) {
-		if (! this.isValidEncoding(encoding)) {
-			throw new InvalidDecodingError('Requires a 26-character Crockford32 string');
-		}
+class Crockford32Coder extends BaseCoder {
+	constructor() {
+		super({
+			decoding_error_message: 'Requires a 26-character Crockford32 string',
+			valid_encoding_pattern: /^[0-7][^\W_]{25}$/,
+		});
+	}
 
+	_decode(encoding) {
 		const quintets = Array.from(encoding, _charToQuintet);
 		let bytes = new Uint8Array(16);
 
@@ -60,11 +64,7 @@ class Crockford32Coder {
 		return bytes;
 	}
 
-	encode(bytes) {
-		if (! this.isValidBytes(bytes)) {
-			throw new InvalidEncodingError('Requires a 16-byte Uint8Array');
-		}
-
+	_encode(bytes) {
 		//Note: unrolled for performance
 		let quintets = [
 			(bytes[0] >> 5),
@@ -106,18 +106,6 @@ class Crockford32Coder {
 		}
 
 		return encoding;
-	}
-
-	isValidBytes(bytes) {
-		return true
-			&& (bytes instanceof Uint8Array)
-			&& bytes.length === 16;
-	}
-
-	isValidEncoding(encoding) {
-		return true
-			&& (typeof encoding === 'string' || encoding instanceof String)
-			&& VALID_ENCODING.test(encoding);
 	}
 }
 
