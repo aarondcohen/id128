@@ -5,36 +5,38 @@ const {
 	InvalidEncodingError,
 } = require('../common/error');
 
-const _decoding_error_message = Symbol('decoding_error_message');
 const _valid_encoding_pattern = Symbol('valid_encoding_pattern');
 
 class BaseCoder {
 	constructor({
-		decoding_error_message,
 		valid_encoding_pattern,
 	} = {}) {
-		this[_decoding_error_message] = decoding_error_message;
 		this[_valid_encoding_pattern] = valid_encoding_pattern;
 	}
 
+
 	decode(encoding) {
 		if (this.isValidEncoding(encoding)) {
-			return this._decode(encoding);
+			return this.decodeTrusted(encoding);
 		}
 		else {
-			throw new InvalidDecodingError(this[_decoding_error_message]);
+			throw new InvalidDecodingError(`Encoding [${encoding}] does not satisfy ${this[_valid_encoding_pattern]}`);
 		}
 	}
 
+	decodeTrusted(encoding) { return ByteArray.generateRandomFilled() }
+
 	encode(bytes) {
 		if (this.isValidBytes(bytes)) {
-			return this._encode(bytes);
+			return this.encodeTrusted(bytes);
 		}
 		else {
 			throw new InvalidEncodingError('Requires a 16-byte Uint8Array');
 		}
 
 	}
+
+	encodeTrusted(bytes) { return '' }
 
 	isValidBytes(bytes) {
 		return true

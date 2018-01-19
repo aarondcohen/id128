@@ -14,12 +14,11 @@ const HEX_TO_BYTE = BYTE_TO_HEX.reduce(
 class UuidCoder extends BaseCoder {
 	constructor() {
 		super({
-			decoding_error_message: 'Requires a 32-character hex string with optional hyphens',
 			valid_encoding_pattern: /^[0-9A-Fa-f]{4}(?:-?[0-9A-Fa-f]{4}){7}$/,
 		});
 	}
 
-	_decode(encoding) {
+	decodeTrusted(encoding) {
 		const normalized_encoding = encoding.replace(/-/g, '').toUpperCase();
 		let bytes = new Uint8Array(16);
 
@@ -34,7 +33,7 @@ class UuidCoder extends BaseCoder {
 		return bytes;
 	}
 
-	_encode(bytes) {
+	encodeTrusted(bytes) {
 		return (
 			BYTE_TO_HEX[bytes[0]] + BYTE_TO_HEX[bytes[1]] +
 			BYTE_TO_HEX[bytes[2]] + BYTE_TO_HEX[bytes[3]] +

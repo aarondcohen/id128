@@ -14,12 +14,11 @@ const HEX_TO_BYTE = BYTE_TO_HEX.reduce(
 class HexCoder extends BaseCoder {
 	constructor() {
 		super({
-			decoding_error_message: 'Requires a 32-character hex string',
 			valid_encoding_pattern: /^[0-9A-Fa-f]{32}$/,
 		});
 	}
 
-	_decode(encoding) {
+	decodeTrusted(encoding) {
 		const normalized_encoding = encoding.toUpperCase();
 		let bytes = new Uint8Array(16);
 
@@ -34,7 +33,7 @@ class HexCoder extends BaseCoder {
 		return bytes;
 	}
 
-	_encode(bytes) {
+	encodeTrusted(bytes) {
 		let encoding = '';
 		for (let byt of bytes) { encoding += BYTE_TO_HEX[byt] };
 		return encoding;

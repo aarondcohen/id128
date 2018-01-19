@@ -31,12 +31,11 @@ function _quintetToChar(quintet) {
 class Crockford32Coder extends BaseCoder {
 	constructor() {
 		super({
-			decoding_error_message: 'Requires a 26-character Crockford32 string',
 			valid_encoding_pattern: /^[0-7][^\W_]{25}$/,
 		});
 	}
 
-	_decode(encoding) {
+	decodeTrusted(encoding) {
 		const quintets = Array.from(encoding, _charToQuintet);
 		let bytes = new Uint8Array(16);
 
@@ -64,7 +63,7 @@ class Crockford32Coder extends BaseCoder {
 		return bytes;
 	}
 
-	_encode(bytes) {
+	encodeTrusted(bytes) {
 		//Note: unrolled for performance
 		let quintets = [
 			(bytes[0] >> 5),

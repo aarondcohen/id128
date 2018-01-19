@@ -51,8 +51,8 @@ function assertDecode({
 	encoding_max,
 	encoding_min,
 } = {}) {
-	describe('.decode', function() {
-		const subject = described_namespace.decode.bind(described_namespace);
+	describe('.decodeTrusted', function() {
+		const subject = described_namespace.decodeTrusted.bind(described_namespace);
 
 		it(`decodes ${encoding_min} to all 0-bits`, function() {
 			expect(subject(encoding_min)).to.deep.equal(BYTES.MIN);
@@ -89,7 +89,10 @@ function assertEncode({
 
 			expect(subject.bind(null, BYTES.ANY)).not.to.throw();
 		});
+	});
 
+	describe('.encodeTrusted', function() {
+		const subject = described_namespace.encodeTrusted.bind(described_namespace);
 		it(`encodes all 0-bits to ${encoding_min}`, function() {
 			expect(subject(BYTES.MIN)).to.equal(encoding_min);
 		});
