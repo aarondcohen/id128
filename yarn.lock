@@ -3,8 +3,8 @@
 
 
 assertion-error@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.0.2.tgz#13ca515d86206da0bac66e834dd397d87581094c"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.1.0.tgz#e60b6b0e8f301bd97e5375215bda406c85118c0b"
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -274,6 +274,10 @@ type-detect@^4.0.0:
 ulid@*:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ulid/-/ulid-2.3.0.tgz#93063522771a9774121a84d126ecd3eb9804071f"
+
+uuid4@*:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/uuid4/-/uuid4-1.0.0.tgz#813aaeaf11ea2f68909c5ad57d894f83202d6720"
 
 uuid@*:
   version "3.1.0"

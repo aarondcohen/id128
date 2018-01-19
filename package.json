@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"main": "index.js",
 	"scripts": {
-		"benchmark": "matcha",
+		"benchmark": "NODE_PATH='./src/' matcha",
 		"test": "NODE_PATH='./src/' mocha"
 	},
 	"engines": {
@@ -21,6 +21,7 @@
 		"nanoid": "*",
 		"ulid": "*",
 		"uuid": "*",
+		"uuid4": "*",
 		"uuidjs": "*"
 	}
 }
