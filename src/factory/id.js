@@ -16,8 +16,8 @@ class IdFactory {
 		this[_id] = class extends id {
 			static get [Symbol.species]() { return id; }
 			get [Symbol.toStringTag]() { return `${id.name} ${this.toRaw()}`; }
-			toCanonical() { return factory.toCanonical(this); }
-			toRaw() { return factory.toRaw(this); }
+			toCanonical() { return canonical_coder.encodeTrusted(this.bytes); }
+			toRaw() { return raw_coder.encodeTrusted(this.bytes); }
 		};
 		this[_canonical_coder] = canonical_coder;
 		this[_raw_coder] = raw_coder;
@@ -43,8 +43,16 @@ class IdFactory {
 		return  new this[_id](this[_canonical_coder].decode(canonical));
 	}
 
+	fromCanonicalTrusted(canonical) {
+		return  new this[_id](this[_canonical_coder].decodeTrusted(canonical));
+	}
+
 	fromRaw(raw) {
 		return  new this[_id](this[_raw_coder].decode(raw));
+	}
+
+	fromRawTrusted(raw) {
+		return  new this[_id](this[_raw_coder].decodeTrusted(raw));
 	}
 
 	toCanonical(id) {
