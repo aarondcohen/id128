@@ -1,6 +1,6 @@
 const ByteArray = require('../common/byte-array');
 const { Ulid } = require('./ulid');
-const { ClockSequenceOverflowError } = require('../common/error');
+const { ClockSequenceOverflow } = require('../common/exception');
 
 let _previous_time;
 let _previous_id;
@@ -26,7 +26,7 @@ const _incrementClockSequence = (id) => {
 		}
 	}
 
-	throw new ClockSequenceOverflowError;
+	throw new ClockSequenceOverflow;
 };
 
 const _reserveClockSequence = (id) => {

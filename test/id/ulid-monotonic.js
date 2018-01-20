@@ -10,7 +10,7 @@ const {
 } = require('./shared');
 
 const ByteArray = require('common/byte-array');
-const { InvalidSeedError } = require('common/error');
+const { InvalidSeed } = require('common/exception');
 
 const { UlidMonotonic: described_class } = require('id/ulid-monotonic');
 
@@ -68,7 +68,7 @@ describe(described_class.name, function() {
 				['date after late 10889', new Date(MAX_TIME.getTime() + 1)],
 				['ms after 48-bit epoch', MAX_TIME.getTime() + 1],
 			].forEach(([label, value]) => {
-				expect(() => subject(value), label).to.throw(InvalidSeedError);
+				expect(() => subject(value), label).to.throw(InvalidSeed);
 			});
 		});
 
@@ -77,7 +77,7 @@ describe(described_class.name, function() {
 				['false', false],
 				['empty string', ''],
 			].forEach(([label, value]) => {
-				expect(() => subject(value), label).to.throw(InvalidSeedError);
+				expect(() => subject(value), label).to.throw(InvalidSeed);
 			});
 		});
 
@@ -86,7 +86,7 @@ describe(described_class.name, function() {
 				['date string', '2018-01-10'],
 				['duck type', { getTime: (() => {}) }],
 			].forEach(([label, value]) => {
-				expect(() => subject(value), label).to.throw(InvalidSeedError);
+				expect(() => subject(value), label).to.throw(InvalidSeed);
 			});
 		});
 	});

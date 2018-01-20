@@ -1,9 +1,9 @@
 'use strict';
 
 const {
-	InvalidDecodingError,
-	InvalidEncodingError,
-} = require('../common/error');
+	InvalidEncoding,
+	InvalidBytes,
+} = require('../common/exception');
 
 const _valid_encoding_pattern = Symbol('valid_encoding_pattern');
 
@@ -14,13 +14,12 @@ class BaseCoder {
 		this[_valid_encoding_pattern] = valid_encoding_pattern;
 	}
 
-
 	decode(encoding) {
 		if (this.isValidEncoding(encoding)) {
 			return this.decodeTrusted(encoding);
 		}
 		else {
-			throw new InvalidDecodingError(`Encoding [${encoding}] does not satisfy ${this[_valid_encoding_pattern]}`);
+			throw new InvalidEncoding(`Encoding [${encoding}] does not satisfy ${this[_valid_encoding_pattern]}`);
 		}
 	}
 
@@ -31,7 +30,7 @@ class BaseCoder {
 			return this.encodeTrusted(bytes);
 		}
 		else {
-			throw new InvalidEncodingError('Requires a 16-byte Uint8Array');
+			throw new InvalidBytes('Requires a 16-byte Uint8Array');
 		}
 
 	}

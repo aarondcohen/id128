@@ -8,6 +8,7 @@ const HexCoder = require('./src/coder/hex');
 const UuidCoder = require('./src/coder/uuid');
 
 const { IdFactory } = require('./src/factory/id');
+const Exception = require('./src/common/exception');
 
 module.exports = {
 	Ulid: new IdFactory({
@@ -35,6 +36,7 @@ module.exports = {
 		Hex: HexCoder,
 		Uuid: UuidCoder,
 	},
+	Exception,
 	Id: {
 		Ulid,
 		UlidMonotonic,

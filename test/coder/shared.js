@@ -4,9 +4,9 @@ const { expect } = require('chai');
 
 const ByteArray = require('common/byte-array');
 const {
-	InvalidDecodingError,
-	InvalidEncodingError,
-} = require('common/error');
+	InvalidBytes,
+	InvalidEncoding,
+} = require('common/exception');
 
 // Constants
 
@@ -85,7 +85,7 @@ function assertEncode({
 				subject.bind(null, makeBytes(15)),
 				subject.bind(null, makeBytes(17)),
 			].forEach((expectation) => expect(subject)
-				.to.throw(InvalidEncodingError, 'Requires a 16-byte Uint8Array'));
+				.to.throw(InvalidBytes, 'Requires a 16-byte Uint8Array'));
 
 			expect(subject.bind(null, BYTES.ANY)).not.to.throw();
 		});

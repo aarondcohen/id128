@@ -10,7 +10,7 @@ const {
 	makeString,
 } = require('./shared');
 
-const { InvalidDecodingError } = require('common/error');
+const { InvalidEncoding } = require('common/exception');
 
 const described_namespace = require('coder/hex');
 
@@ -36,7 +36,7 @@ describe(describeNamespace(described_namespace, encoding_any), function() {
 				subject.bind(null, encoding_any.slice(0, -1)),
 				subject.bind(null, encoding_any + makeString(1, ALPHABET.HEX)),
 				subject.bind(null, makeString(31, ALPHABET.ASCII) + '\0'),
-			].forEach(expectation => expect(subject).to.throw(InvalidDecodingError));
+			].forEach(expectation => expect(subject).to.throw(InvalidEncoding));
 
 			expect(subject.bind(null, encoding_any)).not.to.throw();
 		});
