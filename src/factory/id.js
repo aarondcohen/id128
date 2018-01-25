@@ -2,8 +2,6 @@
 
 const _id = Symbol('id');
 const _canonical_coder = Symbol('canonical_coder');
-const _max = Symbol('max');
-const _min = Symbol('min');
 const _raw_coder = Symbol('raw_coder');
 
 class IdFactory {
@@ -30,29 +28,29 @@ class IdFactory {
 	}
 
 	MIN() {
-		return this[_min] = this[_min] || this[_id].MIN();
+		return this[_id].MIN();
 	}
 
 	MAX() {
-		return this[_max] = this[_max] || this[_id].MAX();
+		return this[_id].MAX();
 	}
 
 	// Coders
 
 	fromCanonical(canonical) {
-		return  new this[_id](this[_canonical_coder].decode(canonical));
+		return new this[_id](this[_canonical_coder].decode(canonical));
 	}
 
 	fromCanonicalTrusted(canonical) {
-		return  new this[_id](this[_canonical_coder].decodeTrusted(canonical));
+		return new this[_id](this[_canonical_coder].decodeTrusted(canonical));
 	}
 
 	fromRaw(raw) {
-		return  new this[_id](this[_raw_coder].decode(raw));
+		return new this[_id](this[_raw_coder].decode(raw));
 	}
 
 	fromRawTrusted(raw) {
-		return  new this[_id](this[_raw_coder].decodeTrusted(raw));
+		return new this[_id](this[_raw_coder].decodeTrusted(raw));
 	}
 
 	toCanonical(id) {

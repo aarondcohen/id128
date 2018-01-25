@@ -14,6 +14,8 @@ const Id128 = require('../');
 	const raw = id.toRaw();
 
 	bench('generate', () => id_type.generate());
+	bench('MIN', () => id_type.MIN());
+	bench('MAX', () => id_type.MAX());
 	bench('fromCanonical', () => id_type.fromCanonical(canonical));
 	bench('fromCanonicalTrusted', () => id_type.fromCanonicalTrusted(canonical));
 	bench('fromRaw', () => id_type.fromRaw(raw));

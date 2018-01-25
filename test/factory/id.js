@@ -73,8 +73,8 @@ describe(described_class.name, function() {
 			expect(subject()).to.be.an.instanceof(id_class);
 		});
 
-		it('always returns the same object', function() {
-			expect(subject()).to.equal(subject());
+		it('always returns a different object', function() {
+			expect(subject()).not.to.equal(subject());
 		});
 
 		assertInjectsInstanceMethods(subject);
@@ -87,8 +87,8 @@ describe(described_class.name, function() {
 			expect(subject()).to.be.an.instanceof(id_class);
 		});
 
-		it('always returns the same object', function() {
-			expect(subject()).to.equal(subject());
+		it('always returns a different object', function() {
+			expect(subject()).not.to.equal(subject());
 		});
 
 		assertInjectsInstanceMethods(subject);
