@@ -276,6 +276,75 @@ Ultimately, this library strives to be:
 - maintainable: heavily tested isoldated code with a consistent interface
 - extensible: modular design to easily add new ids and new encodings
 
+# Benchmarks
+```
+                  Ulid
+   1,331,198 op/s » generate
+   6,702,244 op/s » MIN
+  11,503,788 op/s » MAX
+   1,280,056 op/s » fromCanonical
+   1,587,584 op/s » fromCanonicalTrusted
+   1,190,579 op/s » fromRaw
+   1,513,672 op/s » fromRawTrusted
+   2,653,967 op/s » toCanonical
+   4,590,364 op/s » toRaw
+
+                  UlidMonotonic
+     753,737 op/s » generate
+   6,253,985 op/s » MIN
+   6,090,588 op/s » MAX
+   1,277,067 op/s » fromCanonical
+   1,195,515 op/s » fromCanonicalTrusted
+   1,105,092 op/s » fromRaw
+   1,344,874 op/s » fromRawTrusted
+   2,634,811 op/s » toCanonical
+   4,557,650 op/s » toRaw
+
+                  Uuid4
+   2,094,511 op/s » generate
+   8,094,324 op/s » MIN
+   8,215,459 op/s » MAX
+   1,017,922 op/s » fromCanonical
+   1,231,544 op/s » fromCanonicalTrusted
+   1,050,289 op/s » fromRaw
+   1,280,291 op/s » fromRawTrusted
+   4,679,154 op/s » toCanonical
+   3,374,717 op/s » toRaw
+
+                  UuidNil
+   7,536,007 op/s » generate
+   7,670,932 op/s » MIN
+   7,533,499 op/s » MAX
+   1,046,487 op/s » fromCanonical
+   1,109,529 op/s » fromCanonicalTrusted
+   1,196,799 op/s » fromRaw
+   1,412,511 op/s » fromRawTrusted
+   4,665,090 op/s » toCanonical
+   4,502,375 op/s » toRaw
+
+                  Competitors
+   1,403,784 op/s » Id128.Ulid
+     889,726 op/s » Id128.Ulid Canonical
+     784,403 op/s » Id128.UlidMonotonic
+     574,771 op/s » Id128.UlidMonotonic Canonical
+   2,081,764 op/s » Id128.Uuid4
+   1,423,435 op/s » Id128.Uuid4 Canonical
+   7,721,350 op/s » Id128.UuidNil
+   2,798,246 op/s » Id128.UuidNil Canonical
+     764,560 op/s » Cuid
+     106,184 op/s » Ksuid
+     341,822 op/s » Nanoid
+     318,279 op/s » Nanoid like Uuid v4
+      28,197 op/s » Ulid
+   1,828,431 op/s » Ulid Monotonic
+     401,421 op/s » Uuid
+   1,613,896 op/s » UuidRandom
+     258,176 op/s » Uuid4
+      80,850 op/s » UuidJs
+      49,429 op/s » UuidJs v4
+      49,995 op/s » UuidJs v4 Canonical
+```
+
 # Acknowledgments
 
 Much of this library would not exist without the great work and documentation of
