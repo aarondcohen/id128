@@ -10,7 +10,10 @@ const {
 } = require('./shared');
 
 const ByteArray = require('common/byte-array');
-const { InvalidSeed } = require('common/exception');
+const {
+	ClockSequenceOverflow,
+	InvalidSeed,
+} = require('common/exception');
 
 const { UlidMonotonic: described_class } = require('id/ulid-monotonic');
 
@@ -88,6 +91,20 @@ describe(described_class.name, function() {
 			].forEach(([label, value]) => {
 				expect(() => subject(value), label).to.throw(InvalidSeed);
 			});
+		});
+
+		it('throws when the clock sequence overflows', function() {
+			const overflow = 0x10001;
+			let sequence = 0;
+
+			subject(Date.now() + 24 * 60 * 60 * 1000);
+			expect(() => {
+				for (; sequence <= overflow; ++sequence) {
+					subject();
+				}
+			}).to.throw(ClockSequenceOverflow);
+			expect(sequence).to.be.above(overflow >> 1);
+			expect(sequence).to.be.below(overflow);
 		});
 	});
 

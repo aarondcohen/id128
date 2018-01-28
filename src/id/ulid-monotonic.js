@@ -2,11 +2,11 @@ const ByteArray = require('../common/byte-array');
 const { Ulid } = require('./ulid');
 const { ClockSequenceOverflow } = require('../common/exception');
 
-let _previous_time;
-let _previous_id;
-
 const CLOCK_SEQUENCE_OFFSET = 6;
 const RANDOM_OFFSET = 8;
+
+let _previous_id;
+let _previous_time;
 
 const _incrementClockSequence = (id) => {
 	const bytes = id.bytes;
@@ -26,7 +26,7 @@ const _incrementClockSequence = (id) => {
 		}
 	}
 
-	throw new ClockSequenceOverflow;
+	throw new ClockSequenceOverflow('Exhausted clock sequence');
 };
 
 const _reserveClockSequence = (id) => {
@@ -43,6 +43,7 @@ class UlidMonotonic extends Ulid {
 
 	static generate(time) {
 		const id = super.generate(time);
+		time = id.time;
 
 		if (time <= _previous_time) {
 			_restoreClockSequence(id);
@@ -57,7 +58,7 @@ class UlidMonotonic extends Ulid {
 	}
 
 	static resetClockSequence() {
-		_previous_time = -1;
+		_previous_time = new Date(-1);
 		_previous_id = this.MIN();
 	}
 }
