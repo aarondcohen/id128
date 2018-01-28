@@ -5,6 +5,14 @@
 	"author": "Aaron Cohen <aarondcohen@gmail.com>",
 	"license": "MIT",
 	"main": "index.js",
+	"homepage": "https://github.com/aarondcohen/id128#id128",
+	"respository": {
+		"type": "git",
+		"url": "git@github.com:aarondcohen/id128.git"
+	},
+	"bugs": {
+		"url": "https://github.com/aarondcohen/id128/issues"
+	},
 	"scripts": {
 		"benchmark": "NODE_PATH='./src/' matcha",
 		"test": "NODE_PATH='./src/' mocha"

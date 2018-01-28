@@ -276,7 +276,21 @@ Ultimately, this library strives to be:
 - maintainable: heavily tested isoldated code with a consistent interface
 - extensible: modular design to easily add new ids and new encodings
 
+# Tests
+
+To run the tests:
+```bash
+yarn test test/*
+```
+
 # Benchmarks
+
+To run the benchmarks:
+```bash
+yarn install
+yarn benchmark benchmark/*
+```
+
 ```
                   Ulid
    1,331,198 op/s » generate
@@ -353,3 +367,11 @@ other engineers.  In particular:
 - [ksuid](https://github.com/segmentio/ksuid): an in-depth exploration of the guid nuances
 - [ulid](https://github.com/ulid/javascript): an elegant solution to a persistent problem
 - [uuid-random](https://github.com/jchook/uuid-random): allocating pages of randomness is by far the biggest performance factor
+
+# Contributing
+
+Feel free to make a branch and send a pull request through [github](https://github.com/aarondcohen/id128)
+
+# Issues
+
+Please report any issues or bugs through [github](https://github.com/aarondcohen/id128/issues)
