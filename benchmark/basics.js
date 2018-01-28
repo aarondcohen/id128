@@ -6,7 +6,7 @@ const Id128 = require('../');
 	'Uuid4',
 	'UuidNil',
 ].forEach((id_type_name) => suite(id_type_name, function() {
-  set('iterations', 100000);
+  set('iterations', 1000000);
 
 	const id_type = Id128[id_type_name];
 	const id = id_type.generate();
