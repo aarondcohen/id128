@@ -69,6 +69,11 @@ suite('Competitors', function() {
 		Ulid.ulid();
 	});
 
+	const ulidMonotonic = Ulid.monotonicFactory();
+	bench('Ulid Monotonic', function() {
+		ulidMonotonic();
+	});
+
 	bench('Uuid', function() {
 		Uuid();
 	});
