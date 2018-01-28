@@ -2,12 +2,21 @@
 
 const { BaseCoder } = require('./base');
 
-const BYTE_TO_HEX = Array
-	.from({length: 256})
-	.map((val, key) => (0x100 + key).toString(16).substr(1).toUpperCase());
+const ALPHABET = '0123456789ABCDEF';
 
-const HEX_TO_BYTE = BYTE_TO_HEX.reduce(
-	(mapping, hex, idx) => Object.assign(mapping, { [hex]: idx }),
+const BYTE_TO_HEX = Array
+	.from({ length: ALPHABET.length * ALPHABET.length })
+	.map((_, key) => (
+		''
+		+ ALPHABET.charAt(key / ALPHABET.length)
+		+ ALPHABET.charAt(key % ALPHABET.length)
+	));
+
+const HEX_TO_BYTE = Array.from(ALPHABET).reduce(
+	(mapping, hex, idx) => Object.assign(mapping, {
+		[hex.toUpperCase()]: idx,
+		[hex.toLowerCase()]: idx,
+	}),
 	Object.create(null)
 );
 
@@ -19,34 +28,39 @@ class UuidCoder extends BaseCoder {
 	}
 
 	decodeTrusted(encoding) {
-		const normalized_encoding = encoding.replace(/-/g, '').toUpperCase();
 		let bytes = new Uint8Array(16);
 
-		for (
-			let dst=0, src=0, len=bytes.length;
-			dst < len;
-			dst += 1, src += 2
-		) {
-			bytes[dst] = HEX_TO_BYTE[normalized_encoding.substr(src, 2)];
+		let dst = 0;
+		let hi_hex = true;
+		for (let hex of encoding) {
+			if(hex === '-') {
+				continue
+			} else if (hi_hex) {
+				bytes[dst] = HEX_TO_BYTE[hex] << 4;
+			} else {
+				bytes[dst++] |= HEX_TO_BYTE[hex];
+			}
+			hi_hex = !hi_hex;
 		}
 
 		return bytes;
 	}
 
 	encodeTrusted(bytes) {
+		let idx=0;
 		return (
-			BYTE_TO_HEX[bytes[0]] + BYTE_TO_HEX[bytes[1]] +
-			BYTE_TO_HEX[bytes[2]] + BYTE_TO_HEX[bytes[3]] +
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
 			'-' +
-			BYTE_TO_HEX[bytes[4]] + BYTE_TO_HEX[bytes[5]] +
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
 			'-' +
-			BYTE_TO_HEX[bytes[6]] + BYTE_TO_HEX[bytes[7]] +
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
 			'-' +
-			BYTE_TO_HEX[bytes[8]] + BYTE_TO_HEX[bytes[9]] +
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
 			'-' +
-			BYTE_TO_HEX[bytes[10]] + BYTE_TO_HEX[bytes[11]] +
-			BYTE_TO_HEX[bytes[12]] + BYTE_TO_HEX[bytes[13]] +
-			BYTE_TO_HEX[bytes[14]] + BYTE_TO_HEX[bytes[15]]
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
+			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]]
 		);
 	}
 }

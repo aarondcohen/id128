@@ -36,8 +36,12 @@ class Crockford32Coder extends BaseCoder {
 	}
 
 	decodeTrusted(encoding) {
-		const quintets = Array.from(encoding, _charToQuintet);
-		let bytes = new Uint8Array(16);
+		const bytes = new Uint8Array(16);
+		const quintets = [];
+
+		for (let char of encoding) {
+			quintets.push(_charToQuintet(char));
+		}
 
 		//Note: unrolled for performance
 		bytes[0] = quintets[0] << 5 | quintets[1];
