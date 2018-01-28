@@ -164,14 +164,13 @@ Format `ttttttrrrrrrrrrr` where:
 import { UlidMonotonic } from 'id128';
 ```
 
-UlidMonotonic is inspired by the [specification](https://github.com/ulid/spec#monotonicity),
-however has some key differences:
+UlidMonotonic is inspired by the [specification](https://github.com/ulid/spec#monotonicity):
 - collision resistant: 15-bits of random seeded clock sequence plus 64-bits of randomness
 - total ordered: prefixed with millisecond precision timestamp plus 15-bit clock sequence
 - database friendly: fits within a uuid and generally appends to the index
 - human friendly: canonically encodes as a case-insensitive Crockford 32 number
 
-It is useful when you need a server unique id.
+It is useful when you need to guarantee a process unique id.
 
 ## Additional Properties
 
@@ -205,7 +204,7 @@ timestamp is generated, the clock sequence is seeded with random bits and the
 left-most clock sequence bit is set to 0, reserving 2^15 clock ticks.  Whenever
 a time from the past (now is so ephemeral) seeds the generator, the previous id's
 time and clock sequence is used instead, incremented by 1.  This guarantees strict
-local monotonicity and preserves lexical ordering.
+local monotonicity and preserves lexical ordering and general randomness.
 
 Given UlidMonotonic currently generates approximately 700 ids per millisecond,
 the clock sequence should never overflow.  This also means the left most bit of
