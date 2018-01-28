@@ -21,6 +21,7 @@
 		"nanoid": "*",
 		"ulid": "*",
 		"uuid": "*",
+		"uuid-random": "*",
 		"uuid4": "*",
 		"uuidjs": "*"
 	}

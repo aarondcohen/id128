@@ -9,6 +9,7 @@ const Ksuid = require('ksuid');
 const Nanoid = require('nanoid');
 const Ulid = require('ulid');
 const Uuid = require('uuid');
+const UuidRandom = require('uuid-random');
 const Uuid4 = require('uuid4');
 const UuidJs = require('uuidjs');
 
@@ -70,6 +71,10 @@ suite('Competitors', function() {
 
 	bench('Uuid', function() {
 		Uuid();
+	});
+
+	bench('UuidRandom', function() {
+		UuidRandom();
 	});
 
 	bench('Uuid4', function() {

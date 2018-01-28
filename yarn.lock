@@ -275,6 +275,10 @@ ulid@*:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ulid/-/ulid-2.3.0.tgz#93063522771a9774121a84d126ecd3eb9804071f"
 
+uuid-random@*:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/uuid-random/-/uuid-random-1.0.6.tgz#e722a9f4834094405c20f3b4f97c3a5a9562e32f"
+
 uuid4@*:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/uuid4/-/uuid4-1.0.0.tgz#813aaeaf11ea2f68909c5ad57d894f83202d6720"
