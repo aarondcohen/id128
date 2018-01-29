@@ -9,18 +9,18 @@ Generate 128-bit unique identifiers for various specifications.  In particular:
 # Common Usage
 
 ```es6
-import {
+const {
 	Ulid,
 	UlidMonotonic,
-	Uuid4
+	Uuid4,
 	UuidNil,
-} from 'id128';
+} = require('id128');
 
 // Id factories
 [
 	Ulid,
 	UlidMonotonic,
-	Uuid4
+	Uuid4,
 	UuidNil,
 ].forEach((IdType) => {
 	// Generate a new id
@@ -33,9 +33,9 @@ import {
 	const max = IdType.MAX();
 
 	// Compare ids
-	console.log(id.equals(id));
-	console.log(! id.equals(min));
-	console.log(! id.equals(max));
+	console.log(id.equal(id));
+	console.log(! id.equal(min));
+	console.log(! id.equal(max));
 	console.log(id.compare(min) === 1);
 	console.log(id.compare(id) === 0);
 	console.log(id.compare(max) === -1);
