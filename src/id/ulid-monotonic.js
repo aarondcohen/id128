@@ -43,14 +43,14 @@ class UlidMonotonic extends Ulid {
 
 	static generate(time) {
 		const id = super.generate(time);
-		time = id.time;
+		const generated_time = id.time.getTime();
 
-		if (time <= _previous_time) {
+		if (generated_time <= _previous_time) {
 			_restoreClockSequence(id);
 			_incrementClockSequence(id);
 		} else {
 			_reserveClockSequence(id);
-			_previous_time = time;
+			_previous_time = generated_time;
 		}
 		_previous_id = id;
 
@@ -58,7 +58,7 @@ class UlidMonotonic extends Ulid {
 	}
 
 	static resetClockSequence() {
-		_previous_time = new Date(-1);
+		_previous_time = -1;
 		_previous_id = this.MIN();
 	}
 }

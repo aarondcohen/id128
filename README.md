@@ -206,7 +206,7 @@ a time from the past (now is so ephemeral) seeds the generator, the previous id'
 time and clock sequence is used instead, incremented by 1.  This guarantees strict
 local monotonicity and preserves lexical ordering and general randomness.
 
-Given UlidMonotonic currently generates approximately 700 ids per millisecond,
+Given UlidMonotonic currently generates approximately 850 ids per millisecond,
 the clock sequence should never overflow.  This also means the left most bit of
 the clock sequence will rarely be set to 1.  However, in the unlikely event of
 an overflow, id generation should be aborted.
@@ -292,70 +292,70 @@ yarn benchmark benchmark/*
 
 ```
                   Ulid
-   1,331,198 op/s » generate
-   6,702,244 op/s » MIN
-  11,503,788 op/s » MAX
-   1,280,056 op/s » fromCanonical
-   1,587,584 op/s » fromCanonicalTrusted
-   1,190,579 op/s » fromRaw
-   1,513,672 op/s » fromRawTrusted
-   2,653,967 op/s » toCanonical
-   4,590,364 op/s » toRaw
+   1,318,776 op/s » generate
+   6,773,280 op/s » MIN
+  11,357,849 op/s » MAX
+   1,309,111 op/s » fromCanonical
+   1,546,867 op/s » fromCanonicalTrusted
+   1,147,472 op/s » fromRaw
+   1,411,664 op/s » fromRawTrusted
+   2,603,936 op/s » toCanonical
+   4,549,521 op/s » toRaw
 
                   UlidMonotonic
-     753,737 op/s » generate
-   6,253,985 op/s » MIN
-   6,090,588 op/s » MAX
-   1,277,067 op/s » fromCanonical
-   1,195,515 op/s » fromCanonicalTrusted
-   1,105,092 op/s » fromRaw
-   1,344,874 op/s » fromRawTrusted
-   2,634,811 op/s » toCanonical
-   4,557,650 op/s » toRaw
+     856,812 op/s » generate
+   6,233,701 op/s » MIN
+   6,251,137 op/s » MAX
+   1,187,556 op/s » fromCanonical
+   1,364,965 op/s » fromCanonicalTrusted
+   1,068,532 op/s » fromRaw
+   1,257,115 op/s » fromRawTrusted
+   2,122,055 op/s » toCanonical
+   4,531,077 op/s » toRaw
 
                   Uuid4
-   2,094,511 op/s » generate
-   8,094,324 op/s » MIN
-   8,215,459 op/s » MAX
-   1,017,922 op/s » fromCanonical
-   1,231,544 op/s » fromCanonicalTrusted
-   1,050,289 op/s » fromRaw
-   1,280,291 op/s » fromRawTrusted
-   4,679,154 op/s » toCanonical
-   3,374,717 op/s » toRaw
+   2,041,977 op/s » generate
+   8,230,167 op/s » MIN
+   8,183,125 op/s » MAX
+     985,580 op/s » fromCanonical
+   1,172,836 op/s » fromCanonicalTrusted
+   1,093,680 op/s » fromRaw
+   1,312,437 op/s » fromRawTrusted
+   4,616,699 op/s » toCanonical
+   3,850,641 op/s » toRaw
 
                   UuidNil
-   7,536,007 op/s » generate
-   7,670,932 op/s » MIN
-   7,533,499 op/s » MAX
-   1,046,487 op/s » fromCanonical
-   1,109,529 op/s » fromCanonicalTrusted
-   1,196,799 op/s » fromRaw
-   1,412,511 op/s » fromRawTrusted
-   4,665,090 op/s » toCanonical
-   4,502,375 op/s » toRaw
+   6,550,963 op/s » generate
+   7,924,792 op/s » MIN
+   7,879,315 op/s » MAX
+   1,023,658 op/s » fromCanonical
+   1,163,824 op/s » fromCanonicalTrusted
+   1,149,569 op/s » fromRaw
+   1,365,354 op/s » fromRawTrusted
+   4,664,013 op/s » toCanonical
+   4,461,030 op/s » toRaw
 
                   Competitors
-   1,403,784 op/s » Id128.Ulid
-     889,726 op/s » Id128.Ulid Canonical
-     784,403 op/s » Id128.UlidMonotonic
-     574,771 op/s » Id128.UlidMonotonic Canonical
-   2,081,764 op/s » Id128.Uuid4
-   1,423,435 op/s » Id128.Uuid4 Canonical
-   7,721,350 op/s » Id128.UuidNil
-   2,798,246 op/s » Id128.UuidNil Canonical
-     764,560 op/s » Cuid
-     106,184 op/s » Ksuid
-     341,822 op/s » Nanoid
-     318,279 op/s » Nanoid like Uuid v4
-      28,197 op/s » Ulid
-   1,828,431 op/s » Ulid Monotonic
-     401,421 op/s » Uuid
-   1,613,896 op/s » UuidRandom
-     258,176 op/s » Uuid4
-      80,850 op/s » UuidJs
-      49,429 op/s » UuidJs v4
-      49,995 op/s » UuidJs v4 Canonical
+   1,366,500 op/s » Id128.Ulid
+     857,560 op/s » Id128.Ulid Canonical
+     878,101 op/s » Id128.UlidMonotonic
+     618,274 op/s » Id128.UlidMonotonic Canonical
+   2,095,413 op/s » Id128.Uuid4
+   1,392,257 op/s » Id128.Uuid4 Canonical
+   7,365,361 op/s » Id128.UuidNil
+   2,753,044 op/s » Id128.UuidNil Canonical
+     744,091 op/s » Cuid
+     106,541 op/s » Ksuid
+     347,503 op/s » Nanoid
+     316,387 op/s » Nanoid like Uuid v4
+      27,530 op/s » Ulid
+   1,857,655 op/s » Ulid Monotonic
+     383,997 op/s » Uuid
+   1,584,366 op/s » UuidRandom
+     253,459 op/s » Uuid4
+      81,533 op/s » UuidJs
+      47,690 op/s » UuidJs v4
+      48,914 op/s » UuidJs v4 Canonical
 ```
 
 # Acknowledgments
