@@ -32,5 +32,16 @@
 		"uuid-random": "*",
 		"uuid4": "*",
 		"uuidjs": "*"
-	}
+	},
+	"keywords": [
+		"128-bit",
+		"crockford",
+		"guid",
+		"id",
+		"random",
+		"rfc4122",
+		"ulid",
+		"unique id",
+		"uuid"
+	]
 }
