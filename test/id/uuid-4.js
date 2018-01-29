@@ -12,7 +12,7 @@ const {
 
 const ByteArray = require('common/byte-array');
 
-const { Uuid4: described_class } = require('id/uuid4');
+const { Uuid4: described_class } = require('id/uuid-4');
 
 describe(described_class.name, function() {
 	assertDebuggable(described_class);

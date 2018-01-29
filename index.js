@@ -1,6 +1,6 @@
 const { Ulid } = require('./src/id/ulid');
 const { UlidMonotonic } = require('./src/id/ulid-monotonic');
-const { Uuid4 } = require('./src/id/uuid4');
+const { Uuid4 } = require('./src/id/uuid-4');
 const { UuidNil } = require('./src/id/uuid-nil');
 
 const Crockford32Coder = require('./src/coder/crockford32');
