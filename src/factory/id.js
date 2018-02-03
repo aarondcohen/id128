@@ -21,6 +21,8 @@ class IdFactory {
 		this[_raw_coder] = raw_coder;
 	}
 
+	get name() { return this[_id].name }
+
 	//Generators
 
 	generate() {

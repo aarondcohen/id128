@@ -2,8 +2,6 @@
 
 const { expect } = require('chai');
 
-const Id128 = require('../');
-
 function assertDebuggable(id_name, generator) {
 	describe('when cast as a string', function() {
 		const subject = () => '' + generator();
@@ -14,10 +12,7 @@ function assertDebuggable(id_name, generator) {
 	});
 }
 
-function assertValidId128(id_name) {
-	const factory = Id128[id_name];
-	const id_class = Id128.Id[id_name];
-
+function assertValidId128(id_name, factory, id_class) {
 	describe(`${id_name} Factory`, function() {
 		describe('new', function() {
 			it('is disabled', function() {
@@ -125,7 +120,11 @@ function assertValidId128(id_name) {
 	});
 }
 
-assertValidId128('Ulid');
-assertValidId128('UlidMonotonic');
-assertValidId128('Uuid4');
-assertValidId128('UuidNil');
+[
+	['Ulid', require('id128/ulid'), require('id/ulid')],
+	['UlidMonotonic', require('id128/ulid-monotonic'), require('id/ulid-monotonic')],
+	['Uuid4', require('id128/uuid-4'), require('id/uuid-4')],
+	['UuidNil', require('id128/uuid-nil'), require('id/uuid-nil')],
+].forEach(([id_name, factory_import, id_import]) => {
+	assertValidId128(id_name, factory_import[id_name], id_import[id_name])
+})

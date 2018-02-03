@@ -1,9 +1,8 @@
-const {
-	Ulid: MyUlid,
-	UlidMonotonic: MyUlidMonotonic,
-	Uuid4: MyUuid4,
-	UuidNil: MyUuidNil,
-} = require('../');
+const { Ulid: MyUlid } = require('id128/ulid');
+const { UlidMonotonic: MyUlidMonotonic } = require('id128/ulid-monotonic');
+const { Uuid4: MyUuid4 } = require('id128/uuid-4');
+const { UuidNil: MyUuidNil } = require('id128/uuid-nil');
+
 const Cuid = require('cuid');
 const Ksuid = require('ksuid');
 const Nanoid = require('nanoid');

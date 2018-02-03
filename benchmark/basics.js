@@ -1,14 +1,16 @@
-const Id128 = require('../');
+const { Ulid } = require('id128/ulid');
+const { UlidMonotonic } = require('id128/ulid-monotonic');
+const { Uuid4 } = require('id128/uuid-4');
+const { UuidNil } = require('id128/uuid-nil');
 
 [
-	'Ulid',
-	'UlidMonotonic',
-	'Uuid4',
-	'UuidNil',
-].forEach((id_type_name) => suite(id_type_name, function() {
+	Ulid,
+	UlidMonotonic,
+	Uuid4,
+	UuidNil,
+].forEach((id_type) => suite(id_type.name, function() {
   set('iterations', 1000000);
 
-	const id_type = Id128[id_type_name];
 	const id = id_type.generate();
 	const canonical = id.toCanonical();
 	const raw = id.toRaw();

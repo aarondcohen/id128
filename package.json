@@ -4,7 +4,7 @@
 	"version": "0.0.2",
 	"author": "Aaron Cohen <aarondcohen@gmail.com>",
 	"license": "MIT",
-	"main": "index.js",
+	"main": "main/index.js",
 	"homepage": "https://github.com/aarondcohen/id128#id128",
 	"respository": {
 		"type": "git",
@@ -14,8 +14,10 @@
 		"url": "https://github.com/aarondcohen/id128/issues"
 	},
 	"scripts": {
-		"benchmark": "NODE_PATH='./src/' matcha",
-		"test": "NODE_PATH='./src/' mocha"
+		"benchmark": "NODE_PATH='./' matcha",
+		"benchmark-all": "NODE_PATH='./' matcha benchmark/*",
+		"test": "NODE_PATH='./src/:./' mocha",
+		"test-all": "NODE_PATH='./src/:./' mocha test/*"
 	},
 	"engines": {
 		"node": ">=v6.9.0"
