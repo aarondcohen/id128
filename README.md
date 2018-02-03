@@ -272,7 +272,7 @@ which seems generally useful.
 Ultimately, this library strives to be:
 - secure: uses cryptographic randomness to ensure general uniqueness
 - performant: currently one of the fastest id generators available
-- maintainable: heavily tested isoldated code with a consistent interface
+- maintainable: heavily tested isolated code with a consistent interface
 - extensible: modular design to easily add new ids and new encodings
 
 # Tests
