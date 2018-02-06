@@ -135,7 +135,7 @@ Encode this id in its raw form.
 
 # Ulid
 ```es6
-import { Ulid } from 'id128';
+const { Ulid } = require('id128');
 ```
 
 Ulid, as [specified](https://github.com/ulid/spec), has some nice properties:
@@ -168,7 +168,7 @@ Format `ttttttrrrrrrrrrr` where:
 
 # UlidMonotonic
 ```es6
-import { UlidMonotonic } from 'id128';
+const { UlidMonotonic } = require('id128');
 ```
 
 UlidMonotonic is inspired by the [specification](https://github.com/ulid/spec#monotonicity):
@@ -220,7 +220,7 @@ an overflow, id generation should be aborted.
 
 # Uuid4
 ```es6
-import { Uuid4 } from 'id128';
+const { Uuid4 } = require('id128');
 ```
 
 Uuid4 implements the [RFC 4122 random uuid specification](https://tools.ietf.org/html/rfc4122#section-4.4):
@@ -241,7 +241,7 @@ Return the version as encoded in the id.  Should be 4.
 
 # UuidNil
 ```es6
-import { UuidNil } from 'id128';
+const { UuidNil } = require('id128');
 ```
 
 UuidNil implements the [RFC 4122 nil uuid specification](https://tools.ietf.org/html/rfc4122#section-4.1.7):
@@ -258,11 +258,47 @@ Return the variant as encoded in the id.  Should be 0.
 ### version
 Return the version as encoded in the id.  Should be 0.
 
+# Exceptions
+```es6
+const { Exception } = require('id128');
+```
+All exceptions are namespaced under `Exception` for clarity.
+
+## Id128Error
+```es6
+const { Exception: { Id128Error } } = require('id128');
+```
+Base exception class for generic error catching.
+
+## ClockSequenceOverflow
+```es6
+const { Exception: { ClockSequenceOverflow } } = require('id128');
+```
+Incrementing the clock sequence is impossible.  Should not happen unless manually seeding `#generate`.
+
+## InvalidBytes
+```es6
+const { Exception: { InvalidBytes } } = require('id128');
+```
+Encoding something other than 16 bytes.  Likely to happen when encoding untrusted user input.
+
+## InvalidEncoding
+```es6
+const { Exception: { InvalidEncoding } } = require('id128');
+```
+Decoding an invalid format or non-string object.  Likely to happen when decoding untrusted user input.
+
+## InvalidSeed
+```es6
+const { Exception: { InvalidSeed } } = require('id128');
+```
+Generating an id with an invalid timestamp.  Should not happen unless manually seeding `#generate`.
+
 # Motivation
 
 Originally, I was looking for an id that is independent of the database, but plays
 nice with database indices and data types.  Most databases have built-in support
-for storing UUIDs efficiently, but UUID v4 fragments the index and the other UUIDs
+for storing UUIDs efficiently, but UUID v4 does not cluster well and the other UUIDs
 require bit manipulation to get good performance, which will likely cause future
 maintenance headaches.
 
