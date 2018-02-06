@@ -335,70 +335,70 @@ yarn benchmark benchmark/*
 
 ```
                   Ulid
-   1,318,776 op/s » generate
-   6,773,280 op/s » MIN
-  11,357,849 op/s » MAX
-   1,309,111 op/s » fromCanonical
-   1,546,867 op/s » fromCanonicalTrusted
-   1,147,472 op/s » fromRaw
-   1,411,664 op/s » fromRawTrusted
-   2,603,936 op/s » toCanonical
-   4,549,521 op/s » toRaw
+   1,413,078 op/s » generate
+   6,893,822 op/s » MIN
+  11,538,759 op/s » MAX
+   1,320,862 op/s » fromCanonical
+   1,533,068 op/s » fromCanonicalTrusted
+   1,162,887 op/s » fromRaw
+   1,494,354 op/s » fromRawTrusted
+   2,416,784 op/s » toCanonical
+   4,595,085 op/s » toRaw
 
                   UlidMonotonic
-     856,812 op/s » generate
-   6,233,701 op/s » MIN
-   6,251,137 op/s » MAX
-   1,187,556 op/s » fromCanonical
-   1,364,965 op/s » fromCanonicalTrusted
-   1,068,532 op/s » fromRaw
-   1,257,115 op/s » fromRawTrusted
-   2,122,055 op/s » toCanonical
-   4,531,077 op/s » toRaw
+   1,167,732 op/s » generate
+   6,397,690 op/s » MIN
+   6,329,040 op/s » MAX
+   1,265,217 op/s » fromCanonical
+   1,475,240 op/s » fromCanonicalTrusted
+   1,039,781 op/s » fromRaw
+   1,300,156 op/s » fromRawTrusted
+   2,677,758 op/s » toCanonical
+   4,633,578 op/s » toRaw
 
                   Uuid4
-   2,041,977 op/s » generate
-   8,230,167 op/s » MIN
-   8,183,125 op/s » MAX
-     985,580 op/s » fromCanonical
-   1,172,836 op/s » fromCanonicalTrusted
-   1,093,680 op/s » fromRaw
-   1,312,437 op/s » fromRawTrusted
-   4,616,699 op/s » toCanonical
-   3,850,641 op/s » toRaw
+   2,073,658 op/s » generate
+   8,184,492 op/s » MIN
+   8,266,042 op/s » MAX
+   1,042,614 op/s » fromCanonical
+   1,284,090 op/s » fromCanonicalTrusted
+   1,086,209 op/s » fromRaw
+   1,353,873 op/s » fromRawTrusted
+   4,742,080 op/s » toCanonical
+   4,602,379 op/s » toRaw
 
                   UuidNil
-   6,550,963 op/s » generate
-   7,924,792 op/s » MIN
-   7,879,315 op/s » MAX
-   1,023,658 op/s » fromCanonical
-   1,163,824 op/s » fromCanonicalTrusted
-   1,149,569 op/s » fromRaw
-   1,365,354 op/s » fromRawTrusted
-   4,664,013 op/s » toCanonical
-   4,461,030 op/s » toRaw
+   7,478,873 op/s » generate
+   7,209,127 op/s » MIN
+   7,726,939 op/s » MAX
+   1,037,465 op/s » fromCanonical
+   1,169,540 op/s » fromCanonicalTrusted
+   1,100,890 op/s » fromRaw
+   1,405,361 op/s » fromRawTrusted
+   3,695,678 op/s » toCanonical
+   4,507,287 op/s » toRaw
 
                   Competitors
-   1,366,500 op/s » Id128.Ulid
-     857,560 op/s » Id128.Ulid Canonical
-     878,101 op/s » Id128.UlidMonotonic
-     618,274 op/s » Id128.UlidMonotonic Canonical
-   2,095,413 op/s » Id128.Uuid4
-   1,392,257 op/s » Id128.Uuid4 Canonical
-   7,365,361 op/s » Id128.UuidNil
-   2,753,044 op/s » Id128.UuidNil Canonical
-     744,091 op/s » Cuid
-     106,541 op/s » Ksuid
-     347,503 op/s » Nanoid
-     316,387 op/s » Nanoid like Uuid v4
-      27,530 op/s » Ulid
-   1,857,655 op/s » Ulid Monotonic
-     383,997 op/s » Uuid
-   1,584,366 op/s » UuidRandom
-     253,459 op/s » Uuid4
-      81,533 op/s » UuidJs
-      47,690 op/s » UuidJs v4
-      48,914 op/s » UuidJs v4 Canonical
+   1,533,528 op/s » Id128.Ulid
+     919,702 op/s » Id128.Ulid Canonical
+   1,232,763 op/s » Id128.UlidMonotonic
+     805,625 op/s » Id128.UlidMonotonic Canonical
+   2,107,214 op/s » Id128.Uuid4
+   1,401,036 op/s » Id128.Uuid4 Canonical
+   7,612,931 op/s » Id128.UuidNil
+   2,758,679 op/s » Id128.UuidNil Canonical
+     755,351 op/s » Cuid
+     108,052 op/s » Ksuid
+     345,012 op/s » Nanoid
+     324,690 op/s » Nanoid like Uuid v4
+      28,330 op/s » Ulid
+   1,874,436 op/s » Ulid Monotonic
+     401,293 op/s » Uuid
+   1,601,570 op/s » UuidRandom
+     262,299 op/s » Uuid4
+      82,436 op/s » UuidJs
+      48,422 op/s » UuidJs v4
+      49,255 op/s » UuidJs v4 Canonical
 ```
 
 # Acknowledgments

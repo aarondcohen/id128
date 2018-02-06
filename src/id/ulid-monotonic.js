@@ -1,5 +1,5 @@
 const ByteArray = require('../common/byte-array');
-const { Ulid } = require('./ulid');
+const { Ulid, coerceTime, setTime, validateTime } = require('./ulid');
 const { ClockSequenceOverflow } = require('../common/exception');
 
 const CLOCK_SEQUENCE_OFFSET = 6;
@@ -8,9 +8,7 @@ const RANDOM_OFFSET = 8;
 let _previous_id;
 let _previous_time;
 
-const _incrementClockSequence = (id) => {
-	const bytes = id.bytes;
-
+function incrementClockSequence(bytes) {
 	for (
 		let
 			idx = RANDOM_OFFSET - 1,
@@ -29,12 +27,12 @@ const _incrementClockSequence = (id) => {
 	throw new ClockSequenceOverflow('Exhausted clock sequence');
 };
 
-const _reserveClockSequence = (id) => {
-	id.bytes[CLOCK_SEQUENCE_OFFSET] &= 0b01111111;
+function reserveClockSequence(bytes) {
+	bytes[CLOCK_SEQUENCE_OFFSET] &= 0b01111111;
 };
 
-const _restoreClockSequence = (id) => {
-	id.bytes.set(_previous_id.bytes.subarray(0, RANDOM_OFFSET));
+function restoreClockSequence(bytes) {
+	bytes.set(_previous_id.bytes.subarray(0, RANDOM_OFFSET));
 };
 
 class UlidMonotonic extends Ulid {
@@ -42,19 +40,22 @@ class UlidMonotonic extends Ulid {
 	//Constructors
 
 	static generate(time) {
-		const id = super.generate(time);
-		const generated_time = id.time.getTime();
+		time = coerceTime(time);
+		validateTime(time);
+
+		const generated_time = time.getTime();
+		let bytes = ByteArray.generateRandomFilled();
 
 		if (generated_time <= _previous_time) {
-			_restoreClockSequence(id);
-			_incrementClockSequence(id);
+			restoreClockSequence(bytes);
+			incrementClockSequence(bytes);
 		} else {
-			_reserveClockSequence(id);
+			setTime(time, bytes)
+			reserveClockSequence(bytes);
 			_previous_time = generated_time;
 		}
-		_previous_id = id;
 
-		return id;
+		return (_previous_id = new this(bytes));
 	}
 
 	static resetClockSequence() {

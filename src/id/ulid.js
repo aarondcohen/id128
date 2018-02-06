@@ -9,13 +9,15 @@ const EPOCH_MS_MAX = Math.pow(BYTE_RADIX, RANDOM_OFFSET - TIME_OFFSET);
 const DATE_MIN_ISO = new Date(0).toISOString();
 const DATE_MAX_ISO = new Date(EPOCH_MS_MAX - 1).toISOString();
 
-const _coerceTime = (time = null) => (
-	Number.isInteger(time) ? new Date(time) :
-	time === null ? new Date() :
-		time
-);
+function coerceTime(time = null) {
+	return (
+		Number.isInteger(time) ? new Date(time) :
+		time === null ? new Date() :
+			time
+	);
+};
 
-const _setTime = (time, bytes) => {
+function setTime(time, bytes) {
 	let epoch_ms = time.getTime();
 	for (
 		let
@@ -30,7 +32,7 @@ const _setTime = (time, bytes) => {
 	}
 };
 
-const _validateTime = (time) => {
+function validateTime(time) {
 	if (! (time instanceof Date)) {
 		throw new InvalidSeed('Time must be a Date');
 	}
@@ -47,12 +49,12 @@ class Ulid extends BaseId {
 	//Constructors
 
 	static generate(time) {
-		time = _coerceTime(time);
-		_validateTime(time);
+		time = coerceTime(time);
+		validateTime(time);
 
 		let bytes = ByteArray.generateRandomFilled();
 
-		_setTime(time, bytes);
+		setTime(time, bytes);
 
 		return new this(bytes);
 	}
@@ -76,4 +78,4 @@ class Ulid extends BaseId {
 	}
 }
 
-module.exports = { Ulid };
+module.exports = { Ulid, coerceTime, setTime, validateTime };
