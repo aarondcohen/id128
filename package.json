@@ -15,7 +15,9 @@
 	},
 	"scripts": {
 		"benchmark": "NODE_PATH='./src/' matcha",
-		"test": "NODE_PATH='./src/' mocha"
+		"benchmark-all": "NODE_PATH='./src/' matcha benchmark/*",
+		"test": "NODE_PATH='./src/' mocha",
+		"test-all": "NODE_PATH='./src/' mocha test/*"
 	},
 	"engines": {
 		"node": ">=v6.9.0"
