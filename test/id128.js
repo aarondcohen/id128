@@ -3,6 +3,7 @@
 const { expect } = require('chai');
 
 const Id128 = require('../');
+const { Id } = require('../utils');
 
 function assertDebuggable(id_name, generator) {
 	describe('when cast as a string', function() {
@@ -130,6 +131,6 @@ function assertValidId128(id_name, factory, id_class) {
 ].forEach((id_name) => assertValidId128(
 	id_name,
 	Id128[id_name],
-	Id128.Id[id_name],
+	Id[id_name],
 ));
 

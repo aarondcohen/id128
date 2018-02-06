@@ -31,16 +31,5 @@ module.exports = {
 		canonical_coder: UuidCoder,
 		raw_coder: HexCoder,
 	}),
-	Coder: {
-		Crockford32: Crockford32Coder,
-		Hex: HexCoder,
-		Uuid: UuidCoder,
-	},
 	Exception,
-	Id: {
-		Ulid,
-		UlidMonotonic,
-		Uuid4,
-		UuidNil,
-	},
 };
