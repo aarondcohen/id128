@@ -1,0 +1,1 @@
+- 0.1.0 : Move extraneous exports from index.js into utils.js.
