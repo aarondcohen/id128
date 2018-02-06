@@ -1,7 +1,7 @@
 {
 	"name": "id128",
 	"description": "Collection of 128-bit Id generators",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "Aaron Cohen <aarondcohen@gmail.com>",
 	"license": "MIT",
 	"main": "index.js",
