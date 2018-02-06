@@ -23,6 +23,9 @@ const {
 	Uuid4,
 	UuidNil,
 ].forEach((IdType) => {
+	// Identify the factory
+	console.log(IdType.name);
+
 	// Generate a new id
 	const id = IdType.generate();
 
@@ -61,6 +64,10 @@ const {
 	console.log(id.equal(IdType.fromRawTrusted(raw)));
 });
 ```
+## Common Factory Properties
+
+### name
+Return the name of the generated id type.
 
 ## Common Factory Methods
 

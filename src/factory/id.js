@@ -21,7 +21,11 @@ class IdFactory {
 		this[_raw_coder] = raw_coder;
 	}
 
-	//Generators
+	// Properties
+
+	get name() { return this[_id].name }
+
+	// Generators
 
 	generate() {
 		return this[_id].generate(...arguments);

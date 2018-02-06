@@ -14,10 +14,7 @@ function assertDebuggable(id_name, generator) {
 	});
 }
 
-function assertValidId128(id_name) {
-	const factory = Id128[id_name];
-	const id_class = Id128.Id[id_name];
-
+function assertValidId128(id_name, factory, id_class) {
 	describe(`${id_name} Factory`, function() {
 		describe('new', function() {
 			it('is disabled', function() {
@@ -125,7 +122,14 @@ function assertValidId128(id_name) {
 	});
 }
 
-assertValidId128('Ulid');
-assertValidId128('UlidMonotonic');
-assertValidId128('Uuid4');
-assertValidId128('UuidNil');
+[
+	'Ulid',
+	'UlidMonotonic',
+	'Uuid4',
+	'UuidNil',
+].forEach((id_name) => assertValidId128(
+	id_name,
+	Id128[id_name],
+	Id128.Id[id_name],
+));
+
