@@ -294,6 +294,32 @@ const { Exception: { InvalidSeed } } = require('id128');
 ```
 Generating an id with an invalid timestamp.  Should not happen unless manually seeding `#generate`.
 
+# Browser Support
+
+This module supports browser compilation though Webpack/Browserify with a few caveats:
+- Random number generation is optimized for memory usage over speed since only a
+handful of ids are likely to be generated during a user's session so the overhead
+of generating a page of random values has poor amortized cost.
+- The browser must have native support for `crypto`.  `Math.random` is far too
+insecure to support as a fallback, especially since the fallback only makes sense
+for older browsers with proven security holes.  `msCrypto` is not a supported
+fallback due to many of the other required features.
+- The browser must support:
+	* classes
+	* closures
+	* `const` and `let`
+	* `for...of` loops
+	* `Uint8Array`
+	* `Symbol`
+
+This library is intended for modern browsers that keep pace with Javascript's
+growing ecosystem.  I philosophically object to supporting efforts of companies
+to pour more money into broken browsers that only cause headaches for developers
+to support.  I expect these caveats to be unnecessary within the next 5 years.
+
+All that said, please notify me of any issues with modern browsers and I'll do
+my best to support you.
+
 # Motivation
 
 Originally, I was looking for an id that is independent of the database, but plays
