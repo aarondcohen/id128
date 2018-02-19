@@ -348,7 +348,8 @@ Ultimately, this library strives to be:
 
 To run the tests:
 ```bash
-yarn test test/*
+yarn install
+yarn test-all
 ```
 
 # Benchmarks
@@ -356,7 +357,7 @@ yarn test test/*
 To run the benchmarks:
 ```bash
 yarn install
-yarn benchmark benchmark/*
+yarn benchmark-all
 ```
 
 ```
