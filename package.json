@@ -13,6 +13,9 @@
 	"bugs": {
 		"url": "https://github.com/aarondcohen/id128/issues"
 	},
+	"browser": {
+		"./src/common/random-bytes.js": "./src/common/random-bytes-browser.js"
+	},
 	"scripts": {
 		"benchmark": "NODE_PATH='./src/' matcha",
 		"benchmark-all": "NODE_PATH='./src/' matcha benchmark/*",
