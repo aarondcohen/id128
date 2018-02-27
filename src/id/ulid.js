@@ -1,11 +1,12 @@
 const ByteArray = require('../common/byte-array');
+const UintConverter = require('../common/uint-converter');
 const { BaseId } = require('./base');
 const { InvalidSeed } = require('../common/exception');
 
-const BYTE_RADIX = 1 << 8;
-const RANDOM_OFFSET = 6;
 const TIME_OFFSET = 0;
-const EPOCH_MS_MAX = Math.pow(BYTE_RADIX, RANDOM_OFFSET - TIME_OFFSET);
+const RANDOM_OFFSET = 6;
+
+const EPOCH_MS_MAX = Math.pow(2, (RANDOM_OFFSET - TIME_OFFSET) * 8);
 const DATE_MIN_ISO = new Date(0).toISOString();
 const DATE_MAX_ISO = new Date(EPOCH_MS_MAX - 1).toISOString();
 
@@ -18,18 +19,12 @@ function coerceTime(time = null) {
 };
 
 function setTime(time, bytes) {
-	let epoch_ms = time.getTime();
-	for (
-		let
-			idx = RANDOM_OFFSET - 1,
-			end = TIME_OFFSET - 1;
-		idx > end;
-		--idx
-	) {
-		let rem = epoch_ms % BYTE_RADIX;
-		epoch_ms = (epoch_ms - rem) / BYTE_RADIX;
-		bytes[idx] = rem;
-	}
+	UintConverter.assignUint(
+		TIME_OFFSET,
+		RANDOM_OFFSET,
+		bytes,
+		time.getTime()
+	);
 };
 
 function validateTime(time) {
@@ -70,12 +65,13 @@ class Ulid extends BaseId {
 	// Accessors
 
 	get time() {
-		let epoch_ms = 0;
-		for (let idx = TIME_OFFSET; idx < RANDOM_OFFSET; ++idx) {
-			epoch_ms = epoch_ms * BYTE_RADIX + this.bytes[idx];
-		}
+		const epoch_ms = UintConverter.extractUint(
+			TIME_OFFSET,
+			RANDOM_OFFSET,
+			this.bytes
+		);
 		return new Date(epoch_ms);
-	}
+	};
 }
 
 module.exports = { Ulid, coerceTime, setTime, validateTime };
