@@ -48,7 +48,7 @@ class Ulid extends BaseId {
 
 	//Constructors
 
-	static generate(time) {
+	static generate({ time } = {}) {
 		time = coerceTime(time);
 		validateTime(time);
 

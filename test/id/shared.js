@@ -98,13 +98,9 @@ function assertEqualDemonstratesSameness(labeled_ids) {
 	});
 }
 
-function assertGenerateBasics(described_class, generate_args = []) {
-	if (! (generate_args instanceof Array)) {
-		throw TypeError('Generate args must be an array');
-	}
-
+function assertGenerateBasics(described_class) {
 	describe('.generate', function() {
-		const subject = () => described_class.generate(...generate_args);
+		const subject = () => described_class.generate();
 
 		it(`returns a new ${described_class.name}`, function() {
 			expect(subject()).to.be.an.instanceOf(described_class);

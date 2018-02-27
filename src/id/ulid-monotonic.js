@@ -39,7 +39,7 @@ class UlidMonotonic extends Ulid {
 
 	//Constructors
 
-	static generate(time) {
+	static generate({ time } = {}) {
 		time = coerceTime(time);
 		validateTime(time);
 

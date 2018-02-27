@@ -26,9 +26,9 @@ describe(described_class.name, function() {
 
 	assertDebuggable(described_class);
 
-	assertGenerateBasics(described_class, [new Date(0)]);
+	assertGenerateBasics(described_class);
 	describe('.generate extended', function() {
-		const subject = (time) => described_class.generate(time);
+		const subject = (time) => described_class.generate({ time });
 
 		it('accepts a Date', function() {
 			[
@@ -144,7 +144,7 @@ describe(described_class.name, function() {
 
 	assertAccessorBytes(described_class);
 	describe('#time', function() {
-		const subject = (time) => described_class.generate(time).time;
+		const subject = (time) => described_class.generate({ time }).time;
 
 		describe('given a future time', function() {
 			it('returns the time given to generate', function() {
@@ -172,19 +172,19 @@ describe(described_class.name, function() {
 
 	assertCompareDemonstratesTotalOrder([
 		['the min id', described_class.MIN()],
-		['a min time id', described_class.generate(MIN_TIME)],
-		['a recent id', described_class.generate(new Date())],
-		['a max time id', described_class.generate(MAX_TIME)],
-		['an anachronistic id', described_class.generate(new Date())],
+		['a min time id', described_class.generate({ time: MIN_TIME })],
+		['a recent id', described_class.generate({ time: new Date })],
+		['a max time id', described_class.generate({ time: MAX_TIME })],
+		['an anachronistic id', described_class.generate({ time: new Date })],
 		['the max id', described_class.MAX()],
 	]);
 
 	assertEqualDemonstratesSameness([
 		['the min id', described_class.MIN()],
-		['a min time id', described_class.generate(MIN_TIME)],
-		['a recent id', described_class.generate(new Date())],
-		['a max time id', described_class.generate(MAX_TIME)],
-		['an anachronistic id', described_class.generate(new Date())],
+		['a min time id', described_class.generate({ time: MIN_TIME })],
+		['a recent id', described_class.generate({ time: new Date() })],
+		['a max time id', described_class.generate({ time: MAX_TIME })],
+		['an anachronistic id', described_class.generate({ time: new Date() })],
 		['the max id', described_class.MAX()],
 	]);
 });

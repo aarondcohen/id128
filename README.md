@@ -153,7 +153,7 @@ Return a Date object for the epoch milliseconds encoded in the id.
 
 ## Additional Methods
 
-### .generate(time) => id
+### .generate({ time }) => id
 Return a new id instance.  By default, the current time is generated on each call.
 Setting `time` to `null` or `undefined` triggers the default behavior.
 `time` can be given either as a `Date` object or epoch milliseconds
@@ -186,7 +186,7 @@ Return a Date object for the epoch milliseconds encoded in the id.
 
 ## Additional Methods
 
-### .generate(time) => id
+### .generate({ time }) => id
 Return a new id instance.  By default, the current time is generated on each call.
 Setting `time` to `null` or `undefined` triggers the default behavior.
 `time` can be given either as a `Date` object or epoch milliseconds

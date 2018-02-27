@@ -27,8 +27,8 @@ class IdFactory {
 
 	// Generators
 
-	generate() {
-		return this[_id].generate(...arguments);
+	generate(args = {}) {
+		return this[_id].generate(args);
 	}
 
 	MIN() {
