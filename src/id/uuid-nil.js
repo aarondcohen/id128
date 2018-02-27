@@ -8,20 +8,14 @@ const {
 } = require('./uuid');
 
 class UuidNil extends Uuid {
+	static get VARIANT() { return 0 }
+	static get VERSION() { return 0 }
+
 	static generate() {
 		let bytes = ByteArray.generateZeroFilled();
 
-		setVariant(0, bytes);
-		setVersion(0, bytes);
-
-		return new this(bytes);
-	}
-
-	static MIN() {
-		let bytes = ByteArray.generateZeroFilled();
-
-		setVariant(0, bytes);
-		setVersion(0, bytes);
+		setVariant(this.VARIANT, bytes);
+		setVersion(this.VERSION, bytes);
 
 		return new this(bytes);
 	}
@@ -29,8 +23,8 @@ class UuidNil extends Uuid {
 	static MAX() {
 		let bytes = ByteArray.generateZeroFilled();
 
-		setVariant(0, bytes);
-		setVersion(0, bytes);
+		setVariant(this.VARIANT, bytes);
+		setVersion(this.VERSION, bytes);
 
 		return new this(bytes);
 	}

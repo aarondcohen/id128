@@ -8,29 +8,14 @@ const {
 } = require('./uuid');
 
 class Uuid4 extends Uuid {
+	static get VARIANT() { return 1 }
+	static get VERSION() { return 4 }
+
 	static generate() {
 		let bytes = ByteArray.generateRandomFilled();
 
-		setVariant(1, bytes);
-		setVersion(4, bytes);
-
-		return new this(bytes);
-	}
-
-	static MIN() {
-		let bytes = ByteArray.generateZeroFilled();
-
-		setVariant(1, bytes);
-		setVersion(4, bytes);
-
-		return new this(bytes);
-	}
-
-	static MAX() {
-		let bytes = ByteArray.generateOneFilled();
-
-		setVariant(1, bytes);
-		setVersion(4, bytes);
+		setVariant(this.VARIANT, bytes);
+		setVersion(this.VERSION, bytes);
 
 		return new this(bytes);
 	}
