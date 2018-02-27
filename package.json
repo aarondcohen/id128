@@ -14,6 +14,7 @@
 		"url": "https://github.com/aarondcohen/id128/issues"
 	},
 	"browser": {
+		"./src/common/machine.js": "./src/common/fake-machine.js",
 		"./src/common/random-bytes.js": "./src/common/random-bytes-browser.js"
 	},
 	"scripts": {
@@ -32,6 +33,7 @@
 		"matcha": "*",
 		"mocha": "*",
 		"nanoid": "*",
+		"sinon": "*",
 		"ulid": "*",
 		"uuid": "*",
 		"uuid-random": "*",
