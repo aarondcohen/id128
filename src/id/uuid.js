@@ -1,6 +1,7 @@
 'use strict';
 
 const { BaseId } = require('./base');
+const ByteArray = require('../common/byte-array');
 
 const VARIANT_BYTE = 8;
 const VERSION_BYTE = 6;
@@ -16,6 +17,24 @@ function setVersion(version, bytes) {
 };
 
 class Uuid extends BaseId {
+	static MIN() {
+		let bytes = ByteArray.generateZeroFilled();
+
+		setVariant(this.VARIANT, bytes);
+		setVersion(this.VERSION, bytes);
+
+		return new this(bytes);
+	}
+
+	static MAX() {
+		let bytes = ByteArray.generateOneFilled();
+
+		setVariant(this.VARIANT, bytes);
+		setVersion(this.VERSION, bytes);
+
+		return new this(bytes);
+	}
+
 	get variant() {
 		const bits = this.bytes[VARIANT_BYTE] >>> 5;
 
