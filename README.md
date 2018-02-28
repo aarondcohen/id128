@@ -158,7 +158,7 @@ Return a new id instance.  By default, the current time is generated on each cal
 Setting `time` to `null` or `undefined` triggers the default behavior.
 `time` can be given either as a `Date` object or epoch milliseconds
 (milliseconds since January 1st, 1970).  For times prior to the epoch or after
-approximately August 2nd, 10889, throws `InvalidSeed`. This is provided mostly
+approximately August 2nd, 10889, throws `InvalidEpoch`. This is provided mostly
 for unit tests.
 
 ## Byte Format
@@ -191,7 +191,7 @@ Return a new id instance.  By default, the current time is generated on each cal
 Setting `time` to `null` or `undefined` triggers the default behavior.
 `time` can be given either as a `Date` object or epoch milliseconds
 (milliseconds since January 1st, 1970).  For times prior to the epoch or after
-approximately August 2nd, 10889, throws `InvalidSeed`.  Extra caution is required
+approximately August 2nd, 10889, throws `InvalidEpoch`.  Extra caution is required
 since setting a future time and subsequently calling `generate` guarantees usage
 of the clock sequence.  Throws `ClockSequenceOverflow` when the clock sequence
 is exhausted.  This is provided mostly for unit tests.
@@ -288,9 +288,9 @@ const { Exception: { InvalidEncoding } } = require('id128');
 ```
 Decoding an invalid format or non-string object.  Likely to happen when decoding untrusted user input.
 
-## InvalidSeed
+## InvalidEpoch
 ```es6
-const { Exception: { InvalidSeed } } = require('id128');
+const { Exception: { InvalidEpoch } } = require('id128');
 ```
 Generating an id with an invalid timestamp.  Should not happen unless manually seeding `#generate`.
 
