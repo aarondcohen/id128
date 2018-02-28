@@ -10,7 +10,7 @@ const {
 } = require('./shared');
 
 const ByteArray = require('common/byte-array');
-const { InvalidSeed } = require('common/exception');
+const { InvalidEpoch } = require('common/exception');
 
 const { Ulid: described_class } = require('id/ulid');;
 
@@ -24,66 +24,21 @@ describe(described_class.name, function() {
 	describe('.generate extended', function() {
 		const subject = (time) => described_class.generate({ time });
 
-		it('accepts a Date', function() {
+		it('accepts epoch values', function() {
 			[
-				['start of epoch time', MIN_TIME],
-				['current time', new Date],
-				['end of epoch time', MAX_TIME],
+				['start of epoch', MIN_TIME],
+				['end of epoch', MAX_TIME],
 			].forEach(([label, value]) => {
-				expect(() => subject(value), label).not.to.throw();
-				expect(subject(value).time, label).to.eql(value);
-			});
-		});
-
-		it('accepts milliseconds', function() {
-			[
-				['start of epoch time', MIN_TIME],
-				['current time', new Date],
-				['end of epoch time', MAX_TIME],
-			].forEach(([label, value]) => {
-				expect(() => subject(value.getTime()), label).not.to.throw();
-				expect(subject(value.getTime()).time, label).to.eql(value);
-			});
-		});
-
-		it('defaults to now for null and undefined', function() {
-			[
-				['null', null],
-				['undefined', void(null)],
-			].forEach(([label, value]) => {
-				const now = new Date;
-
-				expect(subject(value).time, label)
-					.to.be.within(now, new Date(now.getTime() + 1));
+				expect(() => subject(value), label).not.to.throw(InvalidEpoch);
 			});
 		});
 
 		it('rejects pre/post-epoch values', function() {
 			[
-				['date prior to 1970', new Date(MIN_TIME.getTime() - 1)],
-				['ms before epoch', MIN_TIME.getTime() - 1],
-				['date after late 10889', new Date(MAX_TIME.getTime() + 1)],
-				['ms after 48-bit epoch', MAX_TIME.getTime() + 1],
+				['prior to 1970', MIN_TIME - 1],
+				['after late 10889', MAX_TIME + 1],
 			].forEach(([label, value]) => {
-				expect(() => subject(value), label).to.throw(InvalidSeed);
-			});
-		});
-
-		it('rejects other falsey values', function() {
-			[
-				['false', false],
-				['empty string', ''],
-			].forEach(([label, value]) => {
-				expect(() => subject(value), label).to.throw(InvalidSeed);
-			});
-		});
-
-		it('rejects other Date-like values', function() {
-			[
-				['date string', '2018-01-10'],
-				['duck type', { getTime: (() => {}) }],
-			].forEach(([label, value]) => {
-				expect(() => subject(value), label).to.throw(InvalidSeed);
+				expect(() => subject(value), label).to.throw(InvalidEpoch);
 			});
 		});
 	});
@@ -96,7 +51,7 @@ describe(described_class.name, function() {
 		});
 
 		it('has the least allowed time', function() {
-			expect(subject().time).to.eql(new Date(0));
+			expect(subject().time).to.deep.equal(MIN_TIME);
 		});
 	});
 
@@ -108,7 +63,7 @@ describe(described_class.name, function() {
 		});
 
 		it('has the greatest allowed time', function() {
-			expect(subject().time).to.eql(new Date(Math.pow(2, 48) - 1));
+			expect(subject().time).to.deep.equal(MAX_TIME);
 		});
 	});
 
@@ -122,7 +77,7 @@ describe(described_class.name, function() {
 				new Date(Math.floor(MAX_TIME.getTime() * Math.random())),
 				new Date(),
 				MAX_TIME,
-			].forEach((time) => expect(subject(time)).to.eql(time));
+			].forEach((time) => expect(subject(time)).to.deep.equal(time));
 		});
 	});
 

@@ -1,9 +1,12 @@
+const { Ulid, setTime } = require('./ulid');
 const ByteArray = require('../common/byte-array');
-const { Ulid, coerceTime, setTime, validateTime } = require('./ulid');
+const EpochConverter = require('../common/epoch-converter');
 const { ClockSequenceOverflow } = require('../common/exception');
 
 const CLOCK_SEQUENCE_OFFSET = 6;
 const RANDOM_OFFSET = 8;
+
+const EPOCH_ORIGIN_MS = 0;
 
 let _previous_id;
 let _previous_time;
@@ -40,19 +43,16 @@ class UlidMonotonic extends Ulid {
 	//Constructors
 
 	static generate({ time } = {}) {
-		time = coerceTime(time);
-		validateTime(time);
-
-		const generated_time = time.getTime();
+		time = EpochConverter.toEpoch(EPOCH_ORIGIN_MS, time);
 		let bytes = ByteArray.generateRandomFilled();
 
-		if (generated_time <= _previous_time) {
+		if (time <= _previous_time) {
 			restoreClockSequence(bytes);
 			incrementClockSequence(bytes);
 		} else {
 			setTime(time, bytes)
 			reserveClockSequence(bytes);
-			_previous_time = generated_time;
+			_previous_time = time;
 		}
 
 		return (_previous_id = new this(bytes));
