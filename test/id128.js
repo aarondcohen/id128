@@ -126,6 +126,7 @@ function assertValidId128(id_name, factory, id_class) {
 [
 	'Ulid',
 	'UlidMonotonic',
+	'Uuid1',
 	'Uuid4',
 	'UuidNil',
 ].forEach((id_name) => assertValidId128(

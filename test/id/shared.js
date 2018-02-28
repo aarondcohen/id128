@@ -21,6 +21,18 @@ function assertAccessorBytes(described_class) {
 	});
 }
 
+function assertAccessorTime(described_class, labeled_times) {
+	describe('#time', function() {
+		const subject = (time) => described_class.generate({ time }).time;
+
+		it('returns the time given to generate', function() {
+			labeled_times.forEach(([label, time]) => {
+				expect(subject(time), label).to.deep.equal(time)
+			});
+		});
+	});
+}
+
 function assertCompareDemonstratesTotalOrder(labeled_ids) {
 	describe('#compare', function() {
 		const diagnose = (lhs, rhs) => `(${lhs}).compare(${rhs})`;
@@ -148,6 +160,7 @@ function assertUuidVariantVersion(described_class, variant, version) {
 
 module.exports = {
 	assertAccessorBytes,
+	assertAccessorTime,
 	assertCompareDemonstratesTotalOrder,
 	assertDebuggable,
 	assertEqualDemonstratesSameness,
