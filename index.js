@@ -1,5 +1,6 @@
 const { Ulid } = require('./src/id/ulid');
 const { UlidMonotonic } = require('./src/id/ulid-monotonic');
+const { Uuid1 } = require('./src/id/uuid-1');
 const { Uuid4 } = require('./src/id/uuid-4');
 const { UuidNil } = require('./src/id/uuid-nil');
 
@@ -19,6 +20,11 @@ module.exports = {
 	UlidMonotonic: new IdFactory({
 		id: UlidMonotonic,
 		canonical_coder: Crockford32Coder,
+		raw_coder: HexCoder,
+	}),
+	Uuid1: new IdFactory({
+		id: Uuid1,
+		canonical_coder: UuidCoder,
 		raw_coder: HexCoder,
 	}),
 	Uuid4: new IdFactory({

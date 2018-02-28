@@ -104,10 +104,12 @@ describe(described_class.name, function() {
 		describe('given a future time', function() {
 			it('returns the time given to generate', function() {
 				[
-					MIN_TIME,
-					new Date(),
-					MAX_TIME,
-				].forEach((time) => expect(subject(time)).to.deep.equal(time));
+					['min', MIN_TIME],
+					['now', new Date()],
+					['max', MAX_TIME],
+				].forEach(([label, time]) => {
+					expect(subject(time), label).to.deep.equal(time);
+				});
 			});
 		});
 
@@ -117,10 +119,12 @@ describe(described_class.name, function() {
 
 			it('returns the same time as the most recent id', function() {
 				[
-					MIN_TIME,
-					new Date(),
-					MAX_TIME,
-				].forEach((time) => expect(subject(time)).to.deep.equal(most_recent_time));
+					['min', MIN_TIME],
+					['now', new Date()],
+					['max', MAX_TIME],
+				].forEach(([label, time]) => {
+					expect(subject(time), label).to.deep.equal(most_recent_time);
+				});
 			});
 		});
 	});

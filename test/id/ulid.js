@@ -3,6 +3,7 @@
 const { expect } = require('chai');
 const {
 	assertAccessorBytes,
+	assertAccessorTime,
 	assertCompareDemonstratesTotalOrder,
 	assertDebuggable,
 	assertEqualDemonstratesSameness,
@@ -68,18 +69,11 @@ describe(described_class.name, function() {
 	});
 
 	assertAccessorBytes(described_class);
-	describe('#time', function() {
-		const subject = (time) => described_class.generate({ time }).time;
-
-		it('returns the time given to generate', function() {
-			[
-				MIN_TIME,
-				new Date(Math.floor(MAX_TIME.getTime() * Math.random())),
-				new Date(),
-				MAX_TIME,
-			].forEach((time) => expect(subject(time)).to.deep.equal(time));
-		});
-	});
+	assertAccessorTime(described_class, [
+		['min', MIN_TIME],
+		['now', new Date()],
+		['max', MAX_TIME],
+	]);
 
 	assertCompareDemonstratesTotalOrder([
 		['the min id', described_class.MIN()],

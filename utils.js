@@ -1,5 +1,6 @@
 const { Ulid } = require('./src/id/ulid');
 const { UlidMonotonic } = require('./src/id/ulid-monotonic');
+const { Uuid1 } = require('./src/id/uuid-1');
 const { Uuid4 } = require('./src/id/uuid-4');
 const { UuidNil } = require('./src/id/uuid-nil');
 
@@ -20,6 +21,7 @@ module.exports = {
 	Id: {
 		Ulid,
 		UlidMonotonic,
+		Uuid1,
 		Uuid4,
 		UuidNil,
 	},
