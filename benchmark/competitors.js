@@ -1,6 +1,7 @@
 const {
 	Ulid: MyUlid,
 	UlidMonotonic: MyUlidMonotonic,
+	Uuid1: MyUuid1,
 	Uuid4: MyUuid4,
 	UuidNil: MyUuidNil,
 } = require('../');
@@ -8,7 +9,8 @@ const Cuid = require('cuid');
 const Ksuid = require('ksuid');
 const Nanoid = require('nanoid');
 const Ulid = require('ulid');
-const Uuid = require('uuid');
+const Uuidv1 = require('uuid/v1');
+const Uuidv4 = require('uuid/v4');
 const UuidRandom = require('uuid-random');
 const Uuid4 = require('uuid4');
 const UuidJs = require('uuidjs');
@@ -30,6 +32,14 @@ suite('Competitors', function() {
 
 	bench('Id128.UlidMonotonic Canonical', function() {
 		MyUlidMonotonic.generate().toCanonical();
+	});
+
+	bench('Id128.Uuid1', function() {
+		MyUuid1.generate();
+	});
+
+	bench('Id128.Uuid1 Canonical', function() {
+		MyUuid1.generate().toCanonical();
 	});
 
 	bench('Id128.Uuid4', function() {
@@ -74,8 +84,12 @@ suite('Competitors', function() {
 		ulidMonotonic();
 	});
 
-	bench('Uuid', function() {
-		Uuid();
+	bench('Uuidv1', function() {
+		Uuidv1();
+	});
+
+	bench('Uuidv4', function() {
+		Uuidv4();
 	});
 
 	bench('UuidRandom', function() {
