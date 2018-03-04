@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"main": "index.js",
 	"homepage": "https://github.com/aarondcohen/id128#id128",
-	"respository": {
+	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/aarondcohen/id128.git"
 	},
