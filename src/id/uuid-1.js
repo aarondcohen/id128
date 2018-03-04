@@ -49,13 +49,9 @@ function setClockSequence(time, bytes) {
 }
 
 function setNode(node, bytes) {
-	let dst = NODE_OFFSET - 1, src = -1;
-	bytes[++dst] = node[++src];
-	bytes[++dst] = node[++src];
-	bytes[++dst] = node[++src];
-	bytes[++dst] = node[++src];
-	bytes[++dst] = node[++src];
-	bytes[++dst] = node[++src];
+	for (let idx = 0; idx < 6; ++idx) {
+		bytes[NODE_OFFSET + idx] = node[idx];
+	}
 }
 
 function setTime(time, bytes) {

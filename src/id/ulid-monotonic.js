@@ -3,6 +3,7 @@ const ByteArray = require('../common/byte-array');
 const EpochConverter = require('../common/epoch-converter');
 const { ClockSequenceOverflow } = require('../common/exception');
 
+const TIME_OFFSET = 0;
 const CLOCK_SEQUENCE_OFFSET = 6;
 const RANDOM_OFFSET = 8;
 
@@ -35,7 +36,9 @@ function reserveClockSequence(bytes) {
 };
 
 function restoreClockSequence(bytes) {
-	bytes.set(_previous_id.bytes.subarray(0, RANDOM_OFFSET));
+	for (let idx = TIME_OFFSET; idx < RANDOM_OFFSET; ++idx) {
+		bytes[idx] = _previous_id.bytes[idx];
+	}
 };
 
 class UlidMonotonic extends Ulid {

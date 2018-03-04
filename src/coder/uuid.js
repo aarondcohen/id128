@@ -30,37 +30,44 @@ class UuidCoder extends BaseCoder {
 	decodeTrusted(encoding) {
 		let bytes = new Uint8Array(16);
 
-		let dst = 0;
-		let hi_hex = true;
-		for (let hex of encoding) {
-			if(hex === '-') {
-				continue
-			} else if (hi_hex) {
-				bytes[dst] = HEX_TO_BYTE[hex] << 4;
-			} else {
-				bytes[dst++] |= HEX_TO_BYTE[hex];
+		for (
+			let
+				dst = 0,
+				hi_hex = true,
+				src = 0,
+				end = encoding.length;
+			src < end;
+			++src
+		) {
+			const hex = encoding[src];
+			if(hex !== '-') {
+				if (hi_hex) {
+					bytes[dst] = HEX_TO_BYTE[hex] << 4;
+				} else {
+					bytes[dst++] |= HEX_TO_BYTE[hex];
+				}
+				hi_hex = ! hi_hex;
 			}
-			hi_hex = !hi_hex;
 		}
 
 		return bytes;
 	}
 
 	encodeTrusted(bytes) {
-		let idx=0;
-		return (
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
-			'-' +
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
-			'-' +
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
-			'-' +
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
-			'-' +
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]] +
-			BYTE_TO_HEX[bytes[idx++]] + BYTE_TO_HEX[bytes[idx++]]
+		let idx = -1;
+		return (''
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
+			+ '-'
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
+			+ '-'
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
+			+ '-'
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
+			+ '-'
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
+			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
 		);
 	}
 }

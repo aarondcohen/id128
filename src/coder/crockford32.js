@@ -39,8 +39,8 @@ class Crockford32Coder extends BaseCoder {
 		const bytes = new Uint8Array(16);
 		const quintets = [];
 
-		for (let char of encoding) {
-			quintets.push(_charToQuintet(char));
+		for (let idx = 0, end = encoding.length; idx < end; ++idx) {
+			quintets.push(_charToQuintet(encoding[idx]));
 		}
 
 		//Note: unrolled for performance
@@ -104,8 +104,8 @@ class Crockford32Coder extends BaseCoder {
 		//Note: Massive performance losses occured when
 		// using the more legible Array.map and Array.join
 		let encoding = '';
-		for (let quintet of quintets) {
-			encoding += _quintetToChar(quintet);
+		for (let idx = 0, end = quintets.length; idx < end; ++idx) {
+			encoding += _quintetToChar(quintets[idx]);
 		}
 
 		return encoding;

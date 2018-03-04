@@ -30,9 +30,16 @@ class HexCoder extends BaseCoder {
 	decodeTrusted(encoding) {
 		let bytes = new Uint8Array(16);
 
-		let dst = 0;
-		let hi_hex = true;
-		for (let hex of encoding) {
+		for (
+			let
+				dst = 0,
+				hi_hex = true,
+				src = 0,
+				end = encoding.length;
+			src < end;
+			++src
+		) {
+			const hex = encoding[src];
 			if (hi_hex) {
 				bytes[dst] = HEX_TO_BYTE[hex] << 4;
 			} else {
@@ -46,7 +53,9 @@ class HexCoder extends BaseCoder {
 
 	encodeTrusted(bytes) {
 		let encoding = '';
-		for (let byt of bytes) { encoding += BYTE_TO_HEX[byt] };
+		for (let idx = 0, end = bytes.length; idx < end; ++idx) {
+			encoding += BYTE_TO_HEX[bytes[idx]];
+		}
 		return encoding;
 	}
 }
