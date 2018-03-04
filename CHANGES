@@ -2,3 +2,5 @@
 - 0.2.0 : Add browser support for Browserify/Webpack.
 - 0.3.0 : Pass named arguments to .generate instead of positional.
 - 1.0.0 : Added support for Uuid V1 and extracted competitive benchmarks.
+- 1.0.1 : Remove lockfile from release.
+- 1.0.2 : Fix bad version push
