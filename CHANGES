@@ -5,3 +5,4 @@
 - 1.0.1 : Remove lockfile from release.
 - 1.0.2 : Fix bad version push.
 - 1.0.3 : Delete the extra benchmarks for real.
+- 1.1.0 : Performance improvements and renamed resetClockSequence to reset.
