@@ -10,9 +10,6 @@ const {
 } = require('./uuid');
 
 const TIME_OFFSET = 0;
-const TIME_LOW_OFFSET = 0;
-const TIME_MID_OFFSET = 4;
-const TIME_HIGH_OFFSET = 6;
 const CLOCK_SEQUENCE_OFFSET = 8;
 const NODE_OFFSET = 10;
 
@@ -20,7 +17,6 @@ const CLOCK_SEQUENCE_RADIX = Math.pow(2, 14);
 const EPOCH_ORIGIN_MS = Date.parse('1582-10-15Z');
 const TIME_HIRES_RADIX = Math.pow(2, 12);
 const TIME_LOW_MS_RADIX = Math.pow(2, 20);
-const TIME_MID_RADIX = Math.pow(2, 16);
 const UINT8_MAX = 0b11111111;
 
 let _clock_sequence;
@@ -126,7 +122,7 @@ class Uuid1 extends Uuid {
 			| (this.bytes[++idx] << 12)
 			| (this.bytes[++idx] << 4)
 			| (this.bytes[++idx] >>> 4);
-		++idx; // Skip hires bits
+		++idx; // Skip hi-res bits
 		const time_high = 0
 			| (this.bytes[++idx] << 8)
 			| (this.bytes[++idx] << 0)
