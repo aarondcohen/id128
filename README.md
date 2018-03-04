@@ -4,6 +4,7 @@ Generate 128-bit unique identifiers for various specifications.  In particular:
 - [ULID](#ulid)
 - [Monotonic ULID](#ulidmonotonic)
 - [Nil UUID](#uuidnil)
+- [UUID Variant 1 Version 1](#uuid1)
 - [UUID Variant 1 Version 4](#uuid4)
 
 # Common Usage
@@ -12,6 +13,7 @@ Generate 128-bit unique identifiers for various specifications.  In particular:
 const {
 	Ulid,
 	UlidMonotonic,
+	Uuid1,
 	Uuid4,
 	UuidNil,
 } = require('id128');
@@ -20,6 +22,7 @@ const {
 [
 	Ulid,
 	UlidMonotonic,
+	Uuid1,
 	Uuid4,
 	UuidNil,
 ].forEach((IdType) => {
@@ -218,6 +221,73 @@ the clock sequence should never overflow.  This also means the left most bit of
 the clock sequence will rarely be set to 1.  However, in the unlikely event of
 an overflow, id generation should be aborted.
 
+# Uuid1
+```es6
+const { Uuid1 } = require('id128');
+```
+
+Uuid1 implements the [RFC 4122 time specification](https://tools.ietf.org/html/rfc4122#section-4.2):
+- time-based: encodes the current millisecond timestamp
+- location-based: encodes the mac address of the machine
+
+While this mostly adheres to the spec, there are a few nuances in the handling
+of time.  Instead of encoding time as 100-nanoseconds since the Gregorian epoch,
+48 bits encode milliseconds since the Gregorian epoch time and 12 bits count past
+time collisions, resetting whenever given a new future time.  There are a few benefits:
+- high precision time is unreliable in the browser so this ensures better precision
+- the max supported date is now around the year 10502 instead of around 5236
+- generating 4096 ids/ms (~4,000,000 ids/s) is wildly unlikely in real world uses
+- in the rare  hi-res overflow, the count simply spills over to the clock sequence
+
+## Additional Properties
+
+### clock_sequence
+Return the clock sequence encoded in the id.
+
+### hires_time
+Return the number of prior ids generated while time stood still.
+
+### node
+Raturn the MAC address encoded in the id.
+
+### time
+Return a Date object for the epoch milliseconds encoded in the id.
+
+### variant
+Return the variant as encoded in the id.  Should be 1.
+
+### version
+Return the version as encoded in the id.  Should be 4.
+
+## Additional Methods
+
+### .generate({ node, time }) => id
+Return a new id instance.  By default, the current time is generated on each call
+and the MAC address is used as the node.  When the MAC address is unavailable,
+the node defaults to a random multicast address instead.  Setting both `node` and
+`time` to `null` or `undefined` triggers the default behavior.
+`time` can be given either as a `Date` object or Gregorian milliseconds
+(milliseconds since October 15th, 1582).  For times prior to the Gregorian epoch
+or after approximately May 17, 10502, throws `InvalidEpoch`.  Extra caution is
+required since setting a future time and subsequently calling `generate`
+guarantees usage of the hi-res counter and clock sequence.  Time should only be
+manipulated manually in testing.
+
+### .reset()
+Return the hi-res counter to its starting position and generate a new random
+clock sequence seed.  This is provided mostly for unit tests.
+
+## Byte Format
+Format `llll lnnn mmmm vhhh tccc aaaa aaaa aaaa` where:
+- `l` is 4 bits of low millisecond time
+- `n` is 4 bits of hi-res time
+- `m` is 4 bits of mid millisecond time
+- `v` is 4 bits of the version
+- `h` is 4 bits of high millisecond time
+- `t` is 2 bits of the variant followed by 2 bits of the clock sequence
+- `c` is 4 bits of the clock sequence
+- `a` is 4 bits of the machine address
+
 # Uuid4
 ```es6
 const { Uuid4 } = require('id128');
@@ -239,6 +309,12 @@ Return the variant as encoded in the id.  Should be 1.
 ### version
 Return the version as encoded in the id.  Should be 4.
 
+## Byte Format
+Format `rrrr rrrr rrrr vrrr trrr rrrr rrrr rrrr` where:
+- `r` is 4 bits of random
+- `v` is 4 bits of the version
+- `t` is 2 bits of the variant followed by 2 bits of random
+
 # UuidNil
 ```es6
 const { UuidNil } = require('id128');
@@ -257,6 +333,12 @@ Return the variant as encoded in the id.  Should be 0.
 
 ### version
 Return the version as encoded in the id.  Should be 0.
+
+## Byte Format
+Format `0000 0000 0000 v000 t000 0000 0000 0000` where:
+- `0` is 4 bits of 0
+- `v` is 4 bits of the version (also 0)
+- `t` is 2 bits of the variant (also 0) followed by 2 bits of 0
 
 # Exceptions
 ```es6
@@ -362,70 +444,84 @@ yarn benchmark-all
 
 ```
                   Ulid
-   1,413,078 op/s » generate
-   6,893,822 op/s » MIN
-  11,538,759 op/s » MAX
-   1,320,862 op/s » fromCanonical
-   1,533,068 op/s » fromCanonicalTrusted
-   1,162,887 op/s » fromRaw
-   1,494,354 op/s » fromRawTrusted
-   2,416,784 op/s » toCanonical
-   4,595,085 op/s » toRaw
+   1,747,886 op/s » generate
+   6,637,109 op/s » MIN
+  10,489,461 op/s » MAX
+   1,331,008 op/s » fromCanonical
+   1,491,721 op/s » fromCanonicalTrusted
+   1,091,976 op/s » fromRaw
+   1,389,473 op/s » fromRawTrusted
+   2,572,830 op/s » toCanonical
+   4,549,597 op/s » toRaw
 
                   UlidMonotonic
-   1,167,732 op/s » generate
-   6,397,690 op/s » MIN
-   6,329,040 op/s » MAX
-   1,265,217 op/s » fromCanonical
-   1,475,240 op/s » fromCanonicalTrusted
-   1,039,781 op/s » fromRaw
-   1,300,156 op/s » fromRawTrusted
-   2,677,758 op/s » toCanonical
-   4,633,578 op/s » toRaw
+   1,275,757 op/s » generate
+   6,146,052 op/s » MIN
+   6,170,485 op/s » MAX
+   1,122,394 op/s » fromCanonical
+   1,344,821 op/s » fromCanonicalTrusted
+   1,005,281 op/s » fromRaw
+   1,200,270 op/s » fromRawTrusted
+   2,360,370 op/s » toCanonical
+   3,897,537 op/s » toRaw
+
+                  Uuid1
+   3,915,632 op/s » generate
+   7,433,629 op/s » MIN
+   7,265,863 op/s » MAX
+     946,907 op/s » fromCanonical
+   1,165,525 op/s » fromCanonicalTrusted
+     985,044 op/s » fromRaw
+   1,235,074 op/s » fromRawTrusted
+   3,961,868 op/s » toCanonical
+   3,891,827 op/s » toRaw
 
                   Uuid4
-   2,073,658 op/s » generate
-   8,184,492 op/s » MIN
-   8,266,042 op/s » MAX
-   1,042,614 op/s » fromCanonical
-   1,284,090 op/s » fromCanonicalTrusted
-   1,086,209 op/s » fromRaw
-   1,353,873 op/s » fromRawTrusted
-   4,742,080 op/s » toCanonical
-   4,602,379 op/s » toRaw
+   2,094,657 op/s » generate
+   5,504,194 op/s » MIN
+   5,891,598 op/s » MAX
+     935,034 op/s » fromCanonical
+   1,154,671 op/s » fromCanonicalTrusted
+   1,003,814 op/s » fromRaw
+   1,250,546 op/s » fromRawTrusted
+   3,630,476 op/s » toCanonical
+   3,739,272 op/s » toRaw
 
                   UuidNil
-   7,478,873 op/s » generate
-   7,209,127 op/s » MIN
-   7,726,939 op/s » MAX
-   1,037,465 op/s » fromCanonical
-   1,169,540 op/s » fromCanonicalTrusted
-   1,100,890 op/s » fromRaw
-   1,405,361 op/s » fromRawTrusted
-   3,695,678 op/s » toCanonical
-   4,507,287 op/s » toRaw
+   8,414,373 op/s » generate
+   5,079,497 op/s » MIN
+   9,361,354 op/s » MAX
+     978,589 op/s » fromCanonical
+   1,187,739 op/s » fromCanonicalTrusted
+   1,133,286 op/s » fromRaw
+   1,355,183 op/s » fromRawTrusted
+   3,785,571 op/s » toCanonical
+   3,810,341 op/s » toRaw
 
                   Competitors
-   1,533,528 op/s » Id128.Ulid
-     919,702 op/s » Id128.Ulid Canonical
-   1,232,763 op/s » Id128.UlidMonotonic
-     805,625 op/s » Id128.UlidMonotonic Canonical
-   2,107,214 op/s » Id128.Uuid4
-   1,401,036 op/s » Id128.Uuid4 Canonical
-   7,612,931 op/s » Id128.UuidNil
-   2,758,679 op/s » Id128.UuidNil Canonical
-     755,351 op/s » Cuid
-     108,052 op/s » Ksuid
-     345,012 op/s » Nanoid
-     324,690 op/s » Nanoid like Uuid v4
-      28,330 op/s » Ulid
-   1,874,436 op/s » Ulid Monotonic
-     401,293 op/s » Uuid
-   1,601,570 op/s » UuidRandom
-     262,299 op/s » Uuid4
-      82,436 op/s » UuidJs
-      48,422 op/s » UuidJs v4
-      49,255 op/s » UuidJs v4 Canonical
+   1,796,835 op/s » Id128.Ulid
+     959,462 op/s » Id128.Ulid Canonical
+   1,347,769 op/s » Id128.UlidMonotonic
+     850,103 op/s » Id128.UlidMonotonic Canonical
+   4,310,336 op/s » Id128.Uuid1
+   1,935,205 op/s » Id128.Uuid1 Canonical
+   2,029,128 op/s » Id128.Uuid4
+   1,390,913 op/s » Id128.Uuid4 Canonical
+   8,665,001 op/s » Id128.UuidNil
+   2,445,011 op/s » Id128.UuidNil Canonical
+     739,201 op/s » Cuid
+     103,135 op/s » Ksuid
+     332,636 op/s » Nanoid
+     313,136 op/s » Nanoid like Uuid v4
+      26,866 op/s » Ulid
+   1,820,417 op/s » Ulid Monotonic
+   2,240,589 op/s » Uuidv1
+     374,749 op/s » Uuidv4
+   1,487,795 op/s » UuidRandom
+     257,408 op/s » Uuid4
+      79,617 op/s » UuidJs
+      47,018 op/s » UuidJs v4
+      47,665 op/s » UuidJs v4 Canonical
 ```
 
 # Acknowledgments
