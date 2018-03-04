@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+const Id128 = require('../index');
+const { IdFactory } = require('../utils');
+
+const id_by_name = Object.values(Id128)
+	.filter(x => x instanceof IdFactory)
+	.reduce(
+		(mapping, id) => Object.assign(mapping, {
+			[id.name.toLowerCase()]: id
+		}),
+		{}
+	);
+
+let [name, count] = process.argv.slice(2);
+count = count || 1;
+
+const id = id_by_name[name.toLowerCase().replace(/-/g, '')];
+
+for (let idx = 0; idx < count; ++idx) {
+	console.log(id.generate().toCanonical());
+}
