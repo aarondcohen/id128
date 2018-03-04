@@ -23,6 +23,7 @@ const MIN_TIME = new Date(ORIGIN);
 
 describe(described_class.name, function() {
 	beforeEach(() => described_class.reset());
+	after(() => described_class.reset());
 
 	assertDebuggable(described_class);
 	assertGenerateBasics(described_class);

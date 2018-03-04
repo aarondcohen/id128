@@ -39,6 +39,10 @@ function restoreClockSequence(bytes) {
 };
 
 class UlidMonotonic extends Ulid {
+	static reset() {
+		_previous_time = -1;
+		_previous_id = this.MIN();
+	}
 
 	//Constructors
 
@@ -57,13 +61,8 @@ class UlidMonotonic extends Ulid {
 
 		return (_previous_id = new this(bytes));
 	}
-
-	static resetClockSequence() {
-		_previous_time = -1;
-		_previous_id = this.MIN();
-	}
 }
 
-UlidMonotonic.resetClockSequence();
+UlidMonotonic.reset();
 
 module.exports = { UlidMonotonic };

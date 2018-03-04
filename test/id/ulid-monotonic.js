@@ -21,8 +21,8 @@ const MAX_TIME = new Date(Math.pow(2, 48) - 1);
 const MIN_TIME = new Date(0);
 
 describe(described_class.name, function() {
-	beforeEach(() => described_class.resetClockSequence());
-	after(() => described_class.resetClockSequence());
+	beforeEach(() => described_class.reset());
+	after(() => described_class.reset());
 
 	assertDebuggable(described_class);
 

@@ -199,7 +199,7 @@ since setting a future time and subsequently calling `generate` guarantees usage
 of the clock sequence.  Throws `ClockSequenceOverflow` when the clock sequence
 is exhausted.  This is provided mostly for unit tests.
 
-### .resetClockSequence()
+### .reset()
 Return the clock sequence to its starting position.  This is provided mostly for
 unit tests.
 

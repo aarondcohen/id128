@@ -90,6 +90,8 @@ class Uuid1 extends Uuid {
 		_previous_time = -1;
 	}
 
+	//Constructors
+
 	static generate({ node, time } = {}) {
 		time = EpochConverter.toEpoch(EPOCH_ORIGIN_MS, time);
 
