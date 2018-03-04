@@ -28,27 +28,23 @@
 	},
 	"devDependencies": {
 		"chai": "*",
-		"cuid": "*",
-		"ksuid": "*",
 		"matcha": "*",
 		"mocha": "*",
-		"nanoid": "*",
-		"sinon": "*",
-		"ulid": "*",
-		"uuid": "*",
-		"uuid-random": "*",
-		"uuid4": "*",
-		"uuidjs": "*"
+		"sinon": "*"
 	},
 	"keywords": [
 		"128-bit",
-		"crockford",
+		"crockford32",
 		"guid",
 		"id",
 		"random",
 		"rfc4122",
 		"ulid",
 		"unique id",
-		"uuid"
+		"uuid",
+		"uuidv1",
+		"uuidv4",
+		"uuid-v1",
+		"uuid-v4"
 	]
 }

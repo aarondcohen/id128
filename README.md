@@ -436,6 +436,8 @@ yarn test-all
 
 # Benchmarks
 
+Competitive benchmarks have been moved to [benchmark-guid](https://github.com/aarondcohen/benchmark-guid)
+
 To run the benchmarks:
 ```bash
 yarn install
@@ -497,31 +499,6 @@ yarn benchmark-all
    1,355,183 op/s » fromRawTrusted
    3,785,571 op/s » toCanonical
    3,810,341 op/s » toRaw
-
-                  Competitors
-   1,796,835 op/s » Id128.Ulid
-     959,462 op/s » Id128.Ulid Canonical
-   1,347,769 op/s » Id128.UlidMonotonic
-     850,103 op/s » Id128.UlidMonotonic Canonical
-   4,310,336 op/s » Id128.Uuid1
-   1,935,205 op/s » Id128.Uuid1 Canonical
-   2,029,128 op/s » Id128.Uuid4
-   1,390,913 op/s » Id128.Uuid4 Canonical
-   8,665,001 op/s » Id128.UuidNil
-   2,445,011 op/s » Id128.UuidNil Canonical
-     739,201 op/s » Cuid
-     103,135 op/s » Ksuid
-     332,636 op/s » Nanoid
-     313,136 op/s » Nanoid like Uuid v4
-      26,866 op/s » Ulid
-   1,820,417 op/s » Ulid Monotonic
-   2,240,589 op/s » Uuidv1
-     374,749 op/s » Uuidv4
-   1,487,795 op/s » UuidRandom
-     257,408 op/s » Uuid4
-      79,617 op/s » UuidJs
-      47,018 op/s » UuidJs v4
-      47,665 op/s » UuidJs v4 Canonical
 ```
 
 # Acknowledgments
