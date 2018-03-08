@@ -3,9 +3,10 @@
 Generate 128-bit unique identifiers for various specifications.  In particular:
 - [ULID](#ulid)
 - [Monotonic ULID](#ulidmonotonic)
-- [Nil UUID](#uuidnil)
-- [UUID Variant 1 Version 1](#uuid1)
-- [UUID Variant 1 Version 4](#uuid4)
+- [UUID 1 (Variant 1 Version 1)](#uuid1)
+- [UUID 4 (Variant 1 Version 4)](#uuid4)
+- [Nil UUID (Variant 0 Version 0)](#uuidnil)
+- [Uuid (Unknown Variant and Version)](#uuid)
 
 # Common Usage
 
@@ -13,6 +14,7 @@ Generate 128-bit unique identifiers for various specifications.  In particular:
 const {
 	Ulid,
 	UlidMonotonic,
+	Uuid,
 	Uuid1,
 	Uuid4,
 	UuidNil,
@@ -66,6 +68,38 @@ const {
 	// Decode a raw formatted id, skipping validation
 	console.log(id.equal(IdType.fromRawTrusted(raw)));
 });
+
+// Uuid Factory
+[0, 1, 4].forEach((version) => {
+	// Generate a new id
+	const id = IdType.generate({ version });
+
+	// Get the smallest valid id
+	const min = IdType.MIN({ version });
+
+	// Get the largest valid id
+	const max = IdType.MAX({ version });
+
+	// Encode the id in its canonical form
+	const canonical = id.toCanonical();
+	console.log(canonical);
+
+	// Encode the id for efficient db storage
+	const raw = id.toRaw();
+	console.log(raw);
+
+	// Decode a valid canonically formatted id
+	console.log(id.equal(IdType.fromCanonical(canonical)));
+
+	// Decode a canonically formatted id, skipping validation
+	console.log(id.equal(IdType.fromCanonicalTrusted(canonical)));
+
+	// Decode a valid raw formatted id
+	console.log(id.equal(IdType.fromRaw(raw)));
+
+	// Decode a raw formatted id, skipping validation
+	console.log(id.equal(IdType.fromRawTrusted(raw)));
+});
 ```
 ## Common Factory Properties
 
@@ -73,6 +107,9 @@ const {
 Return the name of the generated id type.
 
 ## Common Factory Methods
+
+### .construct(bytes) => id
+Return a new id instance without validating the bytes.
 
 ### .generate() => id
 Return a new id instance.
@@ -149,12 +186,12 @@ Ulid, as [specified](https://github.com/ulid/spec), has some nice properties:
 
 It is useful when you need a distributed domain unique id.
 
-## Additional Properties
+## Additional Instance Properties
 
 ### time
 Return a Date object for the epoch milliseconds encoded in the id.
 
-## Additional Methods
+## Additional Factory Methods
 
 ### .generate({ time }) => id
 Return a new id instance.  By default, the current time is generated on each call.
@@ -182,12 +219,12 @@ UlidMonotonic is inspired by the [specification](https://github.com/ulid/spec#mo
 
 It is useful when you need to guarantee a process unique id.
 
-## Additional Properties
+## Additional Instance Properties
 
 ### time
 Return a Date object for the epoch milliseconds encoded in the id.
 
-## Additional Methods
+## Additional Factory Methods
 
 ### .generate({ time }) => id
 Return a new id instance.  By default, the current time is generated on each call.
@@ -239,7 +276,7 @@ time collisions, resetting whenever given a new future time.  There are a few be
 - generating 4096 ids/ms (~4,000,000 ids/s) is wildly unlikely in real world uses
 - in the rare  hi-res overflow, the count simply spills over to the clock sequence
 
-## Additional Properties
+## Additional Instance Properties
 
 ### clock_sequence
 Return the clock sequence encoded in the id.
@@ -259,7 +296,7 @@ Return the variant as encoded in the id.  Should be 1.
 ### version
 Return the version as encoded in the id.  Should be 4.
 
-## Additional Methods
+## Additional Factory Methods
 
 ### .generate({ node, time }) => id
 Return a new id instance.  By default, the current time is generated on each call
@@ -301,7 +338,7 @@ Uuid4 implements the [RFC 4122 random uuid specification](https://tools.ietf.org
 
 It is useful when you need a well-supported globally unique id.
 
-## Additional Properties
+## Additional Instance Properties
 
 ### variant
 Return the variant as encoded in the id.  Should be 1.
@@ -326,7 +363,7 @@ UuidNil implements the [RFC 4122 nil uuid specification](https://tools.ietf.org/
 
 It is useful as placeholder for other 128-bit ids.
 
-## Additional Properties
+## Additional Instance Properties
 
 ### variant
 Return the variant as encoded in the id.  Should be 0.
@@ -339,6 +376,64 @@ Format `0000 0000 0000 v000 t000 0000 0000 0000` where:
 - `0` is 4 bits of 0
 - `v` is 4 bits of the version (also 0)
 - `t` is 2 bits of the variant (also 0) followed by 2 bits of 0
+
+# Uuid
+```es6
+const { Uuid } = require('id128');
+```
+
+Uuid is a factory for generating and decoding UUIDs when the version is unknown
+until runtime.  If the version is supported, it will produce UUIDs of the
+appropriate type.  In exchange for the runtime flexibility, there is a necessary
+performance degradation.  It is recommended to use this for decoding data from
+uncontrolled sources rather than generating new ids.
+
+Uuid supports all the same methods as the other ID factories.  All modifications
+to typical behavior are noted below.
+
+## Factory Properties
+
+### versioned_ids
+Return the factories of all the supported ids.
+
+## Factory Methods
+
+### .construct(bytes) => versioned_id
+Return a new versioned id instance without validating the bytes.
+Return a Uuid if an appropriate version does not exist.
+
+### .generate({ version, ... }) => versioned_id
+Return a new versioned id instance.  All additional arguments are passed through
+to the associated version.
+Throw `UnsupportedVersion` if no associated version exists.
+
+### .MIN({ version }) => versioned_id
+Return the versioned id instance with the smallest valid value.
+Throw `UnsupportedVersion` if no associated version exists.
+
+### .MAX({ version }) => versioned_id
+Return the versioned id instance with the largest valid value.
+Throw `UnsupportedVersion` if no associated version exists.
+
+### .fromCanonical(canonical_string) => versioned_id
+Decode a versioned id from its canonical representation.
+Return a Uuid if an appropriate version does not exist.
+Throw `InvalidEncoding` if the string is undecodable.
+
+### .fromCanonicalTrusted(canonical_string) => versioned_id
+Decode a versioned id from its canonical representation.
+Return a Uuid if an appropriate version does not exist.
+Skip validation and assume the input is decodable.
+
+### .fromRaw(raw_string) => versioned_id
+Decode a versioned id from its raw representation.
+Return a Uuid if an appropriate version does not exist.
+Throw `InvalidEncoding` if the string is undecodable.
+
+### .fromRawTrusted(raw_string) => versioned_id
+Decode a versioned id from its raw representation.
+Return a Uuid if an appropriate version does not exist.
+Skip validation and assume the input is decodable.
 
 # Exceptions
 ```es6
@@ -375,6 +470,12 @@ Decoding an invalid format or non-string object.  Likely to happen when decoding
 const { Exception: { InvalidEpoch } } = require('id128');
 ```
 Generating an id with an invalid timestamp.  Should not happen unless manually seeding `#generate`.
+
+## UnsupportedVersion
+```es6
+const { Exception: { UnsupportedVersion } } = require('id128');
+```
+Failed to find a factory for the desired version.  Likely to happen when decoding untrusted user input.
 
 # Browser Support
 
