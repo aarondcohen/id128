@@ -545,60 +545,87 @@ yarn benchmark-all
 ```
 
 ```
-                  Ulid
-   1,734,689 op/s » generate
-   6,587,875 op/s » MIN
-  11,148,917 op/s » MAX
-   1,556,664 op/s » fromCanonical
-   1,839,970 op/s » fromCanonicalTrusted
-   1,208,191 op/s » fromRaw
-   1,546,428 op/s » fromRawTrusted
-   2,786,469 op/s » toCanonical
-   5,238,923 op/s » toRaw
+                 Ulid
+  1,760,944 op/s » generate
+  6,594,260 op/s » MIN
+ 10,990,557 op/s » MAX
+  1,480,291 op/s » fromCanonical
+  1,826,968 op/s » fromCanonicalTrusted
+  1,228,723 op/s » fromRaw
+  1,548,906 op/s » fromRawTrusted
+  2,794,421 op/s » toCanonical
+  5,156,349 op/s » toRaw
 
-                  UlidMonotonic
-   1,482,951 op/s » generate
-   5,599,887 op/s » MIN
-   6,159,102 op/s » MAX
-   1,371,872 op/s » fromCanonical
-   1,545,196 op/s » fromCanonicalTrusted
-   1,080,544 op/s » fromRaw
-   1,357,742 op/s » fromRawTrusted
-   2,518,944 op/s » toCanonical
-   4,573,167 op/s » toRaw
+                 UlidMonotonic
+  1,703,140 op/s » generate
+  6,189,510 op/s » MIN
+  6,248,133 op/s » MAX
+  1,358,547 op/s » fromCanonical
+  1,603,756 op/s » fromCanonicalTrusted
+  1,128,702 op/s » fromRaw
+  1,404,526 op/s » fromRawTrusted
+  2,570,854 op/s » toCanonical
+  4,565,199 op/s » toRaw
 
-                  Uuid1
-   3,932,921 op/s » generate
-   8,046,123 op/s » MIN
-   8,109,215 op/s » MAX
-   1,026,660 op/s » fromCanonical
-   1,279,244 op/s » fromCanonicalTrusted
-   1,061,514 op/s » fromRaw
-   1,311,021 op/s » fromRawTrusted
-   4,164,810 op/s » toCanonical
-   3,882,307 op/s » toRaw
+                 Uuid1
+  3,846,210 op/s » generate
+  5,872,431 op/s » MIN
+  8,127,308 op/s » MAX
+  1,072,626 op/s » fromCanonical
+  1,295,915 op/s » fromCanonicalTrusted
+  1,147,182 op/s » fromRaw
+  1,406,157 op/s » fromRawTrusted
+  4,234,691 op/s » toCanonical
+  4,525,192 op/s » toRaw
 
-                  Uuid4
-   1,931,619 op/s » generate
-   5,578,405 op/s » MIN
-   5,851,649 op/s » MAX
-   1,041,400 op/s » fromCanonical
-   1,283,673 op/s » fromCanonicalTrusted
-   1,076,477 op/s » fromRaw
-   1,375,373 op/s » fromRawTrusted
-   4,115,202 op/s » toCanonical
-   4,502,261 op/s » toRaw
+                 Uuid4
+  2,183,526 op/s » generate
+  5,779,195 op/s » MIN
+  5,762,765 op/s » MAX
+  1,076,366 op/s » fromCanonical
+  1,291,582 op/s » fromCanonicalTrusted
+  1,141,181 op/s » fromRaw
+  1,384,508 op/s » fromRawTrusted
+  4,122,682 op/s » toCanonical
+  4,568,635 op/s » toRaw
 
-                  UuidNil
-   8,387,385 op/s » generate
-   5,241,476 op/s » MIN
-   9,156,954 op/s » MAX
-   1,032,409 op/s » fromCanonical
-   1,241,726 op/s » fromCanonicalTrusted
-   1,189,080 op/s » fromRaw
-   1,455,646 op/s » fromRawTrusted
-   3,877,682 op/s » toCanonical
-   4,209,638 op/s » toRaw
+                 UuidNil
+  8,258,386 op/s » generate
+  4,300,877 op/s » MIN
+  8,200,264 op/s » MAX
+  1,045,316 op/s » fromCanonical
+  1,285,898 op/s » fromCanonicalTrusted
+  1,229,899 op/s » fromRaw
+  1,477,772 op/s » fromRawTrusted
+  3,942,554 op/s » toCanonical
+  4,286,521 op/s » toRaw
+
+                 Uuid processing Uuid1
+  3,985,749 op/s » generate
+  4,284,471 op/s » MIN
+  5,002,648 op/s » MAX
+    974,158 op/s » fromCanonical
+  1,085,489 op/s » fromCanonicalTrusted
+  1,020,743 op/s » fromRaw
+  1,207,364 op/s » fromRawTrusted
+
+                 Uuid processing Uuid4
+  1,958,769 op/s » generate
+  4,236,707 op/s » MIN
+  4,995,024 op/s » MAX
+    948,984 op/s » fromCanonical
+  1,090,877 op/s » fromCanonicalTrusted
+  1,017,034 op/s » fromRaw
+  1,209,678 op/s » fromRawTrusted
+
+                 Uuid processing UuidNil
+  7,934,392 op/s » generate
+  4,079,253 op/s » MIN
+  8,149,968 op/s » MAX
+    921,704 op/s » fromCanonical
+  1,100,483 op/s » fromCanonicalTrusted
+  1,110,896 op/s » fromRaw
+  1,303,936 op/s » fromRawTrusted
 ```
 
 # Acknowledgments
