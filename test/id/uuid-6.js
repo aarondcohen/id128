@@ -15,7 +15,7 @@ const {
 const ByteArray = require('common/byte-array');
 const { InvalidEpoch } = require('common/exception');
 
-const { Uuid1: described_class } = require('id/uuid-1');
+const { Uuid6: described_class } = require('id/uuid-6');
 
 const ORIGIN = Date.parse('1582-10-15Z');
 const MAX_TIME = new Date(Math.pow(2, 48) - 1 + ORIGIN);
@@ -133,7 +133,7 @@ describe(described_class.name, function() {
 
 		it('has all 0-bits other than variant/version', function() {
 			const expected = ByteArray.generateZeroFilled();
-			expected.set([0b00010000], 6);
+			expected.set([0b01100000], 6);
 			expected.set([0b10000000], 8);
 
 			expect(subject().bytes).to.deep.equal(expected);
@@ -145,14 +145,14 @@ describe(described_class.name, function() {
 
 		it('has all 1-bits other than variant/version', function() {
 			const expected = ByteArray.generateOneFilled();
-			expected.set([0b00011111], 6);
+			expected.set([0b01101111], 6);
 			expected.set([0b10111111], 8);
 
 			expect(subject().bytes).to.deep.equal(expected);
 		});
 	});
 
-	assertUuidVariantVersion(described_class, 1, 1);
+	assertUuidVariantVersion(described_class, 1, 6);
 	assertAccessorBytes(described_class);
 	assertAccessorNode(described_class);
 	assertAccessorTime(described_class, [

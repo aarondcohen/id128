@@ -3,6 +3,7 @@
 const { expect } = require('chai');
 
 const ByteArray = require('common/byte-array');
+const Machine = require('common/machine');
 
 const extractId = ([_, id]) => id;
 const extractLabel = ([label, _]) => label;
@@ -17,6 +18,21 @@ function assertAccessorBytes(described_class) {
 				ByteArray.generateRandomFilled(),
 				ByteArray.generateOneFilled(),
 			].forEach((bytes) => expect(subject(bytes)).to.deep.equal(bytes));
+		});
+	});
+}
+
+function assertAccessorNode(described_class) {
+	describe('#node', function() {
+		const subject = (node) => described_class.generate({ node }).node;
+
+		it('returns the mac address by default', function() {
+			expect(subject()).to.deep.equal(Machine.mac_address);
+		});
+
+		it('returns the supplied node', function() {
+			const node = Uint8Array.of(1, 2, 3, 4, 5, 6);
+			expect(subject(node)).to.deep.equal(node);
 		});
 	});
 }
@@ -160,6 +176,7 @@ function assertUuidVariantVersion(described_class, variant, version) {
 
 module.exports = {
 	assertAccessorBytes,
+	assertAccessorNode,
 	assertAccessorTime,
 	assertCompareDemonstratesTotalOrder,
 	assertDebuggable,
