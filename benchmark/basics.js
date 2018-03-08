@@ -1,8 +1,10 @@
 const Id128 = require('../');
 const { IdFactory } = require('factory/id');
+const { VersionedIdFactory } = require('factory/versioned-id');
 
 Object.values(Id128)
 	.filter(x => x instanceof IdFactory)
+	.filter(x => !(x instanceof VersionedIdFactory))
 	.sort((l, r)  => l.name.localeCompare(r.name))
 	.forEach((id_type) => suite(id_type.name, function() {
 		set('iterations', 1000000);
