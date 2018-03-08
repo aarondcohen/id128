@@ -1,5 +1,5 @@
 const Os = require('os');
-const ByteArray = require('./byte-array');
+const { randomBytes } = require('./random-bytes');
 
 const _mac_address = Symbol('mac-address');
 
@@ -18,8 +18,8 @@ class Machine {
 				|| {};
 
 			mac_address = this[_mac_address] = mac
-				? Uint8Array.from(mac.split(/:/), (hex) => Number.parseInt(hex, 16))
-				: ByteArray.generateRandomFilled().slice(0, 6);
+				? Uint8Array.from(mac.split(':'), (hex) => Number.parseInt(hex, 16))
+				: randomBytes(6);
 
 			if (! mac) {
 				mac_address[0] |= 0b00000001;
