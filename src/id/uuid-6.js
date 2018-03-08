@@ -10,14 +10,14 @@ const {
 } = require('./uuid');
 
 const TIME_OFFSET = 0;
-const HIRES_TIME_OFFSET = 2;
+const HIRES_TIME_OFFSET = 6;
 const CLOCK_SEQUENCE_OFFSET = 8;
 const NODE_OFFSET = 10;
 
 const CLOCK_SEQUENCE_RADIX = Math.pow(2, 14);
 const EPOCH_ORIGIN_MS = Date.parse('1582-10-15Z');
 const HIRES_TIME_RADIX = Math.pow(2, 12);
-const TIME_LOW_MS_RADIX = Math.pow(2, 20);
+const UINT32_RADIX = Math.pow(2, 32);
 const UINT8_MAX = 0b11111111;
 
 let _clock_sequence;
@@ -59,24 +59,23 @@ function setTime(time, bytes) {
 		incrementClockSequence();
 	}
 
-	const time_low_ms = time % TIME_LOW_MS_RADIX;
-	const time_low = time_low_ms * HIRES_TIME_RADIX + _hires_time;
-	const time_high = (time - time_low_ms) / TIME_LOW_MS_RADIX;
+	const time_low = time % UINT32_RADIX;
+	const time_high = (time - time_low) / UINT32_RADIX;
 
 	let idx = TIME_OFFSET - 1;
+	bytes[++idx] = (time_high >>> 8) & UINT8_MAX;
+	bytes[++idx] = (time_high >>> 0) & UINT8_MAX;
 	bytes[++idx] = (time_low >>> 24) & UINT8_MAX;
 	bytes[++idx] = (time_low >>> 16) & UINT8_MAX;
 	bytes[++idx] = (time_low >>> 8) & UINT8_MAX;
 	bytes[++idx] = (time_low >>> 0) & UINT8_MAX;
-	bytes[++idx] = (time_high >>> 8) & UINT8_MAX;
-	bytes[++idx] = (time_high >>> 0) & UINT8_MAX;
-	bytes[++idx] = (time_high >>> 24) & UINT8_MAX;
-	bytes[++idx] = (time_high >>> 16) & UINT8_MAX;
+	bytes[++idx] = (_hires_time >>> 8) & UINT8_MAX;
+	bytes[++idx] = (_hires_time >>> 0) & UINT8_MAX;
 }
 
-class Uuid1 extends Uuid {
+class Uuid6 extends Uuid {
 	static get VARIANT() { return 1 }
-	static get VERSION() { return 1 }
+	static get VERSION() { return 6 }
 
 	static reset() {
 		_clock_sequence = null;
@@ -128,22 +127,20 @@ class Uuid1 extends Uuid {
 
 	get time() {
 		let idx = TIME_OFFSET - 1;
-		const time_low_ms = 0
-			| (this.bytes[++idx] << 12)
-			| (this.bytes[++idx] << 4)
-			| (this.bytes[++idx] >>> 4);
-		++idx; // Skip hi-res bits
 		const time_high = 0
 			| (this.bytes[++idx] << 8)
-			| (this.bytes[++idx] << 0)
-			| ((this.bytes[++idx] & 0x0F) << 24)
-			| (this.bytes[++idx] << 16);
-		const epoch_ms = time_high * TIME_LOW_MS_RADIX + time_low_ms;
+			| (this.bytes[++idx] << 0);
+		const time_low = 0
+			| (this.bytes[++idx] << 24)
+			| (this.bytes[++idx] << 16)
+			| (this.bytes[++idx] << 8)
+			| (this.bytes[++idx] << 0);
+		const epoch_ms = (time_high * UINT32_RADIX) + (time_low >>> 0);
 
 		return EpochConverter.fromEpoch(EPOCH_ORIGIN_MS, epoch_ms);
 	};
 }
 
-Uuid1.reset();
+Uuid6.reset();
 
-module.exports = { Uuid1 };
+module.exports = { Uuid6 };
