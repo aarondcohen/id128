@@ -1,4 +1,4 @@
-const ByteArray = require('./byte-array');
+const { randomBytes } = require('./random-bytes');
 
 const _mac_address = Symbol('mac-address');
 
@@ -11,7 +11,7 @@ class FakeMachine {
 		let mac_address = this[_mac_address];
 
 		if (! mac_address) {
-			mac_address = this[_mac_address] = ByteArray.generateRandomFilled().slice(0, 6);
+			mac_address = this[_mac_address] = randomBytes(6);
 			mac_address[0] |= 0b00000001;
 		}
 
