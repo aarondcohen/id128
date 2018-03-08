@@ -27,34 +27,38 @@ class IdFactory {
 
 	// Generators
 
-	generate(args = {}) {
-		return this[_id].generate(args);
+	construct(bytes) {
+		return new this[_id](bytes);
+	}
+
+	generate() {
+		return this[_id].generate(...arguments);
 	}
 
 	MIN() {
-		return this[_id].MIN();
+		return this[_id].MIN(...arguments);
 	}
 
 	MAX() {
-		return this[_id].MAX();
+		return this[_id].MAX(...arguments);
 	}
 
 	// Coders
 
 	fromCanonical(canonical) {
-		return new this[_id](this[_canonical_coder].decode(canonical));
+		return this.construct(this[_canonical_coder].decode(canonical));
 	}
 
 	fromCanonicalTrusted(canonical) {
-		return new this[_id](this[_canonical_coder].decodeTrusted(canonical));
+		return this.construct(this[_canonical_coder].decodeTrusted(canonical));
 	}
 
 	fromRaw(raw) {
-		return new this[_id](this[_raw_coder].decode(raw));
+		return this.construct(this[_raw_coder].decode(raw));
 	}
 
 	fromRawTrusted(raw) {
-		return new this[_id](this[_raw_coder].decodeTrusted(raw));
+		return this.construct(this[_raw_coder].decodeTrusted(raw));
 	}
 
 	toCanonical(id) {

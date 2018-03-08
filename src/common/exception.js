@@ -6,6 +6,7 @@ class ClockSequenceOverflow extends Id128Error {}
 class InvalidBytes extends Id128Error {}
 class InvalidEncoding extends Id128Error {}
 class InvalidEpoch extends Id128Error {}
+class UnsupportedVersion extends Id128Error {}
 
 module.exports = {
 	Id128Error,
@@ -13,4 +14,5 @@ module.exports = {
 	InvalidBytes,
 	InvalidEncoding,
 	InvalidEpoch,
+	UnsupportedVersion,
 };
