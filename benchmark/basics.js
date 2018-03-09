@@ -1,6 +1,6 @@
 const Id128 = require('../');
-const { IdFactory } = require('factory/id');
-const { VersionedIdFactory } = require('factory/versioned-id');
+const { IdFactory } = require('../utils');
+const { VersionedIdFactory } = require('../utils');
 
 Object.values(Id128)
 	.filter(x => x instanceof IdFactory)
