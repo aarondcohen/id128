@@ -5,6 +5,7 @@ Generate 128-bit unique identifiers for various specifications.  In particular:
 - [Monotonic ULID](#ulidmonotonic)
 - [UUID 1 (Variant 1 Version 1)](#uuid1)
 - [UUID 4 (Variant 1 Version 4)](#uuid4)
+- [UUID 6 (Variant 1 Version 6)](#uuid6)
 - [Nil UUID (Variant 0 Version 0)](#uuidnil)
 - [Uuid (Unknown Variant and Version)](#uuid)
 
@@ -17,6 +18,7 @@ const {
 	Uuid,
 	Uuid1,
 	Uuid4,
+	Uuid6,
 	UuidNil,
 } = require('id128');
 
@@ -26,6 +28,7 @@ const {
 	UlidMonotonic,
 	Uuid1,
 	Uuid4,
+	Uuid6,
 	UuidNil,
 ].forEach((IdType) => {
 	// Identify the factory
@@ -70,15 +73,15 @@ const {
 });
 
 // Uuid Factory
-[0, 1, 4].forEach((version) => {
+[0, 1, 4, 6].forEach((version) => {
 	// Generate a new id
-	const id = IdType.generate({ version });
+	const id = Uuid.generate({ version });
 
 	// Get the smallest valid id
-	const min = IdType.MIN({ version });
+	const min = Uuid.MIN({ version });
 
 	// Get the largest valid id
-	const max = IdType.MAX({ version });
+	const max = Uuid.MAX({ version });
 
 	// Encode the id in its canonical form
 	const canonical = id.toCanonical();
@@ -89,16 +92,16 @@ const {
 	console.log(raw);
 
 	// Decode a valid canonically formatted id
-	console.log(id.equal(IdType.fromCanonical(canonical)));
+	console.log(id.equal(Uuid.fromCanonical(canonical)));
 
 	// Decode a canonically formatted id, skipping validation
-	console.log(id.equal(IdType.fromCanonicalTrusted(canonical)));
+	console.log(id.equal(Uuid.fromCanonicalTrusted(canonical)));
 
 	// Decode a valid raw formatted id
-	console.log(id.equal(IdType.fromRaw(raw)));
+	console.log(id.equal(Uuid.fromRaw(raw)));
 
 	// Decode a raw formatted id, skipping validation
-	console.log(id.equal(IdType.fromRawTrusted(raw)));
+	console.log(id.equal(Uuid.fromRawTrusted(raw)));
 });
 ```
 ## Common Factory Properties
@@ -351,6 +354,67 @@ Format `rrrr rrrr rrrr vrrr trrr rrrr rrrr rrrr` where:
 - `r` is 4 bits of random
 - `v` is 4 bits of the version
 - `t` is 2 bits of the variant followed by 2 bits of random
+
+# Uuid6
+```es6
+const { Uuid6 } = require('id128');
+```
+
+Uuid6 implements this [controversial blog post](https://bradleypeabody.github.io/uuidv6/):
+- time-based: encodes the current millisecond timestamp
+- location-based: encodes the mac address of the machine
+
+This is essentially the same implementation as Uuid1, however the time bits are
+arranged in lexicographical order.  If you're looking for a spacial UUID that
+is optimized for clustered indices, consider Uuid6 as a viable option.
+
+## Additional Instance Properties
+
+### clock_sequence
+Return the clock sequence encoded in the id.
+
+### hires_time
+Return the number of prior ids generated while time stood still.
+
+### node
+Raturn the MAC address encoded in the id.
+
+### time
+Return a Date object for the epoch milliseconds encoded in the id.
+
+### variant
+Return the variant as encoded in the id.  Should be 1.
+
+### version
+Return the version as encoded in the id.  Should be 6.
+
+## Additional Factory Methods
+
+### .generate({ node, time }) => id
+Return a new id instance.  By default, the current time is generated on each call
+and the MAC address is used as the node.  When the MAC address is unavailable,
+the node defaults to a random multicast address instead.  Setting both `node` and
+`time` to `null` or `undefined` triggers the default behavior.
+`time` can be given either as a `Date` object or Gregorian milliseconds
+(milliseconds since October 15th, 1582).  For times prior to the Gregorian epoch
+or after approximately May 17, 10502, throws `InvalidEpoch`.  Extra caution is
+required since setting a future time and subsequently calling `generate`
+guarantees usage of the hi-res counter and clock sequence.  Time should only be
+manipulated manually in testing.
+
+### .reset()
+Return the hi-res counter to its starting position and generate a new random
+clock sequence seed.  This is provided mostly for unit tests.
+
+## Byte Format
+Format `mmmm mmmm mmmm vnnn tccc aaaa aaaa aaaa` where:
+- `m` is 4 bits of millisecond time
+- `n` is 4 bits of hi-res time
+- `v` is 4 bits of the version
+- `h` is 4 bits of high millisecond time
+- `t` is 2 bits of the variant followed by 2 bits of the clock sequence
+- `c` is 4 bits of the clock sequence
+- `a` is 4 bits of the machine address
 
 # UuidNil
 ```es6

@@ -138,6 +138,7 @@ function assertValidId128(id_name, factory, id_class, generator_args = {}) {
 [
 	['Uuid1', { version: 1 }],
 	['Uuid4', { version: 4 }],
+	['Uuid6', { version: 6 }],
 	['UuidNil', { version: 0 }],
 ].forEach(([id_name, generator_args]) => {
 	describe(`Uuid Factory generating ${id_name}`, function() {
