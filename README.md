@@ -288,7 +288,7 @@ Return the clock sequence encoded in the id.
 Return the number of prior ids generated while time stood still.
 
 ### node
-Raturn the MAC address encoded in the id.
+Return the MAC address encoded in the id.
 
 ### time
 Return a Date object for the epoch milliseconds encoded in the id.
@@ -377,7 +377,7 @@ Return the clock sequence encoded in the id.
 Return the number of prior ids generated while time stood still.
 
 ### node
-Raturn the MAC address encoded in the id.
+Return the MAC address encoded in the id.
 
 ### time
 Return a Date object for the epoch milliseconds encoded in the id.
