@@ -41,6 +41,7 @@
 		"id",
 		"mac",
 		"mac-address",
+		"monotonic",
 		"random",
 		"rfc",
 		"rfc-4122",
