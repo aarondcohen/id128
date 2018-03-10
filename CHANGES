@@ -8,3 +8,4 @@
 - 1.1.0 : Performance improvements and renamed resetClockSequence to reset.
 - 1.1.1 : Fixed repo link.
 - 1.2.0 : Added generic UUID factory
+- 1.3.0 : Added UUID V6 support
