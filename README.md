@@ -197,12 +197,13 @@ Return a Date object for the epoch milliseconds encoded in the id.
 ## Additional Factory Methods
 
 ### .generate({ time }) => id
-Return a new id instance.  By default, the current time is generated on each call.
-Setting `time` to `null` or `undefined` triggers the default behavior.
-`time` can be given either as a `Date` object or epoch milliseconds
-(milliseconds since January 1st, 1970).  For times prior to the epoch or after
-approximately August 2nd, 10889, throws `InvalidEpoch`. This is provided mostly
-for unit tests.
+Return a new id instance.  Set any argument to `null` or `undefined` to trigger
+its default behavior.
+
+`time` defaults to the current time.  It can be given either as a `Date` object
+or epoch milliseconds (milliseconds since January 1st, 1970).
+Throw `InvalidEpoch` for times before the epoch or after approximately August 2nd, 10889.
+This is provided mostly for unit tests.
 
 ## Byte Format
 Format `ttttttrrrrrrrrrr` where:
@@ -230,14 +231,16 @@ Return a Date object for the epoch milliseconds encoded in the id.
 ## Additional Factory Methods
 
 ### .generate({ time }) => id
-Return a new id instance.  By default, the current time is generated on each call.
-Setting `time` to `null` or `undefined` triggers the default behavior.
-`time` can be given either as a `Date` object or epoch milliseconds
-(milliseconds since January 1st, 1970).  For times prior to the epoch or after
-approximately August 2nd, 10889, throws `InvalidEpoch`.  Extra caution is required
-since setting a future time and subsequently calling `generate` guarantees usage
-of the clock sequence.  Throws `ClockSequenceOverflow` when the clock sequence
-is exhausted.  This is provided mostly for unit tests.
+Return a new id instance.  Set any argument to `null` or `undefined` to trigger
+its default behavior.
+
+`time` defaults to the current time.  It can be given either as a `Date` object
+or epoch milliseconds (milliseconds since January 1st, 1970).  Extra caution is
+required since setting a future time and subsequently calling `generate`
+guarantees usage of the clock sequence.
+Throw `InvalidEpoch` for times before the epoch or after approximately August 2nd, 10889.
+Throw `ClockSequenceOverflow` when the clock sequence is exhausted.
+This is provided mostly for unit tests.
 
 ### .reset()
 Return the clock sequence to its starting position.  This is provided mostly for
@@ -302,16 +305,18 @@ Return the version as encoded in the id.  Should be 4.
 ## Additional Factory Methods
 
 ### .generate({ node, time }) => id
-Return a new id instance.  By default, the current time is generated on each call
-and the MAC address is used as the node.  When the MAC address is unavailable,
-the node defaults to a random multicast address instead.  Setting both `node` and
-`time` to `null` or `undefined` triggers the default behavior.
-`time` can be given either as a `Date` object or Gregorian milliseconds
-(milliseconds since October 15th, 1582).  For times prior to the Gregorian epoch
-or after approximately May 17, 10502, throws `InvalidEpoch`.  Extra caution is
-required since setting a future time and subsequently calling `generate`
-guarantees usage of the hi-res counter and clock sequence.  Time should only be
-manipulated manually in testing.
+Return a new id instance.  Set any argument to `null` or `undefined` to trigger
+its default behavior.
+
+`time` defaults to the current time.  It can be given either as a `Date` object
+or Gregorian milliseconds (milliseconds since October 15th, 1582).  Extra caution
+is required since setting a future time and subsequently calling `generate`
+guarantees usage of the hi-res counter and clock sequence.
+Throw `InvalidEpoch` for times before the Gregorian epoch or after approximately May 17, 10502.
+This is provided mostly for unit tests.
+
+`node` defaults to the MAC address, or a random multicast address when the MAC
+address is unavilable.  It can be given as an array of 6 bytes.
 
 ### .reset()
 Return the hi-res counter to its starting position and generate a new random
@@ -391,16 +396,18 @@ Return the version as encoded in the id.  Should be 6.
 ## Additional Factory Methods
 
 ### .generate({ node, time }) => id
-Return a new id instance.  By default, the current time is generated on each call
-and the MAC address is used as the node.  When the MAC address is unavailable,
-the node defaults to a random multicast address instead.  Setting both `node` and
-`time` to `null` or `undefined` triggers the default behavior.
-`time` can be given either as a `Date` object or Gregorian milliseconds
-(milliseconds since October 15th, 1582).  For times prior to the Gregorian epoch
-or after approximately May 17, 10502, throws `InvalidEpoch`.  Extra caution is
-required since setting a future time and subsequently calling `generate`
-guarantees usage of the hi-res counter and clock sequence.  Time should only be
-manipulated manually in testing.
+Return a new id instance.  Set any argument to `null` or `undefined` to trigger
+its default behavior.
+
+`time` defaults to the current time.  It can be given either as a `Date` object
+or Gregorian milliseconds (milliseconds since October 15th, 1582).  Extra caution
+is required since setting a future time and subsequently calling `generate`
+guarantees usage of the hi-res counter and clock sequence.
+Throw `InvalidEpoch` for times before the Gregorian epoch or after approximately May 17, 10502.
+This is provided mostly for unit tests.
+
+`node` defaults to the MAC address, or a random multicast address when the MAC
+address is unavilable.  It can be given as an array of 6 bytes.
 
 ### .reset()
 Return the hi-res counter to its starting position and generate a new random
