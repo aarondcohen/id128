@@ -316,7 +316,7 @@ Throw `InvalidEpoch` for times before the Gregorian epoch or after approximately
 This is provided mostly for unit tests.
 
 `node` defaults to the MAC address, or a random multicast address when the MAC
-address is unavilable.  It can be given as an array of 6 bytes.
+address is unavailable.  It can be given as an array of 6 bytes.
 
 ### .reset()
 Return the hi-res counter to its starting position and generate a new random
@@ -407,7 +407,7 @@ Throw `InvalidEpoch` for times before the Gregorian epoch or after approximately
 This is provided mostly for unit tests.
 
 `node` defaults to the MAC address, or a random multicast address when the MAC
-address is unavilable.  It can be given as an array of 6 bytes.
+address is unavailable.  It can be given as an array of 6 bytes.
 
 ### .reset()
 Return the hi-res counter to its starting position and generate a new random
