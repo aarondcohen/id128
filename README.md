@@ -300,7 +300,7 @@ Return a Date object for the epoch milliseconds encoded in the id.
 Return the variant as encoded in the id.  Should be 1.
 
 ### version
-Return the version as encoded in the id.  Should be 4.
+Return the version as encoded in the id.  Should be 1.
 
 ## Additional Factory Methods
 
