@@ -19,12 +19,14 @@ const factory = new described_class({
 		encodeTrusted: (bytes) => `canonical ${bytes}`,
 		decode: (str) => str.replace(/^canonical(?:_distrusted)? /, ''),
 		decodeTrusted: (str) => str.replace(/^canonical /, ''),
+		isValidEncoding: (str) => /^canonical /.test(str),
 	},
 	raw_coder: {
 		encode: (bytes) => `raw ${bytes}`,
 		encodeTrusted: (bytes) => `raw ${bytes}`,
 		decode: (str) => str.replace(/^raw(?:_distrusted)? /, ''),
 		decodeTrusted: (str) => str.replace(/^raw /, ''),
+		isValidEncoding: (str) => /^raw /.test(str),
 	},
 });
 
@@ -86,6 +88,40 @@ function assertInjectsInstanceMethod(injected_method, generator) {
 	});
 }
 
+function assertVerifier(method, validEncoding) {
+	const conditions = [
+		['canonical', factory.generate().toCanonical()],
+		['raw', factory.generate().toRaw()],
+		['other', 'some random string'],
+	];
+
+	describe(`#${method}`, function() {
+		const subject = str => factory[method](str);
+
+		const {
+			true: trueConditions,
+			false: falseConditions,
+		} = conditions.reduce(
+			(partitions, condition) => {
+				const [name] = condition;
+				partitions[validEncoding === name].push(condition);
+				return partitions;
+			},
+			{ true: [], false: [] },
+		);
+
+		it('detects valid encodings', function() {
+			trueConditions.forEach(([name, encoding]) =>
+				expect(subject(encoding), name).to.be.true);
+		});
+
+		it('rejects invalid encodings', function() {
+			falseConditions.forEach(([name, encoding]) =>
+				expect(subject(encoding), name).to.be.false);
+		});
+	});
+}
+
 
 describe(described_class.name, function() {
 	describe('#construct', function() {
@@ -119,5 +155,8 @@ describe(described_class.name, function() {
 
 	assertEncoder('toCanonical', /^canonical id_\d+$/);
 	assertEncoder('toRaw', /^raw id_\d+$/);
+
+	assertVerifier('isCanonical', 'canonical');
+	assertVerifier('isRaw', 'raw');
 });
 

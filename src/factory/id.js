@@ -78,6 +78,16 @@ class IdFactory {
 	equal(lhs, rhs) {
 		return lhs.equal(rhs);
 	}
+
+	// Verifiers
+
+	isCanonical(canonical) {
+		return this[_canonical_coder].isValidEncoding(canonical);
+	}
+
+	isRaw(raw) {
+		return this[_raw_coder].isValidEncoding(raw);
+	}
 }
 
 module.exports = { IdFactory };

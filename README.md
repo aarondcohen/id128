@@ -59,11 +59,17 @@ const {
 	const raw = id.toRaw();
 	console.log(raw);
 
+	// Verify a canonically formatted id
+	console.log(IdType.isCanonical(canonical));
+
 	// Decode a valid canonically formatted id
 	console.log(id.equal(IdType.fromCanonical(canonical)));
 
 	// Decode a canonically formatted id, skipping validation
 	console.log(id.equal(IdType.fromCanonicalTrusted(canonical)));
+
+	// Verify a raw formatted id
+	console.log(IdType.isRaw(raw));
 
 	// Decode a valid raw formatted id
 	console.log(id.equal(IdType.fromRaw(raw)));
@@ -153,6 +159,12 @@ the right id using lexicographical byte order.
 
 ### .equal(left_id, right_id) => (true|false)
 Determine if 2 ids have the same byte value.
+
+### .isCanonical(canonical_string) => (true|false)
+Verify if a string is a valid canonical encoding.
+
+### .isRaw(raw_string) => (true|false)
+Verify if a string is a valid raw encoding.
 
 ## Common Instance Properties
 
