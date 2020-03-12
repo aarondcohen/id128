@@ -23,8 +23,8 @@
 		"./src/common/random-bytes.js": "./src/common/random-bytes-browser.js"
 	},
 	"scripts": {
-		"benchmark": "NODE_PATH='./src/' matcha",
-		"benchmark-all": "NODE_PATH='./src/' matcha benchmark/*",
+		"benchmark-all": "NODE_PATH='./src/' node benchmark/basics.js && node benchmark/factory-uuid.js",
+		"call": "NODE_PATH='./src/' node",
 		"test": "NODE_PATH='./src/' mocha",
 		"test-all": "NODE_PATH='./src/' mocha test/*"
 	},
@@ -32,8 +32,8 @@
 		"node": ">=v6.9.0"
 	},
 	"devDependencies": {
+		"benchmarkify": "*",
 		"chai": "*",
-		"matcha": "*",
 		"mocha": "*",
 		"sinon": "*"
 	},
