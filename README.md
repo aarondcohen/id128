@@ -267,14 +267,13 @@ Format `ttttttccrrrrrrrr` where:
 More specifically, the clock sequence is a counter.  When the first id for a new
 timestamp is generated, the clock sequence is seeded with random bits and the
 left-most clock sequence bit is set to 0, reserving 2^15 clock ticks.  Whenever
-a time from the past (now is so ephemeral) seeds the generator, the previous id's
-time and clock sequence is used instead, incremented by 1.  This guarantees strict
-local monotonicity and preserves lexical ordering and general randomness.
+a time from the past seeds the generator, the previous id's time and clock sequence
+are used instead, with the clock sequence incremented by 1.  This guarantees
+strict local monotonicity and preserves lexical ordering and general randomness.
 
-Given UlidMonotonic currently generates approximately 850 ids per millisecond,
-the clock sequence should never overflow.  This also means the left most bit of
-the clock sequence will rarely be set to 1.  However, in the unlikely event of
-an overflow, id generation should be aborted.
+Without a seeded time, UlidMonotonic is unlikely to exceed the clock sequence
+(the clock sequence supports generating a new id every 31 nanoseconds). However,
+in the unlikely event of an overflow, id generation is aborted.
 
 # Uuid1
 ```es6
@@ -628,107 +627,124 @@ yarn benchmark-all
 ```
 
 ```
-                 Ulid
-  1,769,033 op/s » generate
-  6,569,198 op/s » MIN
- 11,014,665 op/s » MAX
-  1,477,454 op/s » fromCanonical
-  1,748,102 op/s » fromCanonicalTrusted
-  1,242,933 op/s » fromRaw
-  1,536,321 op/s » fromRawTrusted
-  2,802,490 op/s » toCanonical
-  5,258,532 op/s » toRaw
+Platform info
+=============
+	Darwin 18.2.0 x64
+	Node.JS: 13.1.0
+	V8: 7.8.279.17-node.19
+	Intel(R) Core(TM) i7-4578U CPU @ 3.00GHz × 4
 
-                 UlidMonotonic
-  1,695,117 op/s » generate
-  5,967,879 op/s » MIN
-  6,137,375 op/s » MAX
-  1,322,621 op/s » fromCanonical
-  1,555,218 op/s » fromCanonicalTrusted
-  1,150,228 op/s » fromRaw
-  1,377,673 op/s » fromRawTrusted
-  2,603,634 op/s » toCanonical
-  4,629,156 op/s » toRaw
+Ulid
+====
+	generate:                  (3,773,495 rps)   (avg: 265ns)
+	MIN:                      (10,973,370 rps)   (avg: 91ns)
+	MAX:                      (10,632,353 rps)   (avg: 94ns)
+	fromCanonical:             (1,682,872 rps)   (avg: 594ns)
+	fromCanonicalTrusted:      (1,781,927 rps)   (avg: 561ns)
+	fromRaw:                   (1,387,051 rps)   (avg: 720ns)
+	fromRawTrusted:            (1,778,223 rps)   (avg: 562ns)
+	toCanonical:               (3,308,341 rps)   (avg: 302ns)
+	toRaw:                     (5,402,469 rps)   (avg: 185ns)
 
-                 Uuid1
-  3,878,454 op/s » generate
-  5,779,313 op/s » MIN
-  8,024,808 op/s » MAX
-  1,085,930 op/s » fromCanonical
-  1,354,619 op/s » fromCanonicalTrusted
-  1,165,904 op/s » fromRaw
-  1,433,542 op/s » fromRawTrusted
-  3,651,304 op/s » toCanonical
-  4,537,886 op/s » toRaw
+UlidMonotonic
+=============
+	generate:                  (3,244,846 rps)   (avg: 308ns)
+	MIN:                       (5,906,660 rps)   (avg: 169ns)
+	MAX:                       (5,779,445 rps)   (avg: 173ns)
+	fromCanonical:             (1,465,037 rps)   (avg: 682ns)
+	fromCanonicalTrusted:      (1,736,835 rps)   (avg: 575ns)
+	fromRaw:                   (1,320,917 rps)   (avg: 757ns)
+	fromRawTrusted:            (1,656,616 rps)   (avg: 603ns)
+	toCanonical:               (3,255,027 rps)   (avg: 307ns)
+	toRaw:                     (5,613,319 rps)   (avg: 178ns)
 
-                 Uuid4
-  2,175,579 op/s » generate
-  4,768,260 op/s » MIN
-  5,859,188 op/s » MAX
-  1,059,137 op/s » fromCanonical
-  1,275,629 op/s » fromCanonicalTrusted
-  1,148,766 op/s » fromRaw
-  1,403,192 op/s » fromRawTrusted
-  4,196,694 op/s » toCanonical
-  4,522,759 op/s » toRaw
+Uuid1
+=====
+	generate:                  (4,990,647 rps)   (avg: 200ns)
+	MIN:                      (10,111,392 rps)   (avg: 98ns)
+	MAX:                      (10,102,972 rps)   (avg: 98ns)
+	fromCanonical:             (1,295,991 rps)   (avg: 771ns)
+	fromCanonicalTrusted:      (1,568,558 rps)   (avg: 637ns)
+	fromRaw:                   (1,311,402 rps)   (avg: 762ns)
+	fromRawTrusted:            (1,659,691 rps)   (avg: 602ns)
+	toCanonical:               (5,788,985 rps)   (avg: 172ns)
+	toRaw:                     (5,728,554 rps)   (avg: 174ns)
 
-                 Uuid6
-  3,748,749 op/s » generate
-  3,878,965 op/s » MIN
-  4,811,298 op/s » MAX
-  1,089,643 op/s » fromCanonical
-  1,299,267 op/s » fromCanonicalTrusted
-  1,090,523 op/s » fromRaw
-  1,373,687 op/s » fromRawTrusted
-  3,894,566 op/s » toCanonical
-  4,114,762 op/s » toRaw
+Uuid4
+=====
+	generate:                  (4,953,310 rps)   (avg: 201ns)
+	MIN:                       (5,464,391 rps)   (avg: 183ns)
+	MAX:                       (5,555,808 rps)   (avg: 179ns)
+	fromCanonical:             (1,239,890 rps)   (avg: 806ns)
+	fromCanonicalTrusted:      (1,484,790 rps)   (avg: 673ns)
+	fromRaw:                   (1,282,846 rps)   (avg: 779ns)
+	fromRawTrusted:            (1,623,020 rps)   (avg: 616ns)
+	toCanonical:               (5,880,410 rps)   (avg: 170ns)
+	toRaw:                     (5,748,660 rps)   (avg: 173ns)
 
-                 UuidNil
-  8,618,101 op/s » generate
-  4,174,545 op/s » MIN
-  8,297,900 op/s » MAX
-  1,072,836 op/s » fromCanonical
-  1,272,640 op/s » fromCanonicalTrusted
-  1,247,268 op/s » fromRaw
-  1,509,222 op/s » fromRawTrusted
-  3,909,988 op/s » toCanonical
-  4,105,263 op/s » toRaw
+Uuid6
+=====
+	generate:                  (4,286,275 rps)   (avg: 233ns)
+	MIN:                       (4,915,458 rps)   (avg: 203ns)
+	MAX:                       (4,937,495 rps)   (avg: 202ns)
+	fromCanonical:             (1,267,923 rps)   (avg: 788ns)
+	fromCanonicalTrusted:      (1,545,612 rps)   (avg: 646ns)
+	fromRaw:                   (1,318,774 rps)   (avg: 758ns)
+	fromRawTrusted:            (1,668,548 rps)   (avg: 599ns)
+	toCanonical:               (4,422,988 rps)   (avg: 226ns)
+	toRaw:                     (4,824,185 rps)   (avg: 207ns)
 
-                 Uuid processing Uuid1
-  4,008,788 op/s » generate
-  3,959,086 op/s » MIN
-  4,734,408 op/s » MAX
-    953,132 op/s » fromCanonical
-  1,111,260 op/s » fromCanonicalTrusted
-    990,218 op/s » fromRaw
-  1,218,708 op/s » fromRawTrusted
+UuidNil
+=======
+	generate:                  (8,300,439 rps)   (avg: 120ns)
+	MIN:                       (5,048,557 rps)   (avg: 198ns)
+	MAX:                       (8,304,089 rps)   (avg: 120ns)
+	fromCanonical:             (1,249,884 rps)   (avg: 800ns)
+	fromCanonicalTrusted:      (1,551,216 rps)   (avg: 644ns)
+	fromRaw:                   (1,437,341 rps)   (avg: 695ns)
+	fromRawTrusted:            (1,749,802 rps)   (avg: 571ns)
+	toCanonical:               (4,296,274 rps)   (avg: 232ns)
+	toRaw:                     (4,855,101 rps)   (avg: 205ns)
 
-                 Uuid processing Uuid4
-  2,088,674 op/s » generate
-  3,952,405 op/s » MIN
-  4,824,903 op/s » MAX
-    972,908 op/s » fromCanonical
-  1,107,268 op/s » fromCanonicalTrusted
-    988,771 op/s » fromRaw
-  1,209,602 op/s » fromRawTrusted
+Uuid processing Uuid1
+=====================
+	generate:                  (5,013,752 rps)   (avg: 199ns)
+	MAX:                       (9,032,008 rps)   (avg: 110ns)
+	MIN:                      (11,310,608 rps)   (avg: 88ns)
+	fromCanonical:             (1,029,006 rps)   (avg: 971ns)
+	fromCanonicalTrusted:      (1,249,435 rps)   (avg: 800ns)
+	fromRaw:                   (1,057,548 rps)   (avg: 945ns)
+	fromRawTrusted:            (1,277,496 rps)   (avg: 782ns)
 
-                 Uuid processing Uuid6
-  3,988,815 op/s » generate
-  4,048,811 op/s » MIN
-  4,771,905 op/s » MAX
-    983,902 op/s » fromCanonical
-  1,123,541 op/s » fromCanonicalTrusted
-    991,070 op/s » fromRaw
-  1,242,203 op/s » fromRawTrusted
+Uuid processing Uuid4
+=====================
+	generate:                  (4,505,300 rps)   (avg: 221ns)
+	MAX:                       (5,424,698 rps)   (avg: 184ns)
+	MIN:                       (5,472,017 rps)   (avg: 182ns)
+	fromCanonical:               (969,261 rps)   (avg: 1μs)
+	fromCanonicalTrusted:      (1,224,045 rps)   (avg: 816ns)
+	fromRaw:                   (1,071,794 rps)   (avg: 933ns)
+	fromRawTrusted:            (1,309,065 rps)   (avg: 763ns)
 
-                 Uuid processing UuidNil
-  8,144,932 op/s » generate
-  3,993,800 op/s » MIN
-  8,180,888 op/s » MAX
-    960,049 op/s » fromCanonical
-  1,091,887 op/s » fromCanonicalTrusted
-  1,089,924 op/s » fromRaw
-  1,311,902 op/s » fromRawTrusted
+Uuid processing Uuid6
+=====================
+	generate:                  (4,086,474 rps)   (avg: 244ns)
+	MAX:                       (5,482,620 rps)   (avg: 182ns)
+	MIN:                       (5,374,116 rps)   (avg: 186ns)
+	fromCanonical:             (1,020,569 rps)   (avg: 979ns)
+	fromCanonicalTrusted:      (1,215,470 rps)   (avg: 822ns)
+	fromRaw:                   (1,085,620 rps)   (avg: 921ns)
+	fromRawTrusted:            (1,332,100 rps)   (avg: 750ns)
+
+Uuid processing UuidNil
+=======================
+	generate:                  (9,478,763 rps)   (avg: 105ns)
+	MAX:                       (9,218,737 rps)   (avg: 108ns)
+	MIN:                       (5,246,739 rps)   (avg: 190ns)
+	fromCanonical:             (1,018,739 rps)   (avg: 981ns)
+	fromCanonicalTrusted:      (1,237,939 rps)   (avg: 807ns)
+	fromRaw:                   (1,165,352 rps)   (avg: 858ns)
+	fromRawTrusted:            (1,352,172 rps)   (avg: 739ns)
 ```
 
 # Acknowledgments
