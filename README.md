@@ -606,6 +606,69 @@ to support.  I expect these caveats to be unnecessary within the next 5 years.
 All that said, please notify me of any issues with modern browsers and I'll do
 my best to support you.
 
+# Typescript Support
+
+This module includes Typescript bindings for all primary usage patterns.
+I'd like to highlight some design decisions:
+
+## Id Types and Factory Types
+Each factory is exported as an instance using the same name as the type of id
+it produces.  In Javascript, this is desirable as it provides a uniform interface
+regardless of the implementation.  However, this complicates the Typescript
+type imports.
+
+For simple cases, like constructing an id and passing it around the program,
+this will behave exactly as desired:
+```
+import { Ulid } from 'id128'
+
+const id: Ulid = Ulid.generate()
+```
+
+When you need to check the type of the id, you should use the `type` attribute:
+```
+import { Ulid } from 'id128'
+
+const id: Ulid = Ulid.generate()
+if (id instanceof Ulid.type) { ... }
+```
+
+If you wish to pass around the factory itself, you can import the factory type:
+```
+import { Ulid } from 'id128'
+import type { UlidFactory } from 'id128'
+
+function doSomething(factory: UlidFactory) { ... }
+doSomething(Ulid)
+```
+
+Finally, if you need to operate on any id or id factory, you can import base types:
+```
+import type { Id, AnyIdFactory } from 'id128'
+
+function makeOne(factory: AnyIdFactory): Id {
+	return factory.generate()
+}
+```
+
+## Exception Handling
+Exception classes are designed to be checked using `instanceof`.  Unfortunately,
+Typescript broke `instanceof` `Error` support for a more compliant compilation.
+Fortunately, the included exceptions bypass the issues caused by inheriting from
+the native `Error` by never overriding the constructor and implementing `name`
+as a readonly getter,  As a consequence, the exceptions actually violate the
+standard `Error` interface, but they fulfill the standard `Function` interface.
+Therefore, you can safely use `instanceof` as intended:
+```
+import { UlidMonotonic } from 'id128'
+import { Exception } from 'id128'
+
+try { UlidMonotonic.generate() }
+catch (err) {
+	if (err instanceof Exception.ClockSequenceOverflow ) { ... }
+}
+```
+
 # Motivation
 
 Originally, I was looking for an id that is independent of the database, but plays
