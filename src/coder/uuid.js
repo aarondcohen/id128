@@ -55,7 +55,7 @@ class UuidCoder extends BaseCoder {
 
 	encodeTrusted(bytes) {
 		let idx = -1;
-		return (''
+		const encoding = (''
 			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
 			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
 			+ '-'
@@ -69,6 +69,7 @@ class UuidCoder extends BaseCoder {
 			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
 			+ BYTE_TO_HEX[bytes[++idx]] + BYTE_TO_HEX[bytes[++idx]]
 		);
+		return encoding;
 	}
 }
 

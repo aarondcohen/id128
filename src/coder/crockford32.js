@@ -107,7 +107,6 @@ class Crockford32Coder extends BaseCoder {
 		for (let idx = 0, end = quintets.length; idx < end; ++idx) {
 			encoding += _quintetToChar(quintets[idx]);
 		}
-
 		return encoding;
 	}
 }

@@ -10,8 +10,8 @@ class IdFactory {
 		canonical_coder,
 		raw_coder,
 	} = {}) {
-		const factory = this;
 		this[_id] = class extends id {
+			static get name() { return id.name; }
 			static get [Symbol.species]() { return id; }
 			get [Symbol.toStringTag]() { return `${id.name} ${this.toRaw()}`; }
 			toCanonical() { return canonical_coder.encodeTrusted(this.bytes); }
