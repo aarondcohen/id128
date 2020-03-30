@@ -1,0 +1,7 @@
+{
+	"extends": "dtslint/dtslint.json",
+	"rules": {
+		"indent": [true, "tabs", 2],
+		"no-empty-interface": false
+	}
+}

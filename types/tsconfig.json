@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"lib": ["es6"],
+		"module": "commonjs",
+		"noEmit": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"baseUrl": ".",
+		"paths": { "id128": ["."] }
+	}
+}

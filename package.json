@@ -5,10 +5,12 @@
 	"author": "Aaron Cohen <aarondcohen@gmail.com>",
 	"license": "MIT",
 	"main": "index.js",
+	"types": "index.d.ts",
 	"files": [
+		"index.d.ts",
 		"index.js",
-		"utils.js",
-		"src/"
+		"src/",
+		"utils.js"
 	],
 	"homepage": "https://github.com/aarondcohen/id128#id128",
 	"repository": {
@@ -25,6 +27,7 @@
 	"scripts": {
 		"benchmark-all": "NODE_PATH='./src/' node benchmark/basics.js && node benchmark/factory-uuid.js",
 		"call": "NODE_PATH='./src/' node",
+		"dtslint": "dtslint types",
 		"test": "NODE_PATH='./src/' mocha",
 		"test-all": "NODE_PATH='./src/' mocha test/*"
 	},
@@ -34,6 +37,7 @@
 	"devDependencies": {
 		"benchmarkify": "*",
 		"chai": "*",
+		"dtslint": "^3.4.1",
 		"mocha": "*",
 		"sinon": "*"
 	},
