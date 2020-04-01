@@ -46,12 +46,12 @@ function assertDecoder(method, encoding) {
 		const subject = () => factory[method](encoding);
 
 		it('returns a versioned id', function() {
-			expect(subject()).to.be.an.instanceof(versioned_id_class);
+			expect(subject()).to.be.an.instanceOf(versioned_id_class);
 		});
 
 		it('returns an abstract id when the version is unsupported', function() {
 			expect(factory[method](encoding.replace(version, 'IDUNNO')))
-				.to.be.an.instanceof(abstract_id_class);
+				.to.be.an.instanceOf(abstract_id_class);
 		});
 
 		assertInjectsInstanceMethod('toCanonical', subject);
@@ -74,7 +74,7 @@ function assertGenerator(method) {
 		const subject = () => factory[method]({ version });
 
 		it(`returns a versioned id`, function() {
-			expect(subject()).to.be.an.instanceof(versioned_id_class);
+			expect(subject()).to.be.an.instanceOf(versioned_id_class);
 		});
 
 		it('always returns a different object', function() {
@@ -112,7 +112,7 @@ describe(described_class.name, function() {
 		const subject = () => factory.construct(`some bytes vrsn:${version}`);
 
 		it('returns a versioned id', function() {
-			expect(subject()).to.be.an.instanceof(versioned_id_class);
+			expect(subject()).to.be.an.instanceOf(versioned_id_class);
 		});
 
 		it('directly stores the bytes', function() {
@@ -121,7 +121,7 @@ describe(described_class.name, function() {
 
 		it('returns an abstract id when the version is unsupported', function() {
 			expect(factory.construct('some bytes vrsn:IDUNNO'))
-				.to.be.an.instanceof(abstract_id_class);
+				.to.be.an.instanceOf(abstract_id_class);
 		});
 	});
 

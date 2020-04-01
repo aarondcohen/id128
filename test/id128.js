@@ -3,7 +3,6 @@
 const { expect } = require('chai');
 
 const Id128 = require('../');
-const { Id } = require('../utils');
 
 function assertDebuggable(id_name, generator) {
 	describe('when cast as a string', function() {
@@ -26,7 +25,8 @@ function assertValidId128(id_name, factory, id_class, generator_args = {}) {
 		const subject = () => factory.generate(generator_args);
 
 		it(`returns a ${id_name}`, function() {
-			expect(subject()).to.be.an.instanceof(id_class);
+			expect(subject()).to.be.an.instanceOf(id_class);
+			expect(subject()).to.be.an.instanceOf(factory.type);
 		});
 
 		it('generates 128-bit id', function() {
@@ -40,7 +40,7 @@ function assertValidId128(id_name, factory, id_class, generator_args = {}) {
 		const subject = () => factory.MIN(generator_args);
 
 		it(`returns a ${id_name}`, function() {
-			expect(subject()).to.be.an.instanceof(id_class);
+			expect(subject()).to.be.an.instanceOf(id_class);
 		});
 
 		it('generates 128-bit id', function() {
@@ -54,7 +54,7 @@ function assertValidId128(id_name, factory, id_class, generator_args = {}) {
 		const subject = () => factory.MAX(generator_args);
 
 		it(`returns a ${id_name}`, function() {
-			expect(subject()).to.be.an.instanceof(id_class);
+			expect(subject()).to.be.an.instanceOf(id_class);
 		});
 
 		it('generates 128-bit id', function() {
@@ -131,7 +131,7 @@ function assertValidId128(id_name, factory, id_class, generator_args = {}) {
 	assertValidId128(
 		id_name,
 		Id128[id_name],
-		Id[id_name],
+		Id128[id_name].type,
 	);
 }));
 
@@ -145,8 +145,51 @@ function assertValidId128(id_name, factory, id_class, generator_args = {}) {
 		assertValidId128(
 			id_name,
 			Id128.Uuid,
-			Id[id_name],
+			Id128[id_name].type,
 			generator_args,
 		);
 	});
 });
+
+
+const all_ids = [
+	'Ulid',
+	'UlidMonotonic',
+	'Uuid1',
+	'Uuid4',
+	'UuidNil',
+].map((id_name) => Id128[id_name].generate())
+
+describe('idCompare', function() {
+	const subject = Id128.idCompare
+
+	it('compares the same id of any type', function() {
+		all_ids.forEach((id) => expect(subject(id, id), id.name).to.equal(0));
+	});
+
+	it('works with ids of any type', function() {
+		all_ids.forEach((lhs) => {
+			all_ids.forEach((rhs) => {
+				expect(() => subject(lhs, rhs), `${lhs.name} and ${rhs.name}`)
+					.not.to.throw();
+			});
+		});
+	});
+})
+
+describe('idEqual', function() {
+	const subject = Id128.idEqual
+
+	it('equates the same id of any type', function() {
+		all_ids.forEach((id) => expect(subject(id, id), id.name).to.equal(true));
+	});
+
+	it('works with ids of any type', function() {
+		all_ids.forEach((lhs) => {
+			all_ids.forEach((rhs) => {
+				expect(() => subject(lhs, rhs), `${lhs.name} and ${rhs.name}`)
+					.not.to.throw();
+			});
+		});
+	});
+})
