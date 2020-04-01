@@ -15,6 +15,9 @@ const { VersionedIdFactory } = require('./src/factory/versioned-id');
 const Exception = require('./src/common/exception');
 
 const namespace = {
+	idCompare: function(lhs, rhs) { return lhs.compare(rhs); },
+	idEqual: function(lhs, rhs) { return lhs.equal(rhs); },
+	Exception,
 	Ulid: new IdFactory({
 		id: Ulid,
 		canonical_coder: Crockford32Coder,
@@ -36,7 +39,6 @@ const namespace = {
 		canonical_coder: UuidCoder,
 		raw_coder: HexCoder,
 	}),
-	Exception,
 };
 
 namespace.Uuid.versioned_ids.reduce(

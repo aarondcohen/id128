@@ -20,6 +20,8 @@ const {
 	Uuid4,
 	Uuid6,
 	UuidNil,
+	idCompare,
+	idEqual,
 } = require('id128');
 
 // Id factories
@@ -42,6 +44,9 @@ const {
 
 	// Get the largest valid id
 	const max = IdType.MAX();
+
+	// Type-check the id
+	console.log(id instanceof IdType.type)
 
 	// Compare ids
 	console.log(id.equal(id));
@@ -89,6 +94,9 @@ const {
 	// Get the largest valid id
 	const max = Uuid.MAX({ version });
 
+	// Type-check the id
+	console.log(id instanceof Uuid.type)
+
 	// Encode the id in its canonical form
 	const canonical = id.toCanonical();
 	console.log(canonical);
@@ -109,11 +117,24 @@ const {
 	// Decode a raw formatted id, skipping validation
 	console.log(id.equal(Uuid.fromRawTrusted(raw)));
 });
+
+// Static Utilities
+
+// Equate arbitrary ids
+console.log(idEqual(Ulid.generate(), Uuid4.generate()))
+
+// Compare arbitrary ids
+console.log(idCompare(Ulid.generate(), Uuid4.generate()))
 ```
+
 ## Common Factory Properties
 
 ### name
 Return the name of the generated id type.
+
+### type
+Return the type of the generated id instances for type-checking
+with the `instanceof` operator.
 
 ## Common Factory Methods
 
@@ -153,13 +174,6 @@ Throw `InvalidBytes` if the id is not 128-bit conformant.
 Encode the given id in the raw form.
 Throw `InvalidBytes` if the id is not 128-bit conformant.
 
-### .compare(left_id, right_id) => (-1|0|1)
-Determine if the left id is `less than | equal to | greater than`
-the right id using lexicographical byte order.
-
-### .equal(left_id, right_id) => (true|false)
-Determine if 2 ids have the same byte value.
-
 ### .isCanonical(canonical_string) => (true|false)
 Verify if a string is a valid canonical encoding.
 
@@ -187,6 +201,15 @@ Encode this id in its canonical form.
 
 ### .toRaw() => raw_string
 Encode this id in its raw form.
+
+## Namespace Static Utilities
+
+### idCompare(left_id, right_id) => (-1|0|1)
+Determine if the left id is `less than | equal to | greater than`
+the right id using lexicographical byte order.
+
+### idEqual(left_id, right_id) => (true|false)
+Determine if 2 ids have the same byte value.
 
 # Ulid
 ```es6
@@ -218,9 +241,9 @@ Throw `InvalidEpoch` for times before the epoch or after approximately August 2n
 This is provided mostly for unit tests.
 
 ## Byte Format
-Format `ttttttrrrrrrrrrr` where:
-- `t` is 8 bits of time
-- `r` is 8 bits of random
+Format `tttt tttt tttt rrrr rrrr rrrr rrrr rrrr` where:
+- `t` is 4 bits of time
+- `r` is 4 bits of random
 
 # UlidMonotonic
 ```es6
@@ -259,10 +282,10 @@ Return the clock sequence to its starting position.  This is provided mostly for
 unit tests.
 
 ## Byte Format
-Format `ttttttccrrrrrrrr` where:
-- `t` is 8 bits of time
-- `c` is 8 bits of random-seeded clock sequence
-- `r` is 8 bits of random
+Format `tttt tttt tttt cccc rrrr rrrr rrrr rrrr` where:
+- `t` is 4 bits of time
+- `c` is 4 bits of random-seeded clock sequence
+- `r` is 4 bits of random
 
 More specifically, the clock sequence is a counter.  When the first id for a new
 timestamp is generated, the clock sequence is seeded with random bits and the
@@ -427,9 +450,8 @@ clock sequence seed.  This is provided mostly for unit tests.
 ## Byte Format
 Format `mmmm mmmm mmmm vnnn tccc aaaa aaaa aaaa` where:
 - `m` is 4 bits of millisecond time
-- `n` is 4 bits of hi-res time
 - `v` is 4 bits of the version
-- `h` is 4 bits of high millisecond time
+- `n` is 4 bits of hi-res time
 - `t` is 2 bits of the variant followed by 2 bits of the clock sequence
 - `c` is 4 bits of the clock sequence
 - `a` is 4 bits of the machine address

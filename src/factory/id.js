@@ -23,7 +23,8 @@ class IdFactory {
 
 	// Properties
 
-	get name() { return this[_id].name }
+	get name() { return this[_id].name; }
+	get type() { return this[_id][Symbol.species]; }
 
 	// Generators
 
@@ -72,10 +73,12 @@ class IdFactory {
 	// Comparators
 
 	compare(lhs, rhs) {
+		console.warn("Deprecated: use generic idCompare instead.")
 		return lhs.compare(rhs);
 	}
 
 	equal(lhs, rhs) {
+		console.warn("Deprecated: use generic idEqual instead.")
 		return lhs.equal(rhs);
 	}
 
