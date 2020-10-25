@@ -25,7 +25,6 @@
 		"./src/common/random-bytes.js": "./src/common/random-bytes-browser.js"
 	},
 	"scripts": {
-		"benchmark-all": "NODE_PATH='./src/' node benchmark/basics.js && node benchmark/factory-uuid.js",
 		"call": "NODE_PATH='./src/' node",
 		"dtslint": "dtslint types",
 		"test": "NODE_PATH='./src/' mocha",
@@ -35,7 +34,7 @@
 		"node": ">=v6.9.0"
 	},
 	"devDependencies": {
-		"benchmarkify": "*",
+		"benchmarkify": "github:aarondcohen/benchmarkify",
 		"chai": "*",
 		"dtslint": "^3.4.1",
 		"mocha": "*",
