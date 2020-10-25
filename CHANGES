@@ -13,3 +13,4 @@
 - 1.5.0 : Fixed benchmarks and added support for node +12.5.
 - 1.6.0 : Added Typescript support and top-level id comparators.
 - 1.6.1 : Tweaked random memory allocation and updated benchmarks.
+- 1.6.2 : Fixed docs

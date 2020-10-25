@@ -708,7 +708,7 @@ Competitive benchmarks have been moved to [benchmark-guid](https://github.com/aa
 To run the benchmarks:
 ```bash
 yarn install
-yarn benchmark-all
+yarn benchmark
 ```
 
 ```
