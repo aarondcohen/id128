@@ -712,124 +712,124 @@ yarn benchmark-all
 ```
 
 ```
-Platform info
-=============
-	Darwin 18.2.0 x64
-	Node.JS: 13.1.0
-	V8: 7.8.279.17-node.19
-	Intel(R) Core(TM) i7-4578U CPU @ 3.00GHz × 4
+Platform info:
+==============
+   Darwin 18.2.0 x64
+   Node.JS: 15.0.0
+   V8: 8.6.395.16-node.15
+   Intel(R) Core(TM) i7-4578U CPU @ 3.00GHz × 4
 
 Ulid
 ====
-	generate:                  (3,773,495 rps)   (avg: 265ns)
-	MIN:                      (10,973,370 rps)   (avg: 91ns)
-	MAX:                      (10,632,353 rps)   (avg: 94ns)
-	fromCanonical:             (1,682,872 rps)   (avg: 594ns)
-	fromCanonicalTrusted:      (1,781,927 rps)   (avg: 561ns)
-	fromRaw:                   (1,387,051 rps)   (avg: 720ns)
-	fromRawTrusted:            (1,778,223 rps)   (avg: 562ns)
-	toCanonical:               (3,308,341 rps)   (avg: 302ns)
-	toRaw:                     (5,402,469 rps)   (avg: 185ns)
+   generate:                  (4,567,468rps)   (avg: 218ns)
+   MIN:                      (10,111,513rps)   (avg: 98ns)
+   MAX:                      (10,518,784rps)   (avg: 95ns)
+   fromCanonical:             (1,719,762rps)   (avg: 581ns)
+   fromCanonicalTrusted:      (2,029,515rps)   (avg: 492ns)
+   fromRaw:                   (1,482,217rps)   (avg: 674ns)
+   fromRawTrusted:            (1,872,420rps)   (avg: 534ns)
+   toCanonical:               (3,379,176rps)   (avg: 295ns)
+   toRaw:                     (5,711,463rps)   (avg: 175ns)
 
 UlidMonotonic
 =============
-	generate:                  (3,244,846 rps)   (avg: 308ns)
-	MIN:                       (5,906,660 rps)   (avg: 169ns)
-	MAX:                       (5,779,445 rps)   (avg: 173ns)
-	fromCanonical:             (1,465,037 rps)   (avg: 682ns)
-	fromCanonicalTrusted:      (1,736,835 rps)   (avg: 575ns)
-	fromRaw:                   (1,320,917 rps)   (avg: 757ns)
-	fromRawTrusted:            (1,656,616 rps)   (avg: 603ns)
-	toCanonical:               (3,255,027 rps)   (avg: 307ns)
-	toRaw:                     (5,613,319 rps)   (avg: 178ns)
+   generate:                  (3,604,895rps)   (avg: 277ns)
+   MIN:                       (5,853,309rps)   (avg: 170ns)
+   MAX:                       (5,514,524rps)   (avg: 181ns)
+   fromCanonical:             (1,486,208rps)   (avg: 672ns)
+   fromCanonicalTrusted:      (1,746,998rps)   (avg: 572ns)
+   fromRaw:                   (1,311,769rps)   (avg: 762ns)
+   fromRawTrusted:            (1,577,847rps)   (avg: 633ns)
+   toCanonical:               (3,223,537rps)   (avg: 310ns)
+   toRaw:                     (5,947,631rps)   (avg: 168ns)
 
 Uuid1
 =====
-	generate:                  (4,990,647 rps)   (avg: 200ns)
-	MIN:                      (10,111,392 rps)   (avg: 98ns)
-	MAX:                      (10,102,972 rps)   (avg: 98ns)
-	fromCanonical:             (1,295,991 rps)   (avg: 771ns)
-	fromCanonicalTrusted:      (1,568,558 rps)   (avg: 637ns)
-	fromRaw:                   (1,311,402 rps)   (avg: 762ns)
-	fromRawTrusted:            (1,659,691 rps)   (avg: 602ns)
-	toCanonical:               (5,788,985 rps)   (avg: 172ns)
-	toRaw:                     (5,728,554 rps)   (avg: 174ns)
+   generate:                  (4,513,094rps)   (avg: 221ns)
+   MIN:                      (10,413,638rps)   (avg: 96ns)
+   MAX:                       (9,871,229rps)   (avg: 101ns)
+   fromCanonical:             (1,247,856rps)   (avg: 801ns)
+   fromCanonicalTrusted:      (1,590,560rps)   (avg: 628ns)
+   fromRaw:                   (1,268,042rps)   (avg: 788ns)
+   fromRawTrusted:            (1,595,686rps)   (avg: 626ns)
+   toCanonical:               (5,746,628rps)   (avg: 174ns)
+   toRaw:                     (5,985,025rps)   (avg: 167ns)
 
 Uuid4
 =====
-	generate:                  (4,953,310 rps)   (avg: 201ns)
-	MIN:                       (5,464,391 rps)   (avg: 183ns)
-	MAX:                       (5,555,808 rps)   (avg: 179ns)
-	fromCanonical:             (1,239,890 rps)   (avg: 806ns)
-	fromCanonicalTrusted:      (1,484,790 rps)   (avg: 673ns)
-	fromRaw:                   (1,282,846 rps)   (avg: 779ns)
-	fromRawTrusted:            (1,623,020 rps)   (avg: 616ns)
-	toCanonical:               (5,880,410 rps)   (avg: 170ns)
-	toRaw:                     (5,748,660 rps)   (avg: 173ns)
+   generate:                  (6,254,244rps)   (avg: 159ns)
+   MIN:                       (5,707,826rps)   (avg: 175ns)
+   MAX:                       (5,517,208rps)   (avg: 181ns)
+   fromCanonical:             (1,267,725rps)   (avg: 788ns)
+   fromCanonicalTrusted:      (1,610,295rps)   (avg: 621ns)
+   fromRaw:                   (1,312,424rps)   (avg: 761ns)
+   fromRawTrusted:            (1,669,603rps)   (avg: 598ns)
+   toCanonical:               (6,101,250rps)   (avg: 163ns)
+   toRaw:                     (6,241,689rps)   (avg: 160ns)
 
 Uuid6
 =====
-	generate:                  (4,286,275 rps)   (avg: 233ns)
-	MIN:                       (4,915,458 rps)   (avg: 203ns)
-	MAX:                       (4,937,495 rps)   (avg: 202ns)
-	fromCanonical:             (1,267,923 rps)   (avg: 788ns)
-	fromCanonicalTrusted:      (1,545,612 rps)   (avg: 646ns)
-	fromRaw:                   (1,318,774 rps)   (avg: 758ns)
-	fromRawTrusted:            (1,668,548 rps)   (avg: 599ns)
-	toCanonical:               (4,422,988 rps)   (avg: 226ns)
-	toRaw:                     (4,824,185 rps)   (avg: 207ns)
+   generate:                  (4,114,755rps)   (avg: 243ns)
+   MIN:                       (5,083,139rps)   (avg: 196ns)
+   MAX:                       (5,142,139rps)   (avg: 194ns)
+   fromCanonical:             (1,339,490rps)   (avg: 746ns)
+   fromCanonicalTrusted:      (1,669,803rps)   (avg: 598ns)
+   fromRaw:                   (1,311,177rps)   (avg: 762ns)
+   fromRawTrusted:            (1,621,376rps)   (avg: 616ns)
+   toCanonical:               (5,107,397rps)   (avg: 195ns)
+   toRaw:                     (5,125,101rps)   (avg: 195ns)
 
 UuidNil
 =======
-	generate:                  (8,300,439 rps)   (avg: 120ns)
-	MIN:                       (5,048,557 rps)   (avg: 198ns)
-	MAX:                       (8,304,089 rps)   (avg: 120ns)
-	fromCanonical:             (1,249,884 rps)   (avg: 800ns)
-	fromCanonicalTrusted:      (1,551,216 rps)   (avg: 644ns)
-	fromRaw:                   (1,437,341 rps)   (avg: 695ns)
-	fromRawTrusted:            (1,749,802 rps)   (avg: 571ns)
-	toCanonical:               (4,296,274 rps)   (avg: 232ns)
-	toRaw:                     (4,855,101 rps)   (avg: 205ns)
+   generate:                  (8,699,488rps)   (avg: 114ns)
+   MIN:                       (5,031,853rps)   (avg: 198ns)
+   MAX:                       (8,610,677rps)   (avg: 116ns)
+   fromCanonical:             (1,311,994rps)   (avg: 762ns)
+   fromCanonicalTrusted:      (1,600,737rps)   (avg: 624ns)
+   fromRaw:                   (1,470,656rps)   (avg: 679ns)
+   fromRawTrusted:            (1,748,078rps)   (avg: 572ns)
+   toCanonical:               (5,007,620rps)   (avg: 199ns)
+   toRaw:                     (4,948,897rps)   (avg: 202ns)
 
 Uuid processing Uuid1
 =====================
-	generate:                  (5,013,752 rps)   (avg: 199ns)
-	MAX:                       (9,032,008 rps)   (avg: 110ns)
-	MIN:                      (11,310,608 rps)   (avg: 88ns)
-	fromCanonical:             (1,029,006 rps)   (avg: 971ns)
-	fromCanonicalTrusted:      (1,249,435 rps)   (avg: 800ns)
-	fromRaw:                   (1,057,548 rps)   (avg: 945ns)
-	fromRawTrusted:            (1,277,496 rps)   (avg: 782ns)
+   generate:                  (4,040,826rps)   (avg: 247ns)
+   MIN:                       (4,935,627rps)   (avg: 202ns)
+   MAX:                       (4,952,430rps)   (avg: 201ns)
+   fromCanonical:             (1,008,025rps)   (avg: 992ns)
+   fromCanonicalTrusted:      (1,214,639rps)   (avg: 823ns)
+   fromRaw:                   (1,044,399rps)   (avg: 957ns)
+   fromRawTrusted:            (1,307,106rps)   (avg: 765ns)
 
 Uuid processing Uuid4
 =====================
-	generate:                  (4,505,300 rps)   (avg: 221ns)
-	MAX:                       (5,424,698 rps)   (avg: 184ns)
-	MIN:                       (5,472,017 rps)   (avg: 182ns)
-	fromCanonical:               (969,261 rps)   (avg: 1μs)
-	fromCanonicalTrusted:      (1,224,045 rps)   (avg: 816ns)
-	fromRaw:                   (1,071,794 rps)   (avg: 933ns)
-	fromRawTrusted:            (1,309,065 rps)   (avg: 763ns)
+   generate:                  (5,458,613rps)   (avg: 183ns)
+   MIN:                       (4,795,092rps)   (avg: 208ns)
+   MAX:                       (4,741,751rps)   (avg: 210ns)
+   fromCanonical:             (1,030,889rps)   (avg: 970ns)
+   fromCanonicalTrusted:      (1,245,805rps)   (avg: 802ns)
+   fromRaw:                   (1,051,847rps)   (avg: 950ns)
+   fromRawTrusted:            (1,274,083rps)   (avg: 784ns)
 
 Uuid processing Uuid6
 =====================
-	generate:                  (4,086,474 rps)   (avg: 244ns)
-	MAX:                       (5,482,620 rps)   (avg: 182ns)
-	MIN:                       (5,374,116 rps)   (avg: 186ns)
-	fromCanonical:             (1,020,569 rps)   (avg: 979ns)
-	fromCanonicalTrusted:      (1,215,470 rps)   (avg: 822ns)
-	fromRaw:                   (1,085,620 rps)   (avg: 921ns)
-	fromRawTrusted:            (1,332,100 rps)   (avg: 750ns)
+   generate:                  (4,038,150rps)   (avg: 247ns)
+   MIN:                       (4,647,043rps)   (avg: 215ns)
+   MAX:                       (4,742,725rps)   (avg: 210ns)
+   fromCanonical:             (1,049,969rps)   (avg: 952ns)
+   fromCanonicalTrusted:      (1,247,815rps)   (avg: 801ns)
+   fromRaw:                   (1,050,764rps)   (avg: 951ns)
+   fromRawTrusted:            (1,261,134rps)   (avg: 792ns)
 
 Uuid processing UuidNil
 =======================
-	generate:                  (9,478,763 rps)   (avg: 105ns)
-	MAX:                       (9,218,737 rps)   (avg: 108ns)
-	MIN:                       (5,246,739 rps)   (avg: 190ns)
-	fromCanonical:             (1,018,739 rps)   (avg: 981ns)
-	fromCanonicalTrusted:      (1,237,939 rps)   (avg: 807ns)
-	fromRaw:                   (1,165,352 rps)   (avg: 858ns)
-	fromRawTrusted:            (1,352,172 rps)   (avg: 739ns)
+   generate:                  (7,869,054rps)   (avg: 127ns)
+   MIN:                       (4,812,522rps)   (avg: 207ns)
+   MAX:                       (8,056,573rps)   (avg: 124ns)
+   fromCanonical:             (1,033,678rps)   (avg: 967ns)
+   fromCanonicalTrusted:      (1,230,192rps)   (avg: 812ns)
+   fromRaw:                   (1,136,393rps)   (avg: 879ns)
+   fromRawTrusted:            (1,331,759rps)   (avg: 750ns)
 ```
 
 # Acknowledgments
