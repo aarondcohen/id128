@@ -1,14 +1,14 @@
 const Crypto = require('crypto');
 
-const MAX_BUFFER = 4096 /* typical page size */ - 96 /* Empty buffer overhead */;
+const BUFFER_SIZE = 4096 /* typical page size */ - 96 /* Empty buffer overhead */;
 
-let buffer;
-let offset = MAX_BUFFER;
+const buffer = new Uint8Array(BUFFER_SIZE)
+let offset = BUFFER_SIZE;
 
 function randomBytes(size) {
-	if (offset + size >= MAX_BUFFER) {
+	if (offset + size >= BUFFER_SIZE) {
 		offset = 0;
-		buffer = Crypto.randomBytes(MAX_BUFFER);
+		Crypto.randomFillSync(buffer)
 	}
 
 	return buffer.slice(offset, offset += size);
