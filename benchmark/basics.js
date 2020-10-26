@@ -14,7 +14,7 @@ const suites_by_name = Object.fromEntries([
 	'fromRawTrusted',
 	'toCanonical',
 	'toRaw'
-].map((name) => [name, benchmark.createSuite(name, { cycles: 100000 })]));
+].map((name) => [name, benchmark.createSuite(name, { cycles: 1000000 })]));
 
 Object.values(Id128)
 	.filter(x => x instanceof IdFactory)

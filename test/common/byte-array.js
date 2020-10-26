@@ -63,6 +63,17 @@ describe(described_namespace.constructor.name, function() {
 
 			expect(subject()).not.to.deep.equal(subject());
 		});
+
+		it('every call allocates distinct memory', function() {
+			// NOTE: given the nature of random and the bit entropy,
+			// we're guarding against extreme misfortune
+      this.retries(1);
+
+			const byte_arrays = Array.from({ length: 1000 })
+				.map(subject)
+				.map(x => x.toString());
+			expect(new Set(byte_arrays)).to.have.lengthOf(1000);
+		});
 	});
 
 	describe('.generateZeroFilled', function() {
