@@ -1,4 +1,4 @@
-const Crypto = window.crypto;
+const Crypto = self.crypto;
 
 function randomBytes(size) {
 	const bytes = new Uint8Array(size);
