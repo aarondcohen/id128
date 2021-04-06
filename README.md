@@ -841,6 +841,9 @@ other engineers.  In particular:
 - [ulid](https://github.com/ulid/javascript): an elegant solution to a persistent problem
 - [uuid-random](https://github.com/jchook/uuid-random): allocating pages of randomness is by far the biggest performance factor
 
+Also, thank you:
+- [ruleb](https://github.com/ruleb): researching and patching worker support
+
 # Contributing
 
 Feel free to make a branch and send a pull request through [github](https://github.com/aarondcohen/id128)
