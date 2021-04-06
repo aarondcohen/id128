@@ -697,8 +697,8 @@ Ultimately, this library strives to be:
 
 To run the tests:
 ```bash
-yarn install
-yarn test-all
+npm install
+npm run test-all
 ```
 
 # Benchmarks
@@ -707,8 +707,8 @@ Competitive benchmarks have been moved to [benchmark-guid](https://github.com/aa
 
 To run the benchmarks:
 ```bash
-yarn install
-yarn benchmark
+npm install
+npm run benchmark
 ```
 
 ```
