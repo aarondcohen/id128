@@ -39,11 +39,26 @@ const namespace = {
 		canonical_coder: UuidCoder,
 		raw_coder: HexCoder,
 	}),
+	Uuid1: new IdFactory({
+		id: Uuid1,
+		canonical_coder: UuidCoder,
+		raw_coder: HexCoder,
+	}),
+	Uuid4: new IdFactory({
+		id: Uuid4,
+		canonical_coder: UuidCoder,
+		raw_coder: HexCoder,
+	}),
+	Uuid6: new IdFactory({
+		id: Uuid6,
+		canonical_coder: UuidCoder,
+		raw_coder: HexCoder,
+	}),
+	UuidNil: new IdFactory({
+		id: UuidNil,
+		canonical_coder: UuidCoder,
+		raw_coder: HexCoder,
+	}),
 };
-
-namespace.Uuid.versioned_ids.reduce(
-	(ns, uuid) => Object.assign(ns, {[uuid.name]: uuid}),
-	namespace
-);
 
 module.exports = namespace;
