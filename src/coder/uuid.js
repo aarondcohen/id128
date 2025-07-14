@@ -2,7 +2,7 @@
 
 const { BaseCoder } = require('./base');
 
-const ALPHABET = '0123456789ABCDEF';
+const ALPHABET = '0123456789abcdef';
 
 const BYTE_TO_HEX = Array
 	.from({ length: ALPHABET.length * ALPHABET.length })
