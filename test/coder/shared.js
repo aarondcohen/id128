@@ -19,7 +19,7 @@ const BYTES = Object.freeze({
 const ALPHABET = Object.freeze({
 	ASCII: Array.from({ length: 128 }, (v, k) => String.fromCharCode(k)).join(''),
 	CROCKFORD32: '0123456789ABCDEFGHJKMNPQRSTVWXYZ',
-	HEX: '0123456789ABCDEF',
+	HEX: '0123456789abcdef',
 });
 
 //Helpers

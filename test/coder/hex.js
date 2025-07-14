@@ -15,7 +15,7 @@ const { InvalidEncoding } = require('common/exception');
 const described_namespace = require('coder/hex');
 
 const encoding_any = makeString(32, ALPHABET.HEX);
-const encoding_max = makeString(32, 'F');
+const encoding_max = makeString(32, 'f');
 const encoding_min = makeString(32, '0');
 
 describe(describeNamespace(described_namespace, encoding_any), function() {

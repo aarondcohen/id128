@@ -19,7 +19,7 @@ function makeUuid(alphabet) {
 }
 
 const encoding_any = makeUuid(ALPHABET.HEX);
-const encoding_max = makeUuid('F');
+const encoding_max = makeUuid('f');
 const encoding_min = makeUuid('0');
 
 describe(describeNamespace(described_namespace, encoding_any), function() {
